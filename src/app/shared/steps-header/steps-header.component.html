@@ -1,0 +1,5 @@
+<div class="container">
+    @for (step of Steps; track $index) {
+    <p [routerLink]="step.route" [routerLinkActive]="'active'">{{step.label}}</p>
+    }
+</div>

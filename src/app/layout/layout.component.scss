@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+@import "../../styles/typography";
+
+.layout {
+  .sidepanel {
+    width: $sidepanel-width;
+    min-height: $sidepanel-height;
+    max-height: $sidepanel-height;
+    // background-color: white;
+  }
+
+  .collapsed-sidepanel {
+  }
+
+  .layout-holder {
+    width: $layout-width;
+    min-height: $layout-height;
+    max-height: $layout-height;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stretched-layout-holder {
+  }
+
+  .full-router {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+}

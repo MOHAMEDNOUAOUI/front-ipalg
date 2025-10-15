@@ -1,0 +1,21 @@
+<nav class="pagination">
+    <!-- LEFT button: send currentPage (0-based) as 1-based - 1 -->
+
+    <button class="arrow" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">
+        <i class="pi pi-angle-left"></i>
+    </button>
+
+    <!-- Page buttons -->
+    @for (page of pages; track $index) {
+    <button class="page" (click)="changePage(page)" [class.active]="page === currentPage">
+        {{ page + 1 }}
+    </button>
+    }
+
+    <!-- RIGHT button: send currentPage + 2 (1-based) -->
+    <button class="arrow" (click)="changePage(currentPage + 1)" [disabled]="currentPage + 1 === totalPages">
+        <i class="pi pi-angle-right"></i>
+    </button>
+
+
+</nav>

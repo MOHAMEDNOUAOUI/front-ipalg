@@ -1,0 +1,208 @@
+@import "../../../styles/variables";
+@import "../../../styles/typography";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  //   border-right: 2px solid rgba(162, 162, 252, 0.377);
+  // box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  position: relative;
+
+  .headers-links {
+    overflow-y: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    // padding: 1rem;
+    padding-top: 1rem;
+
+    .groupe {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .groupe-header {
+      display: flex;
+      // justify-content: space-between;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.5rem;
+
+      i {
+        color: $color-secondary;
+        font-size: 0.8rem;
+        transition: 300ms ease-in-out;
+      }
+
+      // i {
+      //   color: $color-secondary;
+      //   font-size: 0.65rem;
+      //   transition: 300ms ease-in-out;
+      // }
+      .header {
+        color: rgb(165, 165, 165);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        // letter-spacing: 0.7px;
+      }
+    }
+
+    .routes-holder {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease-in-out, padding 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      border-radius: 5px;
+      padding: 0 0;
+      position: relative;
+
+      // The vertical line behind all dots
+      // &::before {
+      //   content: "";
+      //   position: absolute;
+      //   top: 10%;
+      //   left: 3px; // aligns with dot center
+      //   width: 2px;
+      //   height: 80%;
+      //   background-color: rgb(221, 221, 221);
+      // }
+
+      .link {
+        position: relative;
+        padding-left: 1rem; // space for dot
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        // the dot
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   left: 0;
+        //   top: 50%;
+        //   transform: translateY(-50%);
+        //   width: 8px;
+        //   height: 8px;
+        //   background-color: rgb(221, 221, 221);
+        //   border-radius: 50%;
+        //   z-index: 2;
+        // }
+
+        i {
+          font-size: 0.8rem;
+          color: rgba(0, 0, 0, 0.863);
+        }
+
+        h5 {
+          font-size: 1rem;
+          font-weight: 400;
+          text-transform: capitalize;
+          color: rgb(56, 56, 56);
+        }
+
+        &:hover {
+          i,
+          h5 {
+            transition: color 300ms ease-in-out;
+            color: $color-primary !important;
+          }
+
+          &::before {
+            background-color: $color-primary;
+            transition: all 300ms ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  padding: 1rem;
+
+  h2 {
+    color: $color-secondary;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: $color-text;
+  }
+}
+
+.active {
+  position: relative;
+  i {
+    color: $color-primary !important;
+  }
+  h5 {
+    color: $color-primary !important;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: $color-primary !important;
+  }
+}
+
+.expanded {
+  max-height: 500px !important;
+  padding: 0.5rem 0;
+}
+
+.header-top {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+
+  i {
+    font-size: 0.9rem;
+  }
+
+  .header-top-left {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .circle {
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--color-primary);
+    border-radius: 100%;
+  }
+
+  .informations {
+    h3 {
+      font-size: 0.9rem;
+    }
+    p {
+      font-size: 0.8rem;
+    }
+  }
+
+  #cssArrowsExchangeAltV {
+    font-size: 1.5rem;
+  }
+}

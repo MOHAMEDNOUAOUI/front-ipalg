@@ -1,0 +1,83 @@
+@import "../../../styles/variables";
+
+/* Primary */
+
+/* Secondary */
+
+/* Success */
+
+/* Warn */
+
+/* Help */
+
+/* Danger */
+
+.p-button {
+  --button-color: #06adb9;
+  padding: 0.5rem 0.8rem;
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  p,
+  i {
+    font-size: 0.9rem;
+    color: white !important;
+    width: fit-content;
+    text-wrap: nowrap;
+  }
+}
+
+.p-button-secondary {
+  --button-color: #e2e8f0 !important;
+  p,
+  i {
+    color: #505050 !important;
+  }
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+.p-button-success {
+  --button-color: #28a745 !important;
+}
+
+.p-button-warn {
+  --button-color: #ffc107 !important;
+}
+
+.p-button-help {
+  --button-color: #17a2b8 !important;
+}
+
+.p-button-danger {
+  --button-color: #dc3545 !important;
+}
+.p-button-dark {
+  --button-color: #033d6d !important;
+}
+
+.p-button:hover {
+  opacity: 0.8;
+  transform: translateY(-0.3rem);
+  transition: all 300ms ease-in-out;
+}
+
+.p-button-rounded {
+  border-radius: 10px !important;
+}
+
+.p-button-outlined {
+  background-color: transparent;
+  border: 1px solid var(--button-color);
+
+  i,
+  p {
+    // color: var(--button-color) !important;
+  }
+}

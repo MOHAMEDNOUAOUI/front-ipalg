@@ -1,0 +1,33 @@
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+
+  .arrow {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .page {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+    border: 1px solid #eee;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: 300ms ease-in-out;
+    &.active {
+      background-color: var(--color-secondary);
+      color: white;
+    }
+  }
+
+  // .arrow {
+  //   padding: 0.5rem 0.7rem;
+  //   font-size: 0.7rem;
+  //   border: 1px solid #eee;
+  //   cursor: pointer;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  // }
+}

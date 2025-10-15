@@ -1,0 +1,15 @@
+<div class="container">
+    <h5>{{title}}</h5>
+    <div class="card-design">
+        <div class="left">
+            <h2>6,528</h2>
+            <p>+255 vs last month</p>
+        </div>
+        <div class="design">
+            @for (item of bar; track $index) {
+            <div class="bar" [style.height]="item.size" [style.background]="item.color"></div>
+            }
+        </div>
+
+    </div>
+</div>

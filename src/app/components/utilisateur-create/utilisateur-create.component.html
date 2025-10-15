@@ -1,0 +1,39 @@
+<div class="black-screen">
+    <div class="modal-container">
+        <div class="modal-topper">
+            <i class="pi pi-user"></i>
+            <i class="pi pi-times button-modals" (click)="canceling()"></i>
+        </div>
+        <div class="modal-header">
+            <h3>Créer un nouvel utilisateur</h3>
+            <p>Ajoutez un nouvel utilisateur au système. Vous pouvez lui attribuer un profil.</p>
+        </div>
+        <form class="modal-body" [formGroup]="phoneForm">
+            <div class="input-group">
+                <label for="Nom">Nom complet</label>
+                <input class="input-part" type="text" name="" id="">
+            </div>
+            <div class="input-group">
+                <label for="Email">Email Address</label>
+                <input type="email" class="input-part" type="text" name="" id="">
+            </div>
+            <div class="input-group">
+                <label for="Telephone">Telephone</label>
+                <input type="tel" class="input-part" type="text" name="" id="">
+            </div>
+            <div class="input-group">
+                <label for="Profil">Profil</label>
+                <!-- <select class="input-part" name="" id="">
+                    <option value="">Administrateur</option>
+                    <option value="">Moderateur</option>
+                    <option value="">RH</option>
+                </select> -->
+                <app-costume-select></app-costume-select>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <!-- <app-p-button [label]="'Annuler'" [severity]="severity.Danger"></app-p-button> -->
+            <app-p-button [label]="'Enregistrer'" [icon]="'pi-save'" [severity]="severity.Primary"></app-p-button>
+        </div>
+    </div>
+</div>

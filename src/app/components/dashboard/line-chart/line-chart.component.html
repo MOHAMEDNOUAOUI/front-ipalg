@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="informations">
+        <h2>Testing the header</h2>
+        <p>solution for lines based on acquisation last year</p>
+    </div>
+    <div class="chart-holder">
+        <apx-chart class="chart" [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+            [xaxis]="chartOptions.xaxis!" [yaxis]="chartOptions.yaxis!" [grid]="chartOptions.grid!"
+            [stroke]="chartOptions.stroke!" [markers]="chartOptions.markers!" [dataLabels]="chartOptions.dataLabels!"
+            [colors]="chartOptions.colors!" [fill]="chartOptions.fill!"></apx-chart>
+        <div class="legends">
+            <div class="legend">
+                <p>Highest Touchpoint</p>
+                <h4>{{Highest}}</h4>
+            </div>
+            <div class="legend">
+                <p>Lowest Touchpoint</p>
+                <h4>{{Lowest}}</h4>
+            </div>
+            <div class="legend">
+                <p>Margin</p>
+                <h4>{{Average}}</h4>
+            </div>
+        </div>
+    </div>
+</div>

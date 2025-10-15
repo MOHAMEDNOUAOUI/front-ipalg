@@ -1,0 +1,19 @@
+<div class="container">
+    <!-- <div class="container-header-small">
+        <div class="container-header-text">
+            <h1>Environement Settings</h1>
+            <p>Gérez vos paramètres ici</p>
+        </div>
+        <div class="container-header-filter-container">
+            <app-p-button [label]="'Filter'" [severity]="Severity.Primary"></app-p-button>
+        </div>
+    </div> -->
+
+
+    <main>
+        <app-left-side-navigation-panel [navigationList]="navigationList"></app-left-side-navigation-panel>
+        <section class="mainArea">
+            <router-outlet></router-outlet>
+        </section>
+    </main>
+</div>

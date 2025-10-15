@@ -1,0 +1,19 @@
+<div class="container">
+
+    <div class="bottomside">
+        @for (bar of bars(); track $index) {
+        <div class="bar-holder">
+            <p>{{bar.label}} <span>{{bar.value}}</span></p>
+            <div class="bar-container">
+                <div class="bar" [style.width]="bar.height" [style.background]="
+    'linear-gradient(to top, ' + bar.shades?.dark + ', ' + bar.shades?.light + ')'
+  ">
+                </div>
+
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="topside"></div>
+</div>

@@ -1,0 +1,8 @@
+<div class="chart">
+    <div class="pie-slice" *ngFor="let beam of bars; let i = index" [ngStyle]="{
+         'transform': 'rotate(' + (360 / bars.length * i) + 'deg) translate(40px)',
+         'background': beam.color
+       }">
+    </div>
+    <div class="center-circle"></div>
+</div>

@@ -1,0 +1,14 @@
+<section class="navigation">
+    @for (navigation of navigationList; track $index) {
+    <div *ngIf="navigation.active" class="navigation-item" [routerLink]="navigation.route" routerLinkActive="active"
+        #rla="routerLinkActive" [routerLinkActiveOptions]="{ exact: false }">
+
+        <!-- SVG only if active -->
+        <svg *ngIf="rla.isActive" width="14" height="14" viewBox="0 0 24 24" fill="black">
+            <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
+        </svg>
+
+        <p>{{ navigation.label }}</p>
+    </div>
+    }
+</section>

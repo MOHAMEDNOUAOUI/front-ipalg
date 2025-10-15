@@ -1,0 +1,40 @@
+// Colors
+:root{
+    --color-primary:#06adb9;
+    --color-secondary:#033d6d;
+    --transparent-primary : #06adb9a1;
+
+    --roboto:'Roboto'
+    --inter:'Inter'
+}
+$color-primary: #06adb9;
+$color-secondary: #033d6d;
+$color-third: #aed8ef;
+$color-success: #4caf50;
+$color-danger: #f44336;
+$color-text: #212121;
+$color-paragraph: #747474;
+$color-bg: #f9f9f9;
+$color-layout: #f6f6f6;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Fonts
+$font-primary: "Roboto", sans-serif;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+//panel
+$sidepanel-width: 260px;
+$sidepanel-height: 100vh;
+$layout-width: calc(100% - #{$sidepanel-width});
+$layout-height: 100vh;

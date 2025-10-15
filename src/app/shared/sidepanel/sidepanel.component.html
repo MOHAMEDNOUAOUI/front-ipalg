@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="header-top">
+        <div class="header-top-left">
+            <div class="circle"></div>
+            <div class="informations">
+                <h3>Mohamed Nouaoui</h3>
+                <p>Content Manager</p>
+            </div>
+
+        </div>
+        <!-- <i class="pi pi-sort-down-fill"></i> -->
+        <ng-icon id="cssArrowsExchangeAltV" name="cssArrowsExchangeAltV"></ng-icon>
+    </div>
+    <div class="logo">
+        <h2>IPALG</h2>
+        <p>Gestion des immobilisations</p>
+    </div>
+    <div class="headers-links">
+        @for (tab of tabs; track $index) {
+        <div class="groupe">
+            <div class="groupe-header" (click)="opentab(tab)">
+                <!-- <i [className]="'pi '+tab.icon"></i> -->
+                <p class="header">{{tab.header}}</p>
+                <!-- <i class="pi" [ngClass]="{'pi-angle-up':tab.active , 'pi-angle-down':!tab.active}"></i> -->
+            </div>
+
+            @if (tab.active) {
+            <div class="routes-holder" [class.expanded]="tab.active">
+                @for (link of tab.links; track $index) {
+                <div class="link" [routerLink]="link.route" [routerLinkActive]="'active'"
+                    [routerLinkActiveOptions]="{ exact : false }">
+                    <i [className]="'pi '+link.icon"></i>
+                    <h5>{{link.label}}</h5>
+                </div>
+                }
+            </div>
+            }
+
+        </div>
+        }
+    </div>
+
+
+</div>

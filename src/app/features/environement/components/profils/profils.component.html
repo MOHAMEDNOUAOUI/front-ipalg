@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="container-header-small">
+        <div class="container-header-text">
+            <h1>Accés Management Settings</h1>
+            <p>Manager profils, permissions</p>
+        </div>
+    </div>
+
+    <main>
+        <!-- <app-steps-header [Steps]="steps"></app-steps-header> -->
+        <app-reusable-table [delete]="true" [ellipsis]="true" [modifier]="true" [icon]="'pi-spinner'" [page]="'profile'"
+            [size]="size" [totalElements]="totalElements" [totalPages]="totalPages" [currentPage]="currentPage"
+            [data]="data" [columns]="columns"></app-reusable-table>
+    </main>
+</div>
