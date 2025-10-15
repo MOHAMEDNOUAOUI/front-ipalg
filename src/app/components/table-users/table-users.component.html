@@ -43,7 +43,12 @@
                     }@else {
                     <th style="padding-left: 0.5rem;" scope="col">{{column.label}}</th>
                     } -->
+                    @if (['status'].includes(column.value)) {
+                    <th scope="col" style="width: 1px;white-space: nowrap;">{{column.label}}</th>
+                    }@else{
                     <th scope="col">{{column.label}}</th>
+
+                    }
                     }
                     <th></th>
                 </tr>
@@ -78,9 +83,10 @@
                             <!-- <span> {{getValue(column.value , row)}}</span> -->
                         </p>
                         }@else if(statusUtilisateur.Pending==row.status){
-                        <i title="Pending Account" class="pi pi pi-spin pi-spinner status-icons"></i>
+                        <i title="Pending Account" class="pi pi pi-spin pi-spinner status-icons"
+                            style="text-align: center;"></i>
                         }@else {
-                        <i title="Locked Account" class="pi pi-lock status-icons"></i>
+                        <i title="Locked Account" class="pi pi-lock status-icons" style="text-align: center;"></i>
                         }
                         }@else if(column.value.includes('date')){
                         {{ getValue(column, row) | date:'MMMM dd, yyyy'}}

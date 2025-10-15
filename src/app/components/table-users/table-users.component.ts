@@ -1,21 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
-import {
-  PButtonComponent,
-  Severity,
-} from '../../shared/p-button/p-button.component';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { environment } from '../../environments/environment';
-import {
-  statusUtilisateur,
-  Utilisateur,
-} from '../../Models/Utilisateur/Utilisateurs';
+import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
 
 @Component({
   selector: 'app-table-users',
@@ -86,9 +74,6 @@ export class TableUsersComponent {
   edit() {}
 
   getValue(column: any, row: any): string {
-    console.log('Column:', column);
-    console.log('Row:', row);
-
     if (Array.isArray(column.value)) {
       return column.value
         .map((v: any) => {

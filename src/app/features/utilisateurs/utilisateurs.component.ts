@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { ReusableTableComponent } from '../../shared/reusable-table/reusable-table.component';
 import { TableUsersComponent } from '../../components/table-users/table-users.component';
-import {
-  statusUtilisateur,
-  Utilisateur,
-} from '../../Models/Utilisateur/Utilisateurs';
-import { UtilisateurCreateComponent } from "../../components/utilisateur-create/utilisateur-create.component";
+import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
+import { UtilisateurCreateComponent } from '../../components/utilisateur-create/utilisateur-create.component';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -96,7 +93,7 @@ export class UtilisateursComponent {
       id: '4',
       username: 'Jhon from there',
       email: 'email@gmail.com',
-      status: statusUtilisateur.Active,
+      status: statusUtilisateur.Pending,
       profile: {
         id: '1',
         label: 'Admin',
