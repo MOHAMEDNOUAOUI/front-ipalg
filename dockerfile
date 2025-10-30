@@ -9,7 +9,7 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 
 # Build Angular for staging (minified, AOT, output hashing)
-RUN npm run build-staging
+RUN npm run build
 
 FROM nginx:alpine
 
