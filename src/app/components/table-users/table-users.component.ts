@@ -1,27 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { environment } from '../../environments/environment';
 import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
+import { UsersStore } from '../../store/users.store';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table-users',
   standalone: true,
-  imports: [PButtonComponent, CommonModule, PaginationComponent],
+  imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule],
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.scss',
 })
-export class TableUsersComponent {
+export class TableUsersComponent<T> {
   severity = Severity;
   @Input() columns: any[] = [];
-  @Input() data: any = [];
   @Input() page: string = '';
-  @Input() size: number = 0;
   @Input() activeSize = false;
-  @Input() totalElements: number = 0;
-  @Input() currentPage = 0;
-  @Input() totalPages = 10;
   @Input() exporter: boolean = false;
   @Input() importer: boolean = false;
   @Input() icon: string = '';
@@ -29,6 +34,8 @@ export class TableUsersComponent {
   @Input() ellipsis = false;
   @Input() delete = false;
   @Input() modifier = false;
+
+  constructor(public usersStore: UsersStore) {}
 
   columnWithEmail = {
     label: 'Email address',
@@ -39,6 +46,7 @@ export class TableUsersComponent {
   statusUtilisateur = statusUtilisateur;
 
   @Output() filter = new EventEmitter<boolean>(false);
+  @Output() exporterEmit = new EventEmitter<boolean>(false);
   @Output() supprimer = new EventEmitter<{
     confirmed: boolean;
     user: Utilisateur;
@@ -73,26 +81,25 @@ export class TableUsersComponent {
 
   edit() {}
 
-  getValue(column: any, row: any): string {
-    if (Array.isArray(column.value)) {
-      return column.value
-        .map((v: any) => {
-          const base = row[v.value];
-          const result = v.item ? base?.[v.item] : base;
-          return result;
-        })
-        .filter((val: any) => val !== undefined && val !== null)
-        .join(' ');
+  getValue(column: any, row: any) {
+    if (column.item) {
+      return row[column.value][column.item];
     } else {
-      const base = row[column.value];
-      const result = column.item ? base?.[column.item] : base;
-
-      return result;
+      return row[column.value];
     }
   }
 
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
   changePage(page: number) {
-    this.currentPage = page;
+    this.usersStore.updateFilter({ page: page });
+  }
+
+  changeSearch(event: any) {
+    let value = event.target.value;
+    this.usersStore.updateFilter({ username: value });
   }
 
   openPopUp(row: any, i: number, event: MouseEvent) {
@@ -130,6 +137,8 @@ export class TableUsersComponent {
     let user = User ? User : this.selectedRow;
     this.Modifier.emit({ confirmed: true, user });
   }
-  ExporterClick() {}
+  ExporterClick() {
+    this.exporterEmit.emit(true);
+  }
   ImporterClick() {}
 }

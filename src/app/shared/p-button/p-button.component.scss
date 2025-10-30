@@ -24,10 +24,12 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  height: 100%;
+  justify-content: center;
 
   p,
   i {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: white !important;
     width: fit-content;
     text-wrap: nowrap;

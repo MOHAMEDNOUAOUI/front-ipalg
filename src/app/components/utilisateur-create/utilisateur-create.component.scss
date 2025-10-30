@@ -22,6 +22,16 @@
     position: relative;
     animation: slideUp 300ms ease-in-out forwards;
 
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+
+    /* Mobile Devices */
+    @media (max-width: 600px) {
+      width: 90%;
+      padding: 1rem;
+    }
+
     .button-modals {
       position: absolute;
       right: 1rem;
@@ -37,8 +47,7 @@
         background-color: white;
         padding: 0.7rem;
         border-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-          rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
       }
     }
 

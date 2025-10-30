@@ -10,6 +10,10 @@
     'p-button-danger': severity === Severity.Danger,
     'p-button-dark': severity === Severity.Dark
   }">
-  <i *ngIf="icon" [classList]="'pi '+ icon"></i>
+  @if (icon) {
+  <i [classList]="'pi '+ icon"></i>
+  }
+  @if(label){
   <p>{{ label }}</p>
+  }
 </div>

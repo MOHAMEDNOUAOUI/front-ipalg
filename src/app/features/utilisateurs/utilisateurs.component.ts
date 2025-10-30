@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { UtilisateursService } from './../../services/UtilisateursService';
+import { Component, effect, signal } from '@angular/core';
 import { ReusableTableComponent } from '../../shared/reusable-table/reusable-table.component';
 import { TableUsersComponent } from '../../components/table-users/table-users.component';
 import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
 import { UtilisateurCreateComponent } from '../../components/utilisateur-create/utilisateur-create.component';
+import { PageableResponse } from '../../interfaces/PageableResponse';
+import { UsersStore } from '../../store/users.store';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -12,32 +16,58 @@ import { UtilisateurCreateComponent } from '../../components/utilisateur-create/
   styleUrl: './utilisateurs.component.scss',
 })
 export class UtilisateursComponent {
-  totalPages: number = 10;
-  currentPage: number = 0;
-  size = 10;
-  totalElements = 10;
+  //signals
+
+  utilisateursResponse$ = signal<Utilisateur[]>([]);
+
+  //
   statusUtilisateur = statusUtilisateur;
 
   userCreatePopUp = false;
 
   columns = [
+    // {
+    //   label: 'Something Else',
+    //   value: [
+    //     {
+    //       value: 'status',
+    //     },
+    //     {
+    //       value: 'createdBy',
+    //     },
+    //   ],
+    // },
     {
       label: 'Utilisateur',
       value: [
         {
           value: 'username',
+          bold: true,
         },
         {
-          value: 'profile',
-          item: 'label',
+          value: 'email',
         },
       ],
-      bold: true,
     },
     {
       label: 'Profile',
-      value: 'profile',
-      item: 'label',
+      value: 'userProfile',
+      item: 'name',
+    },
+    {
+      label: 'First Name',
+      value: 'firstName',
+      // item: 'label',
+    },
+    {
+      label: 'lastName',
+      value: 'lastName',
+      // item: 'label',
+    },
+
+    {
+      label: 'Dernière modification',
+      value: 'dateDeModification',
     },
     {
       label: 'Status',
@@ -47,136 +77,138 @@ export class UtilisateursComponent {
       label: 'Créé par',
       value: 'createdBy',
     },
-    {
-      label: 'Dernière modification',
-      value: 'dateDeModification',
-    },
   ];
-  data: Utilisateur[] = [
-    {
-      id: '1',
-      username: 'Khalid Tissmi',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Active,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '2',
-      username: 'Mohamed Do',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Active,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '3',
-      username: 'Jhon from there',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Active,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '4',
-      username: 'Jhon from there',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Pending,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '5',
-      username: 'Jhon from there',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Active,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '6',
-      username: 'Jhon from there',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Inactive,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '7',
-      username: 'Jhon from there',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Inactive,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    {
-      id: '8',
-      username: 'Jhon from there',
-      email: 'email@gmail.com',
-      status: statusUtilisateur.Locked,
-      profile: {
-        id: '1',
-        label: 'Admin',
-      },
-      createdBy: 'Admin',
-      dateDeModification: new Date(),
-    },
-    // {
-    //   id: '9',
-    //   username: 'Jhon from there',
-    //   email: 'email@gmail.com',
-    //   status: statusUtilisateur.Pending,
-    //   profile: {
-    //     id: '1',
-    //     label: 'Admin',
-    //   },
-    //   createdBy: 'Admin',
-    //   dateDeModification: new Date(),
-    // },
-    // {
-    //   id: '10',
-    //   username: 'Jhon from there',
-    //   email: 'email@gmail.com',
-    //   status: statusUtilisateur.Locked,
-    //   profile: {
-    //     id: '1',
-    //     label: 'Admin',
-    //   },
-    //   createdBy: 'Admin',
-    //   dateDeModification: new Date(),
-    // },
-  ];
+  // data: Utilisateur[] = [
+  //   {
+  //     id: '1',
+  //     username: 'Khalid Tissmi',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Active,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '2',
+  //     username: 'Mohamed Do',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Active,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '3',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Active,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '4',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Pending,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '5',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Active,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '6',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Inactive,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '7',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Inactive,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '8',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Locked,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '9',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Pending,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  //   {
+  //     id: '10',
+  //     username: 'Jhon from there',
+  //     email: 'email@gmail.com',
+  //     status: statusUtilisateur.Locked,
+  //     profile: {
+  //       id: '1',
+  //       label: 'Administrateur',
+  //     },
+  //     createdBy: 'Administrateur',
+  //     dateDeModification: new Date(),
+  //   },
+  // ];
+
+  //
+
+  data = [];
+  constructor(public userStore: UsersStore, private service: UtilisateursService) {}
+
+  ngOnInit() {}
 
   // outputs emits
-
   takeFilterResponse($event: boolean) {
     if ($event) {
       alert('filtering');
@@ -196,5 +228,21 @@ export class UtilisateursComponent {
     if ($event.confirmed) {
       console.log($event.user);
     }
+  }
+
+  exporterUtilisateurs() {
+    this.service.exportUtilisateurs(this.userStore.filter()).subscribe({
+      next: (rsp: Blob) => {
+        const url = window.URL.createObjectURL(rsp);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'users.xlsx';
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 }

@@ -49,6 +49,7 @@
     }
     .buttons {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
     }
   }
@@ -204,8 +205,9 @@
 #email {
   font-size: 0.8rem;
   font-weight: 300;
+  color: rgb(129, 129, 129) !important;
 }
 #username {
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
   color: black;
 }

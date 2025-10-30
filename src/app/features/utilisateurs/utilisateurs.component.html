@@ -1,5 +1,5 @@
 <div class="container">
-    <!-- <div class="container-header-small">
+    <div class="container-header-small">
         <div class="container-header-text">
             <h1>Gestion des utilisateurs</h1>
             <p>Gérez vos utilisateurs</p>
@@ -7,10 +7,10 @@
         <div class="container-header-filter-container">
 
         </div>
-    </div> -->
+    </div>
 
     <div class="underneath-container">
-        <div class="container-header-small">
+        <!-- <div class="container-header-small">
             <div class="container-header-text">
                 <h1>Gestion des utilisateurs</h1>
                 <p>Gérez vos utilisateurs</p>
@@ -18,14 +18,14 @@
             <div class="container-header-filter-container">
 
             </div>
-        </div>
+        </div> -->
 
         <!-- <app-reusable-table [page]="'utilisateurs'" [size]="10" [totalElements]="2" [data]="data"
             [columns]="columns"></app-reusable-table> -->
-        <app-table-users (Ajouter)="takeAjouterResponse($event)" (Modifier)="takeModifierResponse($event)"
+        <app-table-users (exporterEmit)="exporterUtilisateurs()" [exporter]="true" [importer]="true"
+            (Ajouter)="takeAjouterResponse($event)" (Modifier)="takeModifierResponse($event)"
             (supprimer)="takeDeleteResponse($event)" (filter)="takeFilterResponse($event)" [modifier]="true"
-            [delete]="true" [ellipsis]="true" [icon]="'pi-spinner'" [page]="'utilisateur'" [size]="size"
-            [totalElements]="totalElements" [totalPages]="totalPages" [currentPage]="currentPage" [data]="data"
+            [delete]="true" [ellipsis]="true" [icon]="'pi-spinner'" [page]="'utilisateur'"
             [columns]="columns"></app-table-users>
     </div>
 </div>

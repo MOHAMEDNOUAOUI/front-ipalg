@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import {
-  PButtonComponent,
-  Severity,
-} from '../../shared/p-button/p-button.component';
+import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
 import {
   FormBuilder,
   FormGroup,
@@ -15,12 +12,7 @@ import { CostumeSelectComponent } from '../costume-select/costume-select.compone
 @Component({
   selector: 'app-utilisateur-create',
   standalone: true,
-  imports: [
-    PButtonComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    CostumeSelectComponent,
-  ],
+  imports: [PButtonComponent, FormsModule, ReactiveFormsModule, CostumeSelectComponent],
   templateUrl: './utilisateur-create.component.html',
   styleUrl: './utilisateur-create.component.scss',
 })

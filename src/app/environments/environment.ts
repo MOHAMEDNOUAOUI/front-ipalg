@@ -1,9 +1,9 @@
 import { Environment } from './env.interface';
 
-export const URI = 'http://192.168.100.179:9790';
+export const URI = 'http://localhost:9090';
 export const environment: Environment = {
   services: {
-    auth: URI + '/',
-    users: URI + '/',
+    auth: URI + '/api',
+    users: URI + '/api/users',
   },
 };

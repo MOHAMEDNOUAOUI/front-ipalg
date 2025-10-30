@@ -3,28 +3,27 @@
         <div class="table-header-left">
             <div class="search-container">
                 <i class="pi pi-search"></i>
-                <input type="text" placeholder="search..." name="" id="">
+                <input type="text" (input)="changeSearch($event)" placeholder="search..." name="" id="">
             </div>
         </div>
         <div class="table-header-right">
-            <!-- <div class="seperator"></div> -->
-            <div class="buttons">
-                <app-p-button [icon]="'pi-filter'" [severity]="severity.Secondary" [outline]="true" [rounded]="true"
-                    [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
-                <app-p-button [icon]="'pi-plus'" [severity]="severity.Dark" [outline]="false" [rounded]="true"
-                    [label]="'Ajouter '+page" (click)="AjouterClick()"></app-p-button>
 
+            <div class="buttons">
+                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Secondary" [outline]="true"
+                    [rounded]="true" [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
+
+                <div class="seperator"></div>
                 @if(exporter){
-                <app-p-button [icon]="'pi-download'" [severity]="severity.Success" [outline]="false" [rounded]="true"
-                    [label]="'Exporter'" (click)="ExporterClick()"></app-p-button>
+                <app-p-button title="exporter" [icon]="'pi-file-export'" [severity]="severity.Secondary"
+                    [outline]="true" [rounded]="true" [label]="'Exporter'" (click)="ExporterClick()"></app-p-button>
                 }
                 @if (importer) {
-                <app-p-button [icon]="'pi-upload'" [severity]="severity.Success" [outline]="true" [rounded]="true"
-                    [label]="'Importer'" (click)="ImporterClick()"></app-p-button>
+                <app-p-button title="importer" [icon]="'pi-upload'" [severity]="severity.Secondary" [outline]="true"
+                    [rounded]="true" [label]="'Importer'" (click)="ImporterClick()"></app-p-button>
                 }
-
-
-
+                <app-p-button [title]="'Ajouter ' + page" [icon]="'pi-plus'" [severity]="severity.Dark"
+                    [outline]="false" [rounded]="true" [label]="'Ajouter '+page"
+                    (click)="AjouterClick()"></app-p-button>
             </div>
         </div>
     </div>
@@ -35,6 +34,7 @@
                 <tr>
                     <!-- <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th> -->
                     <th style="width: 2rem; white-space: nowrap;text-align: center;"></th>
+                    <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th>
                     @for (column of columns; track $index) {
                     <!-- @if (column.label.includes('Status') || column.label.includes('Created by') ||
                     column.label.includes('Nom d\'utilisateur')) {
@@ -54,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (row of data; track $index) {
+                @for (row of this.usersStore.users(); track $index) {
                 <tr [class.active]="true">
                     <!-- <td style="width: 2rem; white-space: nowrap;text-align: center;">{{$index+1}}</td> -->
                     <td style="white-space: nowrap;text-align: center;">
@@ -65,14 +65,21 @@
 
 
 
-
+                    <td style="white-space: nowrap;text-align: center;">
+                        #{{$index+1}}
+                    </td>
 
                     @for (column of columns; track $index) {
+
                     <td>
 
-                        @if (column.label === 'Utilisateur') {
-                        <div [style.font-weight]="column.bold ? '500' : ''" id="username">{{ row.username }}</div>
-                        <div id="email" class="text-muted" style="font-size: 0.9em;">{{ row.email }}</div>
+                        @if (isArray(column.value)) {
+                        <!-- <div [style.font-weight]="column.bold ? '500' : ''" id="username">{{ row.username }}</div>
+                        <div id="email" class="text-muted" style="font-size: 0.9em;">{{ row.email }}</div> -->
+                        @for (values of column.value; track $index) {
+                        <div [id]="values.value" id="email" [style.font-weight]="values.bold ? '500' : ''"
+                            class="text-muted" style="font-size: 0.9em;">{{ getValue(values , row) }}</div>
+                        }
                         }@else if(column.label==='Status'){
                         @if (statusUtilisateur.Active == row.status || statusUtilisateur.Inactive==row.status) {
                         <p class="utilisateur-status">
@@ -89,7 +96,7 @@
                         <i title="Locked Account" class="pi pi-lock status-icons" style="text-align: center;"></i>
                         }
                         }@else if(column.value.includes('date')){
-                        {{ getValue(column, row) | date:'MMMM dd, yyyy'}}
+                        {{ getValue(column, row) | date:'dd MMMM, hh:mm'}}
                         }@else {
                         {{ getValue(column, row)}}
                         }
@@ -158,9 +165,13 @@
     </div>
 
     <div class="table-footer">
-        <p class="showing"><span>Affichage de {{size}}</span> sur {{totalElements}} {{page}}</p>
-        <app-pagination (pageChange)="changePage($event)" [currentPage]="currentPage"
-            [totalPages]="totalPages"></app-pagination>
+        <p class="showing"><span>Affichage de {{this.usersStore.numberOfElements()}}</span> sur
+            {{this.usersStore.totalElements()}}
+        </p>
+        @if (this.usersStore.totalPages() > 1) {
+        <app-pagination (pageChange)="changePage($event)" [currentPage]="this.usersStore.filter().page"
+            [totalPages]="this.usersStore.totalPages()"></app-pagination>
+        }
         @if (activeSize) {
         <div class="size">
             <label for="">Show per page:</label>
