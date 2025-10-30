@@ -16,7 +16,7 @@ FROM nginx:alpine
 RUN apk add --no-cache gettext
 
 # Copy built Angular files (minified + obfuscated)
-COPY --from=builder /app/dist/kockpit/browser /usr/share/nginx/html
+COPY --from=builder /app/dist/ipalg/browser /usr/share/nginx/html
 
 # Copy the production build files into the Nginx container
 COPY nginx.conf /etc/nginx/conf.d/default.conf
