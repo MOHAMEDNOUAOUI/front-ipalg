@@ -1,4 +1,4 @@
-FROM docker.io/library/node:18-alpine AS builder
+FROM docker.io/library/node:latest AS builder
 WORKDIR /app
 
 # Copy package.json and install dependencies
