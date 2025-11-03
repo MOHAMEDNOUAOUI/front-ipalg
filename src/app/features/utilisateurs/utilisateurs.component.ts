@@ -50,32 +50,57 @@ export class UtilisateursComponent {
       ],
     },
     {
-      label: 'Profile',
+      label: "Nom d'utilisateur",
       value: 'userProfile',
       item: 'name',
+      active: true,
     },
     {
-      label: 'First Name',
+      label: 'Prenom',
       value: 'firstName',
+      active: true,
       // item: 'label',
     },
     {
-      label: 'lastName',
+      label: 'Nom',
       value: 'lastName',
+      active: true,
       // item: 'label',
     },
-
     {
-      label: 'Dernière modification',
-      value: 'dateDeModification',
+      label: 'Permissions',
+      value: 'permissionsCount',
+      active: false,
     },
     {
       label: 'Status',
       value: 'status',
+      active: true,
     },
+
+    {
+      label: 'Date de Creation',
+      value: 'dateCreation',
+      type: 'DATE',
+      active: true,
+    },
+    {
+      label: 'Dernière modification',
+      value: 'dateUpdate',
+      type: 'DATE',
+      active: true,
+    },
+    {
+      label: 'latest login',
+      value: 'lastLogin',
+      type: 'DATE',
+      active: true,
+    },
+
     {
       label: 'Créé par',
       value: 'createdBy',
+      active: false,
     },
   ];
   // data: Utilisateur[] = [

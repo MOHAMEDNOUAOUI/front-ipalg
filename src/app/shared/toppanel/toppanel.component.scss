@@ -1,10 +1,9 @@
 .container {
-  height: 3rem;
   display: flex;
   align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
   // background-color: white;
   // box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 3px;
 
@@ -53,7 +52,7 @@
       position: relative;
 
       &::after {
-        content: "";
+        content: '';
         width: 0.5rem;
         height: 0.5rem;
         background-color: var(--color-primary);

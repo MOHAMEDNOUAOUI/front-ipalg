@@ -1,10 +1,10 @@
 import { Profile } from './Profile';
 
 export enum statusUtilisateur {
-  Active = 'Active',
-  Inactive = 'Inactive',
-  Locked = 'Locked',
-  Pending = 'Pending',
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+  Locked = 'LOCKED',
+  Pending = 'PENDING',
 }
 export enum sourceUtilisateur {
   LDAP = 'LDAP',
@@ -24,7 +24,18 @@ export interface Utilisateur {
   roles?: string[]; // From Keycloak groups or roles
   groups?: string[]; // Optional: LDAP groups / Keycloak groups
   createdBy?: string; // Who created the user in your system
-  dateDeModification?: Date; // Last local change
+  dateDeModification?: Date;
+  dateCreation?: Date;
+  dateUpdate?: Date;
+  lastLogin?: Date; // Last local change
   createdAt?: Date; // When created (in your system)
-  source?: sourceUtilisateur; // Helps trace origin of user
+  source?: sourceUtilisateur;
+  userProfile?: UtilisateurProfile;
+  permissionsCount?: number; // Helps trace origin of user
+}
+
+export interface UtilisateurProfile {
+  id: string;
+  name: string;
+  description: string;
 }

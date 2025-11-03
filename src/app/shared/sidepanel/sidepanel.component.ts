@@ -1,12 +1,7 @@
 import { tab } from './../../interfaces/sidepanel-tabs';
 import { Component } from '@angular/core';
 import { sidePanel_Tabs } from '../../interfaces/sidepanel-tabs';
-import {
-  Router,
-  NavigationEnd,
-  RouterLinkActive,
-  RouterModule,
-} from '@angular/router';
+import { Router, NavigationEnd, RouterLinkActive, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { cssArrowsExchangeAltV } from '@ng-icons/css.gg';
@@ -160,21 +155,15 @@ export class SidepanelComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    // this.tabs.forEach((tab: sidePanel_Tabs) => {
-    //   tab.active = tab.links.some((link) =>
-    //     this.router.url.includes(link.route)
-    //   );
-    // });
+    this.tabs.forEach((tab: sidePanel_Tabs) => {
+      tab.active = tab.links.some((link) => this.router.url.includes(link.route));
+    });
   }
 
   opentab(tab: sidePanel_Tabs) {
-    const existingTab = this.tabs.find(
-      (tabb: sidePanel_Tabs) => tabb.header == tab.header
-    );
+    const existingTab = this.tabs.find((tabb: sidePanel_Tabs) => tabb.header == tab.header);
     this.tabs.map((tabb: sidePanel_Tabs) =>
-      tabb.header == tab.header
-        ? (tabb.active = !tabb.active)
-        : (tabb.active = false)
+      tabb.header == tab.header ? (tabb.active = !tabb.active) : (tabb.active = false)
     );
     // console.log();
   }

@@ -2,11 +2,17 @@
 @import '../../../styles/typography';
 
 .container {
+  width: $sidepanel-width;
+  min-height: $sidepanel-height;
+  max-height: $sidepanel-height;
+  position: fixed;
+  left: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
-  //   border-right: 2px solid rgba(162, 162, 252, 0.377);
+  // border-right: 2px solid rgba(162, 162, 252, 0.377);
   // box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-  position: relative;
+  // background-color: rgb(255, 255, 255);
 
   .headers-links {
     overflow-y: auto;
@@ -25,7 +31,7 @@
 
     .groupe-header {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       padding-left: 1rem;
       padding-right: 1rem;
       cursor: pointer;
@@ -34,7 +40,7 @@
 
       i {
         color: rgb(165, 165, 165);
-        font-size: 0.8rem;
+        font-size: 1rem;
         transition: 300ms ease-in-out;
       }
 
@@ -44,8 +50,8 @@
       //   transition: 300ms ease-in-out;
       // }
       .header {
-        color: rgb(44, 44, 44);
-        font-size: 0.7rem;
+        color: rgb(136, 136, 136);
+        font-size: 0.8rem;
         letter-spacing: 1px;
         text-transform: uppercase;
         font-weight: 500;
@@ -57,11 +63,11 @@
     .routes-holder {
       overflow: hidden;
       max-height: 0;
-      transition: max-height 0.4s ease-in-out, padding 0.4s ease;
+      transition: 0.4s ease-in-out;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      border-radius: 5px;
+      // gap: 0.8rem;
+      // border-radius: 5px;
       padding: 0 0;
       position: relative;
 
@@ -78,6 +84,7 @@
 
       .link {
         position: relative;
+        padding: 0.4rem;
         padding-left: 1.5rem; // space for dot
         display: flex;
         align-items: center;
@@ -100,14 +107,14 @@
 
         i {
           font-size: 0.9rem;
-          color: rgb(148, 148, 148);
+          color: black;
         }
 
         h5 {
           font-size: 0.9rem;
           font-weight: 400;
           text-transform: capitalize;
-          color: rgb(148, 148, 148);
+          color: black;
           font-family: 'Inter', sans-serif;
         }
 
@@ -156,7 +163,7 @@
   &::before {
     content: '';
     position: absolute;
-    width: 3px;
+    width: 4px;
     height: 100%;
     left: 0;
     border-top-right-radius: 10px;
@@ -166,17 +173,33 @@
 }
 
 .expanded {
-  max-height: 500px !important;
   padding: 0.5rem 0;
+  transition: 300ms ease-in-out;
+  animation: slide 1s ease-in-out forwards;
+}
+@keyframes slide {
+  0% {
+    max-height: 0;
+  }
+  100% {
+    max-height: 500px;
+  }
 }
 
+.links-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .header-top {
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1rem;
   justify-content: space-between;
   align-items: center;
 
@@ -192,22 +215,23 @@
   }
 
   .circle {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     background-color: var(--color-primary);
     border-radius: 100%;
   }
 
   .informations {
     h3 {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
     }
     p {
-      font-size: 0.8rem;
+      font-size: 0.6rem;
     }
   }
 
   #cssArrowsExchangeAltV {
     font-size: 1.5rem;
+    color: $color-primary;
   }
 }

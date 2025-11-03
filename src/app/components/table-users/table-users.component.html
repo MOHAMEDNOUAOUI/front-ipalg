@@ -9,13 +9,13 @@
         <div class="table-header-right">
 
             <div class="buttons">
-                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Secondary" [outline]="true"
-                    [rounded]="true" [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
+
 
                 <div class="seperator"></div>
                 @if(exporter){
                 <app-p-button title="exporter" [icon]="'pi-file-export'" [severity]="severity.Secondary"
-                    [outline]="true" [rounded]="true" [label]="'Exporter'" (click)="ExporterClick()"></app-p-button>
+                    [outline]="true" [rounded]="true" [label]="'Télécharger Excel'"
+                    (click)="ExporterClick()"></app-p-button>
                 }
                 @if (importer) {
                 <app-p-button title="importer" [icon]="'pi-upload'" [severity]="severity.Secondary" [outline]="true"
@@ -24,6 +24,9 @@
                 <app-p-button [title]="'Ajouter ' + page" [icon]="'pi-plus'" [severity]="severity.Dark"
                     [outline]="false" [rounded]="true" [label]="'Ajouter '+page"
                     (click)="AjouterClick()"></app-p-button>
+
+                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Help" [outline]="false"
+                    [rounded]="true" [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
             </div>
         </div>
     </div>
@@ -43,11 +46,13 @@
                     }@else {
                     <th style="padding-left: 0.5rem;" scope="col">{{column.label}}</th>
                     } -->
+                    @if (column.active) {
                     @if (['status'].includes(column.value)) {
                     <th scope="col" style="width: 1px;white-space: nowrap;">{{column.label}}</th>
                     }@else{
                     <th scope="col">{{column.label}}</th>
 
+                    }
                     }
                     }
                     <th></th>
@@ -70,7 +75,7 @@
                     </td>
 
                     @for (column of columns; track $index) {
-
+                    @if(column.active){
                     <td>
 
                         @if (isArray(column.value)) {
@@ -95,13 +100,14 @@
                         }@else {
                         <i title="Locked Account" class="pi pi-lock status-icons" style="text-align: center;"></i>
                         }
-                        }@else if(column.value.includes('date')){
+                        }@else if(column.type && column.type=="DATE"){
                         {{ getValue(column, row) | date:'dd MMMM, hh:mm'}}
                         }@else {
                         {{ getValue(column, row)}}
                         }
 
                     </td>
+                    }
                     }
 
 
@@ -116,7 +122,7 @@
                         <i title="Suprimer" (click)="DeleteClick(row)" class="pi pi-trash trash-button"
                             (click)="openPopUp(row , $index ,$event)"></i>
                         }
-                        @if (!ellipsis && modifier) {
+                        @if (modifier) {
                         <i class="pi pi-pencil pencil-button" title="Modifier" (click)="ModifierClick(row)"></i>
                         }
                         @if (ellipsis && (modifier || delete)) {
@@ -146,12 +152,12 @@
 
                 @if (popupVisible) {
                 <div [style.top.px]="popupTop" [style.right.px]="popupRight" class="menu">
-                    @if (modifier) {
+
                     <button class="menu-btn" (click)="ModifierClick()">
-                        <i class="pi pi-pencil"></i>
-                        <span>Modifier</span>
+                        <i class="pi pi-user"></i>
+                        <span>Voir Profil</span>
                     </button>
-                    }
+
                     @if (delete) {
                     <button class="menu-btn menu-btn-trash" (click)="DeleteClick()">
                         <i class="pi pi-trash"></i>
