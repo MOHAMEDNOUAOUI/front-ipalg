@@ -39,6 +39,7 @@ export class UtilisateursComponent {
     // },
     {
       label: 'Utilisateur',
+      active: true,
       value: [
         {
           value: 'username',
@@ -51,7 +52,15 @@ export class UtilisateursComponent {
     },
     {
       label: "Nom d'utilisateur",
-      value: 'userProfile',
+      value: [
+        {
+          value: 'userProfile',
+          item: 'name',
+        },
+        {
+          value: 'email',
+        },
+      ],
       item: 'name',
       active: true,
     },

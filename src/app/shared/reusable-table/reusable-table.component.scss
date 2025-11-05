@@ -7,9 +7,10 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  background-color: white;
+  gap: 1rem;
+  // background-color: white;
   border-radius: 10px;
+  // padding: 1rem;
 }
 
 .table-header-first {
@@ -19,6 +20,7 @@
   align-items: center;
 
   .table-header-right {
+    width: 100%;
     height: fit-content;
     display: flex;
     gap: 0.5rem;
@@ -34,6 +36,7 @@
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #f5f5f5;
   height: fit-content;
+  gap: 1rem;
 
   .table-header-right {
     display: flex;
@@ -49,6 +52,7 @@
     }
     .buttons {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
     }
   }
@@ -65,7 +69,8 @@
 }
 .table-body {
   width: 100%;
-  height: auto;
+  // height: 20%;
+  // height: fit-content;
   border-radius: 10px;
   // flex: 1;
   overflow-y: auto;
@@ -151,15 +156,15 @@
 
 .empty {
   td {
-    height: 300px;
+    height: 55vh;
     padding: 2rem;
     text-align: center;
     vertical-align: middle;
-    background-color: #f9f9f9;
+    background-color: transparent !important;
     // border: 1px dashed #ccc;
 
     .empty-content {
-      height: 600px;
+      height: auto;
       max-height: 500px;
       max-width: 400px; /* helps text wrap nicely */
       margin: 0 auto;
@@ -203,8 +208,12 @@
 
 #email {
   font-size: 0.8rem;
+  font-weight: 300;
+  color: rgb(129, 129, 129) !important;
 }
 #username {
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
   color: black;
 }
+
+// menu modification

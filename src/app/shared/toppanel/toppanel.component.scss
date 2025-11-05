@@ -1,11 +1,21 @@
 .container {
+  width: 100%;
+  height: fit-content;
+  background-color: red;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
+  // position: sticky;
+  // top: 0;
+  position: absolute;
   top: 0;
+  left: 0;
   // background-color: white;
-  // box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 3px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 3px;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 2px solid rgba(226, 226, 248, 0.377);
 
   .routes {
     display: flex;

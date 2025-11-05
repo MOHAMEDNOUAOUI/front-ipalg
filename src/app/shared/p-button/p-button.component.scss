@@ -13,7 +13,7 @@
 /* Danger */
 
 .p-button {
-  --button-color: #06adb9;
+  --button-color: var(--color-primary);
   padding: 0.5rem 0.8rem;
   border: none;
   color: white;
@@ -61,8 +61,8 @@
   --border-color: #dc3545 !important;
 }
 .p-button-dark {
-  --button-color: #033d6d !important;
-  --border-color: #033d6d !important;
+  --button-color: var(--color-secondary) !important;
+  --border-color: var(--color-secondary) !important;
 }
 
 .p-button:hover {

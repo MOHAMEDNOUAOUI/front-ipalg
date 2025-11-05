@@ -155,9 +155,9 @@ export class SidepanelComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.tabs.forEach((tab: sidePanel_Tabs) => {
-      tab.active = tab.links.some((link) => this.router.url.includes(link.route));
-    });
+    // this.tabs.forEach((tab: sidePanel_Tabs) => {
+    //   tab.active = tab.links.some((link) => this.router.url.includes(link.route));
+    // });
   }
 
   opentab(tab: sidePanel_Tabs) {

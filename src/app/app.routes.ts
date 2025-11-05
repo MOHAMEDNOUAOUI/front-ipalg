@@ -17,6 +17,7 @@ export const routes: Routes = [
           import('./features/dashboard/dashboard.component').then(
             (dashboard) => dashboard.DashboardComponent
           ),
+        data:['DASHBOARD']
       },
       {
         path: 'inventaire',
