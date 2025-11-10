@@ -7,6 +7,7 @@ import { step } from '../../../../interfaces/sidepanel-tabs';
 import { TableUsersComponent } from '../../../../components/table-users/table-users.component';
 import { ReusableTableComponent } from '../../../../shared/reusable-table/reusable-table.component';
 import { PaginationComponent } from "../../../../shared/pagination/pagination.component";
+import { ProfileStore } from '../../../../store/profile.store';
 
 @Component({
   selector: 'app-profils',
@@ -40,6 +41,11 @@ export class ProfilsComponent {
   size = 10;
   totalElements = 2;
   columns = [
+    {
+      label: 'Username',
+      value: 'username',
+      active: true,
+    },
     {
       label: 'Profile',
       value: 'label',
@@ -86,4 +92,6 @@ export class ProfilsComponent {
       dateDeModification: new Date(),
     },
   ];
+
+  constructor(public profileStore: ProfileStore) {}
 }

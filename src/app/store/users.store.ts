@@ -16,7 +16,7 @@ import { UtilisateursService } from '../services/UtilisateursService';
 import { BackEndResponse, PageableResponse } from '../interfaces/PageableResponse';
 
 type UserState = {
-  users: Utilisateur[];
+  data: Utilisateur[];
   totalPages: number;
   totalElements: number;
   message: string;
@@ -28,9 +28,10 @@ type UserState = {
     username: string;
   };
   numberOfElements: number;
+  selectedUtilisateur: Utilisateur | null;
 };
 const initialState: UserState = {
-  users: [],
+  data: [],
   totalPages: 0,
   totalElements: 0,
   message: '',
@@ -42,6 +43,7 @@ const initialState: UserState = {
     username: '',
   },
   numberOfElements: 0,
+  selectedUtilisateur: null,
 };
 
 @Injectable({ providedIn: 'root' })
@@ -50,7 +52,7 @@ export class UsersStore extends signalStore(
   withState(initialState),
   withMethods((store, utilisateirService = inject(UtilisateursService)) => ({
     setUsers: (response: Utilisateur[]) => {
-      patchState(store, { users: response });
+      patchState(store, { data: response });
     },
 
     updateFilter: (filter: Partial<UserState['filter']>) => {
@@ -70,7 +72,7 @@ export class UsersStore extends signalStore(
           return utilisateirService.fetchAllUtilisateurs({ page, size, search, username }).pipe(
             tap((response: BackEndResponse<Utilisateur>) => {
               patchState(store, {
-                users: response.data.content,
+                data: response.data.content,
                 totalElements: response.data.totalElements,
                 totalPages: response.data.totalPages,
                 message: response.message,

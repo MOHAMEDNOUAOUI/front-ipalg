@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './table-users.component.scss',
 })
 export class TableUsersComponent<T> {
+  @Input() store: any;
   severity = Severity;
   @Input() columns: any[] = [];
   @Input() page: string = '';
@@ -79,6 +80,10 @@ export class TableUsersComponent<T> {
     },
   ];
 
+  ngOnInit() {
+    console.log(this.store.data());
+  }
+
   edit() {}
 
   getValue(column: any, row: any) {
@@ -129,6 +134,7 @@ export class TableUsersComponent<T> {
   DeleteClick(User?: Utilisateur) {
     let user = User ? User : this.selectedRow;
     this.supprimer.emit({ confirmed: true, user });
+    this.store.Supprimer();
   }
   AjouterClick() {
     this.Ajouter.emit(true);
@@ -136,6 +142,7 @@ export class TableUsersComponent<T> {
   ModifierClick(User?: Utilisateur) {
     let user = User ? User : this.selectedRow;
     this.Modifier.emit({ confirmed: true, user });
+    this.store.selectedUtilisateur = user;
   }
   ExporterClick() {
     this.exporterEmit.emit(true);

@@ -15,7 +15,7 @@ $color-danger: #f44336;
 $color-text: #212121;
 $color-paragraph: #747474;
 $color-bg: #f9f9f9;
-$color-layout: #f8fbff;
+$color-layout: #f5f7f9;
 
 // Spacing
 $spacing-xs: 4px;
@@ -34,7 +34,11 @@ $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
 //panel
-$sidepanel-width: 250px;
+$toppanel-height:50px;
+$sidepanel-width: 260px;
 $sidepanel-height: 100vh;
 $layout-width: calc(100% - #{$sidepanel-width});
 $layout-height: 100vh;
+
+$sidepanel-color:#f5f7f9
+// $layout-height: calc(100vh - #{$toppanel-height});

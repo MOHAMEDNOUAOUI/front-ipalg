@@ -8,7 +8,7 @@
 
         </div>
     </div>
-    <app-table-users (exporterEmit)="exporterUtilisateurs()" [exporter]="true" [importer]="true"
+    <app-table-users [store]="userStore" (exporterEmit)="exporterUtilisateurs()" [exporter]="true" [importer]="true"
         (Ajouter)="takeAjouterResponse($event)" (Modifier)="takeModifierResponse($event)"
         (supprimer)="takeDeleteResponse($event)" (filter)="takeFilterResponse($event)" [modifier]="true" [delete]="true"
         [ellipsis]="true" [icon]="'pi-spinner'" [page]="'utilisateur'" [columns]="columns"></app-table-users>
