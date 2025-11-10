@@ -12,7 +12,7 @@ import { Router, RouterModule } from '@angular/router';
   viewProviders: [],
 })
 export class SecondSidePanel {
-  tabs: sidePanel_Tabs[] = [
+  tabs: any[] = [
     {
       header: 'Menu',
       active: true,
@@ -51,6 +51,18 @@ export class SecondSidePanel {
           label: 'Environnement',
           icon: 'tablerCloverFill',
           route: 'environement',
+          links: [
+            {
+              label: 'Accès Management',
+              icon: 'tablerCloverFill',
+              route: 'environement/profils',
+            },
+            {
+              label: 'Categories Management',
+              icon: 'tablerCloverFill',
+              route: 'environement/categories',
+            },
+          ],
         },
         {
           label: 'Utilisateurs',
