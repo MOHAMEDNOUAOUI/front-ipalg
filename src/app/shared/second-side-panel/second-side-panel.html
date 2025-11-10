@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="logo">
+        <div class="inside-logo">
+            <!-- <i class="pi pi-home"></i> -->
+            <h2>IPALG</h2>
+        </div>
+        <i class="icon-holder pi pi-angle-double-left cursor"></i>
+        <!-- <p>Gestion des immobilisations</p> -->
+    </div>
+    <div class="seperator"></div>
+
+    <div class="routing-container">
+        <!-- @for (item of tabs; track $index) {
+        <div class="groupe">
+            <h4 (click)="opentab(item)">{{item.header}}</h4>
+            @if (item.active) {
+            <div class="links">
+                @for (rt of item.links; track $index) {
+                <div class="link">
+                    <i class="pi" [ngClass]="rt.icon ? rt.icon : ''"> </i>
+
+                    <p>{{rt.label}}</p>
+                </div>
+                }
+            </div>
+            }
+        </div>
+        } -->
+        <div class="links groupe">
+            @for (item of tabs; track $index) {
+            <div class="link" [class.headerActive]="item.active" [routerLinkActive]="'active'" (click)="opentab(item)">
+                <ng-icon [name]="item.icon"></ng-icon>
+                <p>{{item.header}}</p>
+            </div>
+            <div class="linkstab">
+                @if (item.active) {
+                @for (link of item.links; track $index) {
+                <div class="sub-link" [routerLink]="link.route" [routerLinkActive]="'active'"
+                    [routerLinkActiveOptions]="{ exact : false }">
+                    <ng-icon [name]="link.icon"></ng-icon>
+                    <p>{{link.label}}</p>
+                </div>
+                }
+                }
+            </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="links">
+        <div class="link">
+            <ng-icon name="tablerSettingsCode" />
+            <p>Settings</p>
+        </div>
+        <div class="link">
+            <ng-icon name="tablerBellRingingFill" />
+            <p>Notifications</p>
+            <div class="circle">
+                <span>15</span>
+            </div>
+        </div>
+        <div class="link">
+            <ng-icon name="tablerProgressHelp" />
+            <p>Help Center</p>
+        </div>
+        <!-- <div class="link">
+            <ng-icon name="ionLogOutOutline" />
+            <p>Log out</p>
+        </div> -->
+    </div>
+
+    <div class="seperator"></div>
+
+    <!-- profile -->
+    <div class="panel-footer">
+        <div class="userprofile">
+            <div class="leftside">
+                <div class="cirlce"></div>
+                <div class="informations">
+                    <p>Mohamed Nouaoui</p>
+                    <span>Administrateur</span>
+                </div>
+            </div>
+
+            <ng-icon name="iconoirArrowSeparateVertical"></ng-icon>
+        </div>
+        <p id="">@ 2025 Sequence Inc.</p>
+    </div>
+</div>

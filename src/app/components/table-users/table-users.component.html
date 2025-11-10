@@ -25,7 +25,7 @@
                     [outline]="false" [rounded]="true" [label]="'Ajouter '+page"
                     (click)="AjouterClick()"></app-p-button>
 
-                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Help" [outline]="false"
+                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Primary" [outline]="false"
                     [rounded]="true" [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (row of this.usersStore.users(); track $index) {
+                @for (row of this.store.data(); track $index) {
                 <tr [class.active]="true">
                     <!-- <td style="width: 2rem; white-space: nowrap;text-align: center;">{{$index+1}}</td> -->
                     <td style="white-space: nowrap;text-align: center;">
