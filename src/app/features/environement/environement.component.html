@@ -1,16 +1,42 @@
 <div class="container">
-    <div class="container-header-small">
-        <div class="container-header-text">
-            <h1>Accés Management Settings</h1>
-            <p>Manager profils, permissions</p>
-        </div>
+  <div class="container-header-small">
+   @for (item of navigationList; track $index) {
+    @if (router.url.includes(item.route)) {
+       <div class="container-header-text">
+      <h1>{{item.text.h2}}</h1>
+      <p>{{item.text.p}}</p>
     </div>
+    }
+   }
+  </div>
 
+  <main>
+    <app-left-side-navigation-panel
+      [navigationList]="navigationList"
+    ></app-left-side-navigation-panel>
+    <section class="mainArea">
+      <router-outlet></router-outlet>
+    </section>
 
-    <main>
-        <app-left-side-navigation-panel [navigationList]="navigationList"></app-left-side-navigation-panel>
-        <section class="mainArea">
-            <router-outlet></router-outlet>
-        </section>
-    </main>
+   
+  </main>
+   <div class="table-footer">
+      <p class="showing">
+        <span>Affichage de {{ 1 }}</span> sur {{ 7 }} {{ 1 }}
+      </p>
+      <app-pagination [currentPage]="0" [totalPages]="10"></app-pagination>
+    
+
+      <!-- @if (true) {
+      <div class="size">
+        <label for="">Show per page:</label>
+        <select class="size">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+      } -->
+    </div>
 </div>

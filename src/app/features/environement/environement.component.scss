@@ -19,3 +19,21 @@ main {
   width: 100%;
   overflow-y: auto;
 }
+
+.table-footer {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+
+  .showing {
+    font-size: 0.8rem;
+    span {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+  }
+}

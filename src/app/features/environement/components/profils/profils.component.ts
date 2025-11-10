@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { step } from '../../../../interfaces/sidepanel-tabs';
 import { TableUsersComponent } from '../../../../components/table-users/table-users.component';
 import { ReusableTableComponent } from '../../../../shared/reusable-table/reusable-table.component';
+import { PaginationComponent } from "../../../../shared/pagination/pagination.component";
 
 @Component({
   selector: 'app-profils',
@@ -17,7 +18,8 @@ import { ReusableTableComponent } from '../../../../shared/reusable-table/reusab
     RouterModule,
     TableUsersComponent,
     ReusableTableComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './profils.component.html',
   styleUrl: './profils.component.scss',
 })

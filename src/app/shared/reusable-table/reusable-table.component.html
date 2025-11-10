@@ -1,177 +1,201 @@
 <div class="container">
-    <div class="table-header">
-        <div class="table-header-left">
-            <div class="search-container">
-                <i class="pi pi-search"></i>
-                <input type="text" placeholder="search..." name="" id="">
-            </div>
-        </div>
-        <div class="table-header-right">
-            <!-- <div class="seperator"></div> -->
-            <div class="buttons">
-                <app-p-button [icon]="'pi-filter'" [severity]="severity.Secondary" [outline]="true" [rounded]="true"
-                    [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
-                <app-p-button [icon]="'pi-plus'" [severity]="severity.Dark" [outline]="false" [rounded]="true"
-                    [label]="'Ajouter '+page" (click)="AjouterClick()"></app-p-button>
-
-                @if(exporter){
-                <app-p-button [icon]="'pi-download'" [severity]="severity.Success" [outline]="false" [rounded]="true"
-                    [label]="'Exporter'" (click)="ExporterClick()"></app-p-button>
-                }
-                @if (importer) {
-                <app-p-button [icon]="'pi-upload'" [severity]="severity.Success" [outline]="true" [rounded]="true"
-                    [label]="'Importer'" (click)="ImporterClick()"></app-p-button>
-                }
-
-
-
-            </div>
-        </div>
+  <div class="table-header">
+    <div class="table-header-left">
+      <div class="search-container">
+        <i class="pi pi-search"></i>
+        <input type="text" placeholder="search..." name="" id="" />
+      </div>
     </div>
+    <div class="table-header-right">
+      <!-- <div class="seperator"></div> -->
+      <div class="buttons">
+        <app-p-button
+          [icon]="'pi-filter'"
+          [severity]="severity.Secondary"
+          [outline]="true"
+          [rounded]="true"
+          [label]="'Filtrer'"
+          (click)="FilterClick()"
+        ></app-p-button>
+        <app-p-button
+          [icon]="'pi-plus'"
+          [severity]="severity.Dark"
+          [outline]="false"
+          [rounded]="true"
+          [label]="'Ajouter ' + page"
+          (click)="AjouterClick()"
+        ></app-p-button>
 
-    <div class="table-body" [style.max-height]="maxHeight">
-        <table>
-            <thead>
-                <tr>
-                    <!-- <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th> -->
-                    <th style="width: 2rem; white-space: nowrap;text-align: center;"></th>
-                    @for (column of columns; track $index) {
-                    <!-- @if (column.label.includes('Status') || column.label.includes('Created by') ||
+        @if(exporter){
+        <app-p-button
+          [icon]="'pi-download'"
+          [severity]="severity.Success"
+          [outline]="false"
+          [rounded]="true"
+          [label]="'Exporter'"
+          (click)="ExporterClick()"
+        ></app-p-button>
+        } @if (importer) {
+        <app-p-button
+          [icon]="'pi-upload'"
+          [severity]="severity.Success"
+          [outline]="true"
+          [rounded]="true"
+          [label]="'Importer'"
+          (click)="ImporterClick()"
+        ></app-p-button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="table-body" [style.max-height]="maxHeight">
+    <table>
+      <thead>
+        <tr>
+          <!-- <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th> -->
+          <th style="width: 2rem; white-space: nowrap; text-align: center"></th>
+          @for (column of columns; track $index) {
+          <!-- @if (column.label.includes('Status') || column.label.includes('Created by') ||
                     column.label.includes('Nom d\'utilisateur')) {
                     <th style="padding-left: 0.5rem;width: 1%; white-space: nowrap;text-align: left;" scope="col">
                         {{column.label}}</th>
                     }@else {
                     <th style="padding-left: 0.5rem;" scope="col">{{column.label}}</th>
                     } -->
-                    <th style="padding-left: 0.5rem;" scope="col">{{column.label}}</th>
-                    }
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (row of data; track $index) {
-                <tr [class.active]="true">
-                    <!-- <td style="width: 2rem; white-space: nowrap;text-align: center;">{{$index+1}}</td> -->
-                    <td style="white-space: nowrap;text-align: center;">
-                        <!-- <label class="checkbox"><input type="checkbox" class="checkbox-input" /><span
+          <th style="padding-left: 0.5rem" scope="col">{{ column.label }}</th>
+          }
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of data; track $index) {
+        <tr [class.active]="true">
+          <!-- <td style="width: 2rem; white-space: nowrap;text-align: center;">{{$index+1}}</td> -->
+          <td style="white-space: nowrap; text-align: center">
+            <!-- <label class="checkbox"><input type="checkbox" class="checkbox-input" /><span
                                 class="checkbox-label"></span></label> -->
-                        <input class="checkbox" type="checkbox">
-                    </td>
-                    @for (column of columns; track $index) {
-                    @if ([ 'date','status','createdBy'].includes(column.value)) {
-                    <td [style.text-align]="column.value.includes('status') ? 'center':''" [style.font-weight]="column.bold ? '500' : '
-                    '"
-                        style="padding-left: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;width: 1%;">
-                        @if (page.includes('utilisateur') && column.value.includes('status')) {
-                        @if (statusUtilisateur.Active == row.status || statusUtilisateur.Inactive==row.status) {
-                        <p class="utilisateur-status">
-                            <label class="switch"><input [checked]="getValue(column , row) == statusUtilisateur.Active"
-                                    type="checkbox" class="switch-input" /><span class="switch-label"></span></label>
-                            <!-- <span class="dot" [class.active]="getValue(column.value , row)=='Active'"
+            <input class="checkbox" type="checkbox" />
+          </td>
+          @for (column of columns; track $index) { @if ([
+          'date','status','createdBy'].includes(column.value)) {
+          <td
+            [style.text-align]="column.value.includes('status') ? 'center' : ''"
+            [style.font-weight]="
+              column.bold
+                ? '500'
+                : '
+                    '
+            "
+            style="
+              padding-left: 0.5rem;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              width: 1%;
+            "
+          >
+            @if (page.includes('utilisateur') && column.value.includes('status')) { @if
+            (statusUtilisateur.Active == row.status || statusUtilisateur.Inactive==row.status) {
+            <p class="utilisateur-status">
+              <label class="switch"
+                ><input
+                  [checked]="getValue(column, row) == statusUtilisateur.Active"
+                  type="checkbox"
+                  class="switch-input" /><span class="switch-label"></span
+              ></label>
+              <!-- <span class="dot" [class.active]="getValue(column.value , row)=='Active'"
                                     [class.disactive]="getValue(column.value , row)=='Not Active'"></span> -->
-                            <!-- <span> {{getValue(column.value , row)}}</span> -->
-                        </p>
-                        }@else if(statusUtilisateur.Pending==row.status){
-                        <i title="Pending Account" class="pi pi pi-spin pi-spinner status-icons"></i>
-                        }@else {
-                        <i title="Locked Account" class="pi pi-lock status-icons"></i>
-                        }
+              <!-- <span> {{getValue(column.value , row)}}</span> -->
+            </p>
+            }@else if(statusUtilisateur.Pending==row.status){
+            <i title="Pending Account" class="pi pi pi-spin pi-spinner status-icons"></i>
+            }@else {
+            <i title="Locked Account" class="pi pi-lock status-icons"></i>
+            } }@else if(column.value.toLowerCase().includes('date')){
+            {{ getValue(column, row) | date : 'MMMM dd, yyyy' }}
+            } @else {
+            {{ getValue(column, row) }}
+            }
+          </td>
+          } @else {
+          <td
+            [style.font-weight]="
+              column.bold
+                ? '500'
+                : '
+                    '
+            "
+            style="padding-left: 0.5rem"
+          >
+            @if(column.value.toLowerCase().includes('date')){
+            {{ getValue(column, row) | date : 'MMMM dd, yyyy' }}
+            } @else {
+            <div>
+              <p id="username">
+                {{ getValue(column, row) }}
+              </p>
+              <p id="email">
+                {{ getValue(columnWithEmail, row) }}
+              </p>
+            </div>
+            }
+          </td>
+          } }
+          <td style="width: 3rem; text-align: center; padding: 0.5rem; white-space: nowrap">
+            @if (!ellipsis && delete) {
+            <i
+              title="Suprimer"
+              (click)="DeleteClick(row)"
+              class="pi pi-trash trash-button"
+              (click)="openPopUp(row, $index, $event)"
+            ></i>
+            } @if (!ellipsis && modifier) {
+            <i class="pi pi-pencil pencil-button" title="Modifier" (click)="ModifierClick(row)"></i>
+            } @if (ellipsis && (modifier || delete)) {
+            <i class="pi pi-ellipsis-v" (click)="openPopUp(row, $index, $event)"></i>
+            }
 
-                        }@else if(column.value.toLowerCase().includes('date')){
-                        {{getValue(column , row) | date:'MMMM dd, yyyy'}}
-                        }
-                        @else {
-                        {{getValue(column , row)}}
-                        }
-                    </td>
-                    }
-                    @else {
-                    <td [style.font-weight]="column.bold ? '500' : '
-                    '" style="padding-left: 0.5rem;">
-                        @if(column.value.toLowerCase().includes('date')){
-                        {{getValue(column , row) | date:'MMMM dd, yyyy'}}
-                        }
-                        @else {
-                        <div>
-                            <p id="username">
-                                {{getValue(column , row)}}
-                            </p>
-                            <p id="email">
-                                {{getValue(columnWithEmail , row)}}
-                            </p>
-                        </div>
-                        }
-                    </td>
-                    }
-
-                    }
-                    <td style="width: 3rem;text-align: center;padding: 0.5rem; white-space: nowrap;">
-                        @if (!ellipsis && delete) {
-                        <i title="Suprimer" (click)="DeleteClick(row)" class="pi pi-trash trash-button"
-                            (click)="openPopUp(row , $index ,$event)"></i>
-                        }
-                        @if (!ellipsis && modifier) {
-                        <i class="pi pi-pencil pencil-button" title="Modifier" (click)="ModifierClick(row)"></i>
-                        }
-                        @if (ellipsis && (modifier || delete)) {
-                        <i class="pi pi-ellipsis-v" (click)="openPopUp(row , $index ,$event)"></i>
-                        }
-
-                        <!-- <div style="display: flex; gap: 0.5rem;">
+            <!-- <div style="display: flex; gap: 0.5rem;">
                             <i class="pi pi-key"></i>
                             <i class="pi pi-key"></i>
                             <i class="pi pi-key"></i>
                         </div> -->
-                    </td>
-                </tr>
-                }@empty{
-                <tr class="empty">
-                    <td colspan="100" rowspan="100">
-                        <div class="empty-content">
-                            <i [ngClass]="['pi', icon]"></i>
-                            <div class="text">
-                                <h2>Oups ! Il n’y a rien ici</h2>
-                                <p>Il n’y a rien à afficher pour le moment. Veuillez ajouter un nouvel {{page}}.</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                }
-
-                @if (popupVisible) {
-                <div [style.top.px]="popupTop" [style.right.px]="popupRight" class="menu">
-                    @if (modifier) {
-                    <button class="menu-btn" (click)="ModifierClick()">
-                        <i class="pi pi-pencil"></i>
-                        <span>Modifier</span>
-                    </button>
-                    }
-                    @if (delete) {
-                    <button class="menu-btn menu-btn-trash" (click)="DeleteClick()">
-                        <i class="pi pi-trash"></i>
-                        <span>Supprimer</span>
-                    </button>
-                    }
-                </div>
-                }
-            </tbody>
-        </table>
-    </div>
-
-    <div class="table-footer">
-        <p class="showing"><span>Affichage de {{size}}</span> sur {{totalElements}} {{page}}</p>
-        <app-pagination (pageChange)="changePage($event)" [currentPage]="currentPage"
-            [totalPages]="totalPages"></app-pagination>
-        @if (activeSize) {
-        <div class="size">
-            <label for="">Show per page:</label>
-            <select class="size">
-                <option value="10" selected>10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="40">40</option>
-            </select>
+          </td>
+        </tr>
+        }@empty{
+        <tr class="empty">
+          <td colspan="100" rowspan="100">
+            <div class="empty-content">
+              <i [ngClass]="['pi', icon]"></i>
+              <div class="text">
+                <h2>Oups ! Il n’y a rien ici</h2>
+                <p>
+                  Il n’y a rien à afficher pour le moment. Veuillez ajouter un nouvel {{ page }}.
+                </p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        } @if (popupVisible) {
+        <div [style.top.px]="popupTop" [style.right.px]="popupRight" class="menu">
+          @if (modifier) {
+          <button class="menu-btn" (click)="ModifierClick()">
+            <i class="pi pi-pencil"></i>
+            <span>Modifier</span>
+          </button>
+          } @if (delete) {
+          <button class="menu-btn menu-btn-trash" (click)="DeleteClick()">
+            <i class="pi pi-trash"></i>
+            <span>Supprimer</span>
+          </button>
+          }
         </div>
         }
-    </div>
+      </tbody>
+    </table>
+    
+  </div>
+
+  
 </div>

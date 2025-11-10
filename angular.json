@@ -61,7 +61,7 @@
         },
         "serve": {
           "options": {
-            "port": 7000
+            "port": 4300
           },
           "builder": "@angular/build:dev-server",
           "configurations": {

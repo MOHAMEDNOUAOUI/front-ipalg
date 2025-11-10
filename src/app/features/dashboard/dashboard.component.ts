@@ -13,6 +13,7 @@ import { PButtonComponent } from '../../shared/p-button/p-button.component';
 import { CommonModule } from '@angular/common';
 import { SummaryChartComponent } from '../../components/summary-chart/summary-chart..component';
 import { BarsChartComponent } from '../../components/dashboard/bars-chart/bars-chart.component';
+import { PileCharts } from "../../components/dashboard/pile-charts/pile-charts";
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -30,7 +31,8 @@ import { BarsChartComponent } from '../../components/dashboard/bars-chart/bars-c
     PButtonComponent,
     SummaryChartComponent,
     BarsChartComponent,
-  ],
+    PileCharts
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

@@ -37,6 +37,27 @@ export const routes: Routes = [
             path: '',
             redirectTo: 'profils',
             pathMatch: 'full',
+          },{
+            path: 'categories',
+            loadComponent: () => import('./features/environement/components/categories/categories').then(
+              (Categories) => Categories.Categories
+            )
+
+          },{
+            path: 'documents',
+            loadComponent: () => import('./features/environement/components/documents/documents').then(
+              (Documents) => Documents.Documents
+            )
+          },{
+            path: 'champs-personalises',
+            loadComponent: () => import('./features/environement/components/champs-personalises/champs-personalises').then(
+              (champspersonalises) => champspersonalises.ChampsPersonalises
+            )
+          },{
+            path: 'variables-globales',
+            loadComponent: () => import('./features/environement/components/variables-globales/variables-globales').then(
+              (variablesGlobales) => variablesGlobales.VariablesGlobales
+            )
           },
           {
             path: 'profils',
