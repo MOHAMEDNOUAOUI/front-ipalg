@@ -3,8 +3,7 @@
 
 .container {
   width: $sidepanel-width;
-  min-height: $sidepanel-height;
-  max-height: $sidepanel-height;
+  height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
@@ -142,8 +141,8 @@
     }
   }
 
-  &.active {
-    background-color: white;
+  .active {
+    background-color: rgb(255, 0, 0) !important;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   }
@@ -237,7 +236,14 @@
   gap: 0.5rem;
   cursor: pointer;
   transition: 300ms ease-in;
+  position: relative;
 
+  .arrow {
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    position: absolute;
+  }
   i,
   p,
   ng-icon {
@@ -273,11 +279,43 @@
 
 .sub-sub-link {
   padding-left: 2rem;
+  color: rgb(105, 105, 105);
 }
 
 .subactive {
   color: var(--color-secondary);
   p {
+    font-weight: 600;
     color: var(--color-secondary);
+  }
+}
+
+/* Detect 125% scaling by viewport shrink (preferred) */
+@media (max-width: 1700px) {
+  .logo h2 {
+    font-size: 1.2rem;
+  }
+
+  .link i,
+  .link p,
+  .link ng-icon {
+    font-size: 0.8rem;
+  }
+
+  .userprofile .informations p {
+    font-size: 0.75rem;
+  }
+
+  .userprofile .informations span {
+    font-size: 0.65rem;
+  }
+
+  .sub-link {
+    i,
+    p,
+    ng-icon {
+      font-size: 0.8rem;
+      color: rgb(57, 57, 57);
+    }
   }
 }

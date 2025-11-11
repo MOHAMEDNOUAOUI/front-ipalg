@@ -28,7 +28,7 @@
         } -->
         <div class="links groupe">
             @for (item of tabs; track $index) {
-            <div class="link" [class.headerActive]="item.active" [routerLinkActive]="'active'" (click)="opentab(item)">
+            <div class="link" [class.headerActive]="item.active" [routerLinkActive]="'active'" (click)="openTab(item)">
                 <ng-icon [name]="item.icon"></ng-icon>
                 <p>{{item.header}}</p>
             </div>
@@ -36,10 +36,14 @@
                 @if (item.active) {
                 @for (link of item.links; track $index) {
                 <div class="sub-link" [routerLink]="link.route" [routerLinkActive]="'active'"
-                    [routerLinkActiveOptions]="{ exact : false }">
+                    [routerLinkActiveOptions]="{ exact : false }" (click)="openSubTab(item , link)">
                     <ng-icon [name]="link.icon"></ng-icon>
                     <p>{{link.label}}</p>
+                    @if (link.links) {
+                    <ng-icon class="arrow" name="tablerCornerRightDown"></ng-icon>
+                    }
                 </div>
+                @if (link.active) {
                 @for (sublink of link.links; track $index) {
                 <div class="sub-link sub-sub-link" [routerLink]="sublink.route" [routerLinkActive]="'subactive'"
                     [routerLinkActiveOptions]="{ exact : false }">
@@ -55,6 +59,7 @@
                     }
                     <p>{{sublink.label}}</p>
                 </div>
+                }
                 }
                 }
                 }

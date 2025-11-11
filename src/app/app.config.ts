@@ -12,6 +12,7 @@ import {
   tablerHomeSignal,
   tablerBrandGoogleHome,
   tablerTruckDelivery,
+  tablerCornerRightDown,
 } from '@ng-icons/tabler-icons';
 import {
   tablerShieldHalfFill,
@@ -57,6 +58,7 @@ export const appConfig: ApplicationConfig = {
       tablerArchiveFill,
       tablerCloverFill,
       tablerTruckDelivery,
+      tablerCornerRightDown,
     }),
   ],
 };

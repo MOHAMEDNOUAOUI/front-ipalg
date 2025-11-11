@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { sidePanel_Tabs } from '../../interfaces/sidepanel-tabs';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-second-side-panel',
@@ -51,6 +52,7 @@ export class SecondSidePanel {
           label: 'Environnement',
           icon: 'tablerCloverFill',
           route: 'environement',
+          active: false,
           links: [
             {
               label: 'Accès Management',
@@ -61,6 +63,21 @@ export class SecondSidePanel {
               label: 'Categories Management',
               icon: 'tablerCloverFill',
               route: 'environement/categories',
+            },
+            {
+              label: 'Documents Management',
+              icon: 'tablerCloverFill',
+              route: 'test',
+            },
+            {
+              label: 'Champs Personalisés',
+              icon: 'tablerCloverFill',
+              route: 'test',
+            },
+            {
+              label: 'Variables Globales',
+              icon: 'tablerCloverFill',
+              route: 'test',
             },
           ],
         },
@@ -167,16 +184,64 @@ export class SecondSidePanel {
   constructor(public router: Router) {}
 
   ngOnInit() {
-    this.tabs.forEach((tab: sidePanel_Tabs) => {
-      tab.active = tab.links.some((link) => this.router.url.includes(link.route));
+    this.starterPanel();
+
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.starterPanel();
+      });
+  }
+
+  starterPanel() {
+    const currentUrl = this.router.url;
+
+    this.tabs.forEach((tab: any) => {
+      let tabMatch = false;
+
+      tab.links.forEach((link: any) => {
+        if (!link.links) {
+          link.active = currentUrl.includes(link.route);
+          if (link.active) tabMatch = true;
+        } else {
+          let linkMatch = false;
+          link.links.forEach((subLink: any) => {
+            subLink.active = currentUrl.includes(subLink.route);
+            if (subLink.active) linkMatch = true;
+          });
+
+          link.active = linkMatch || currentUrl.includes(link.route);
+          if (link.active) tabMatch = true;
+        }
+      });
+
+      tab.active = tabMatch;
+    });
+  }
+  openTab(tab: any) {
+    this.tabs.forEach((t: any) => {
+      if (t.header === tab.header) {
+        t.active = true;
+      } else {
+        t.active = false;
+      }
     });
   }
 
-  opentab(tab: sidePanel_Tabs) {
-    const existingTab = this.tabs.find((tabb: sidePanel_Tabs) => tabb.header == tab.header);
-    this.tabs.map((tabb: sidePanel_Tabs) =>
-      tabb.header == tab.header ? (tabb.active = !tabb.active) : (tabb.active = false)
-    );
-    // console.log();
+  openSubTab(parentTab: any, childTab: any) {
+    parentTab.active = true;
+
+    parentTab.links.forEach((sub: any) => {
+      sub.active = sub.label === childTab.label ? !sub.active : false;
+    });
+  }
+
+  openNestedSubTab(parentTab: any, childTab: any, subChild: any) {
+    parentTab.active = true;
+    childTab.active = true;
+
+    childTab.links.forEach((sub: any) => {
+      sub.active = sub.label === subChild.label;
+    });
   }
 }
