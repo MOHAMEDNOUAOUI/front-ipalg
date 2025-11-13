@@ -1,1 +1,13 @@
-<p>categories works!</p>
+<div class="container">
+ 
+
+    <main>
+        <!-- <app-steps-header [Steps]="steps"></app-steps-header> -->
+        <app-table-categories [store]="CategorieStore" [exporter]="true" [importer]="true" [modifier]="true" [delete]="true"
+            [ellipsis]="true" [icon]="'pi-spinner'" [page]="'utilisateur'" [columns]="columns"></app-table-categories>
+        <!-- <app-reusable-table [delete]="true" [ellipsis]="true" [modifier]="true" [icon]="'pi-spinner'" [page]="'categorie'"
+            [size]="10" [totalElements]="20" [totalPages]="2" [currentPage]="0"
+            [data]="data" [columns]="columns"></app-reusable-table> -->
+      
+    </main>
+</div>
