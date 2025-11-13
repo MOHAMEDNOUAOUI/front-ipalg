@@ -1,0 +1,193 @@
+<div class="container">
+    <div class="table-header">
+        <div class="table-header-left">
+            <div class="search-container">
+                <i class="pi pi-search"></i>
+                <input type="text" (input)="changeSearch($event)" placeholder="search..." name="" id="">
+            </div>
+        </div>
+        <div class="table-header-right">
+
+            <div class="buttons">
+
+
+                <div class="seperator"></div>
+                @if(exporter){
+                <app-p-button title="exporter" [icon]="'pi-file-export'" [severity]="severity.Secondary"
+                    [outline]="true" [rounded]="true" [label]="'Télécharger Excel'"
+                    (click)="ExporterClick()"></app-p-button>
+                }
+                @if (importer) {
+                <app-p-button title="importer" [icon]="'pi-upload'" [severity]="severity.Secondary" [outline]="true"
+                    [rounded]="true" [label]="'Importer'" (click)="ImporterClick()"></app-p-button>
+                }
+                <app-p-button [title]="'Ajouter ' + page" [icon]="'pi-plus'" [severity]="severity.Dark"
+                    [outline]="false" [rounded]="true" [label]="'Ajouter '+page"
+                    (click)="AjouterClick()"></app-p-button>
+
+                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Primary" [outline]="false"
+                    [rounded]="true" [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-body" [style.max-height]="maxHeight">
+        <table>
+            <thead>
+                <tr>
+                    <!-- <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th> -->
+                    <th style="width: 2rem; white-space: nowrap;text-align: center;"></th>
+                    <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th>
+                    @for (column of columns; track $index) {
+                    <!-- @if (column.label.includes('Status') || column.label.includes('Created by') ||
+                    column.label.includes('Nom d\'utilisateur')) {
+                    <th style="padding-left: 0.5rem;width: 1%; white-space: nowrap;text-align: left;" scope="col">
+                        {{column.label}}</th>
+                    }@else {
+                    <th style="padding-left: 0.5rem;" scope="col">{{column.label}}</th>
+                    } -->
+                    @if (column.active) {
+                    @if (['status'].includes(column.value)) {
+                    <th scope="col" style="width: 1px;white-space: nowrap;">{{column.label}}</th>
+                    }@else{
+                    <th scope="col">{{column.label}}</th>
+
+                    }
+                    }
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (row of this.store.data(); track $index) {
+                <tr [class.active]="true">
+                    <!-- <td style="width: 2rem; white-space: nowrap;text-align: center;">{{$index+1}}</td> -->
+                    <td style="white-space: nowrap;text-align: center;">
+                        <!-- <label class="checkbox"><input type="checkbox" class="checkbox-input" /><span
+                                class="checkbox-label"></span></label> -->
+                        <input class="checkbox" type="checkbox">
+                    </td>
+
+
+
+                    <td style="white-space: nowrap;text-align: center;">
+                        #{{$index+1}}
+                    </td>
+
+                    @for (column of columns; track $index) {
+                    @if(column.active){
+                    <td>
+
+                        @if (isArray(column.value)) {
+                        <!-- <div [style.font-weight]="column.bold ? '500' : ''" id="username">{{ row.username }}</div>
+                        <div id="email" class="text-muted" style="font-size: 0.9em;">{{ row.email }}</div> -->
+                        @for (values of column.value; track $index) {
+                        <div [id]="values.value" id="email" [style.font-weight]="values.bold ? '500' : ''"
+                            class="text-muted" style="font-size: 0.9em;">{{ getValue(values , row) }}</div>
+                        }
+                        }@else if(column.label==='Status'){
+                        @if (statusUtilisateur.Active == row.status || statusUtilisateur.Inactive==row.status) {
+                        <p class="utilisateur-status">
+                            <label class="switch"><input [checked]="getValue(column , row) == statusUtilisateur.Active"
+                                    type="checkbox" class="switch-input" /><span class="switch-label"></span></label>
+                            <!-- <span class="dot" [class.active]="getValue(column.value , row)=='Active'"
+                                    [class.disactive]="getValue(column.value , row)=='Not Active'"></span> -->
+                            <!-- <span> {{getValue(column.value , row)}}</span> -->
+                        </p>
+                        }@else if(statusUtilisateur.Pending==row.status){
+                        <i title="Pending Account" class="pi pi pi-spin pi-spinner status-icons"
+                            style="text-align: center;"></i>
+                        }@else {
+                        <i title="Locked Account" class="pi pi-lock status-icons" style="text-align: center;"></i>
+                        }
+                        }@else if(column.type && column.type=="DATE"){
+                        {{ getValue(column, row) | date:'dd MMMM, hh:mm'}}
+                        }@else {
+                        {{ getValue(column, row)}}
+                        }
+
+                    </td>
+                    }
+                    }
+
+
+
+
+
+
+
+
+                    <td style="width: 3rem;text-align: center;padding: 0.5rem; white-space: nowrap;">
+                        @if (!ellipsis && delete) {
+                        <i title="Suprimer" (click)="DeleteClick(row)" class="pi pi-trash trash-button"
+                            (click)="openPopUp(row , $index ,$event)"></i>
+                        }
+                        @if (modifier) {
+                        <i class="pi pi-pencil pencil-button" title="Modifier" (click)="ModifierClick(row)"></i>
+                        }
+                        @if (ellipsis && (modifier || delete)) {
+                        <i class="pi pi-ellipsis-v" (click)="openPopUp(row , $index ,$event)"></i>
+                        }
+
+                        <!-- <div style="display: flex; gap: 0.5rem;">
+                            <i class="pi pi-key"></i>
+                            <i class="pi pi-key"></i>
+                            <i class="pi pi-key"></i>
+                        </div> -->
+                    </td>
+                </tr>
+                }@empty{
+                <tr class="empty">
+                    <td colspan="100" rowspan="100">
+                        <div class="empty-content">
+                            <i [ngClass]="['pi', icon]"></i>
+                            <div class="text">
+                                <h2>Oups ! Il n’y a rien ici</h2>
+                                <p>Il n’y a rien à afficher pour le moment. Veuillez ajouter un nouvel {{page}}.</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+
+                @if (popupVisible) {
+                <div [style.top.px]="popupTop" [style.right.px]="popupRight" class="menu">
+
+                    <button class="menu-btn" (click)="ModifierClick()">
+                        <i class="pi pi-user"></i>
+                        <span>Voir Profil</span>
+                    </button>
+
+                    @if (delete) {
+                    <button class="menu-btn menu-btn-trash" (click)="DeleteClick()">
+                        <i class="pi pi-trash"></i>
+                        <span>Supprimer</span>
+                    </button>
+                    }
+                </div>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-footer">
+        <p class="showing"><span>Affichage de {{this.categorieStore.numberOfElements()}}</span> sur
+            {{this.categorieStore.totalElements()}}
+        </p>
+        @if (this.categorieStore.totalPages() > 1) {
+        <app-pagination (pageChange)="changePage($event)" [currentPage]="this.categorieStore.filter().page"
+            [totalPages]="this.categorieStore.totalPages()"></app-pagination>
+        }
+        @if (activeSize) {
+        <div class="size">
+            <label for="">Show per page:</label>
+            <select class="size">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+        </div>
+        }
+    </div>
+</div>

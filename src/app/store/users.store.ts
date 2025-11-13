@@ -14,23 +14,30 @@ import {
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { UtilisateursService } from '../services/UtilisateursService';
 import { BackEndResponse, PageableResponse } from '../interfaces/PageableResponse';
+import { GenericState } from './type.generic';
 
-type UserState = {
-  data: Utilisateur[];
-  totalPages: number;
-  totalElements: number;
-  message: string;
-  isLoading: boolean;
-  filter: {
-    page: number;
-    size: number;
-    search: string;
-    username: string;
-  };
-  numberOfElements: number;
-  selectedUtilisateur: Utilisateur | null;
+// type UserState = {
+//   data: Utilisateur[];
+//   totalPages: number;
+//   totalElements: number;
+//   message: string;
+//   isLoading: boolean;
+//   filter: {
+//     page: number;
+//     size: number;
+//     search: string;
+//     username: string;
+//   };
+//   numberOfElements: number;
+//   selectedUtilisateur: Utilisateur | null;
+// };
+type Filter = {
+  page: number;
+  size: number;
+  search: string;
+  username: string;
 };
-const initialState: UserState = {
+const initialState: GenericState<Utilisateur,Filter> = {
   data: [],
   totalPages: 0,
   totalElements: 0,
@@ -43,7 +50,7 @@ const initialState: UserState = {
     username: '',
   },
   numberOfElements: 0,
-  selectedUtilisateur: null,
+  selectedData: null,
 };
 
 @Injectable({ providedIn: 'root' })
@@ -55,7 +62,7 @@ export class UsersStore extends signalStore(
       patchState(store, { data: response });
     },
 
-    updateFilter: (filter: Partial<UserState['filter']>) => {
+    updateFilter: (filter: Partial<GenericState<Utilisateur,Filter>['filter']>) => {
       patchState(store, {
         filter: {
           ...(store.filter?.() ?? { page: 0, size: 10, search: '', username: '' }),
@@ -68,8 +75,8 @@ export class UsersStore extends signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(() => {
-          const { page, size, search, username } = store.filter();
-          return utilisateirService.fetchAllUtilisateurs({ page, size, search, username }).pipe(
+          const filter = store.filter();
+          return utilisateirService.fetchAllUtilisateurs(filter).pipe(
             tap((response: BackEndResponse<Utilisateur>) => {
               patchState(store, {
                 data: response.data.content,

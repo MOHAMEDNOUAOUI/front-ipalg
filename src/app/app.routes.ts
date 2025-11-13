@@ -65,20 +65,6 @@ export const routes: Routes = [
               import('./features/environement/components/profils/profils.component').then(
                 (profils) => profils.ProfilsComponent
               ),
-            children: [
-              {
-                path: '',
-                redirectTo: 'prf',
-                pathMatch: 'full',
-              },
-              {
-                path: 'prf',
-                loadComponent: () =>
-                  import(
-                    './features/environement/components/sub-profils/sub-profils.component'
-                  ).then((subPost) => subPost.SubProfilsComponent),
-              },
-            ],
           },
           {
             path: 'modules',
