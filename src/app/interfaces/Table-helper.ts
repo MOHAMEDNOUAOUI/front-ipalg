@@ -1,8 +1,8 @@
 export interface EllipsisInterface {
   label: string;
   icon: string;
-  action?: string;
-  class?: string;
+  action: string;
+  class: string;
   command: () => void;
 }
 

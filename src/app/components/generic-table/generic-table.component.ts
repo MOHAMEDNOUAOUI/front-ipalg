@@ -1,3 +1,4 @@
+import { filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -6,6 +7,7 @@ import {
   HostListener,
   Input,
   Output,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
@@ -15,16 +17,18 @@ import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisa
 import { UsersStore } from '../../store/users.store';
 import { FormsModule } from '@angular/forms';
 import { EllipsisInterface } from '../../interfaces/Table-helper';
+import { BaseFilter, BaseStore } from '../../store/type.generic';
 
 @Component({
-  selector: 'app-table-users',
+  selector: 'app-generic-table',
   standalone: true,
   imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule],
-  templateUrl: './table-users.component.html',
-  styleUrl: './table-users.component.scss',
+  templateUrl: './generic-table-component.html',
+  styleUrl: './generic-table-component.scss',
 })
-export class TableUsersComponent {
-  @Input() store: any;
+export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseStore<T, F>> {
+  // T equals Data type , F equals Filter type , TStore equals Store type
+  @Input() store!: TStore;
   severity = Severity;
   @Input() columns: any[] = [];
   @Input() page: string = '';
@@ -32,6 +36,7 @@ export class TableUsersComponent {
   @Input() ellipsis: boolean = false;
   @Input() maxHeight: string = '';
   @Input() ellipsisItems: EllipsisInterface[] = [];
+  @Output() actionEvent = new EventEmitter<string>();
 
   constructor() {}
 
@@ -40,7 +45,6 @@ export class TableUsersComponent {
 
   popupTop: number = 0;
   popupRight: number = 0;
-  selectedRow: any | null = null;
   popupVisible = false;
 
   @HostListener('document:click', ['$event'])
@@ -48,8 +52,17 @@ export class TableUsersComponent {
     const target = event.target as HTMLElement;
     if (!target.closest('.popup') && !target.closest('.pi-ellipsis-v')) {
       this.popupVisible = false;
-      this.selectedRow = null;
+      this.store.setSelectedData(null);
     }
+  }
+  // Safe property access - TypeScript now knows T has these properties
+  getProperty(item: T, key: string): any {
+    return (item as any)[key];
+  }
+
+  trackByFn(index: number, item: T): string {
+    // Assuming all items have an id property
+    return (item as any).id || index;
   }
 
   ngOnInit() {}
@@ -66,26 +79,27 @@ export class TableUsersComponent {
     return Array.isArray(value);
   }
 
-  changePage(page: number) {
-    this.store.updateFilter({ page: page });
+  changeFilter<K extends keyof F>(partial: Pick<F, K>) {
+    this.store.updateFilter(partial as Partial<F>);
   }
 
   changeSearch(event: any) {
     let value = event.target.value;
-    this.store.updateFilter({ search: value });
+    this.store.updateSearch(value);
   }
 
   openPopUp(row: any, i: number, event: MouseEvent) {
     let sameRow = false;
-    if (this.selectedRow && this.selectedRow.id === row.id) {
+    const selected = this.store.selectedData();
+    if (selected && (selected as any).id === row.id) {
       sameRow = true;
     }
     if (sameRow) {
-      this.selectedRow = null;
+      this.store.setSelectedData(null);
       this.popupVisible = false;
       return;
     }
-    this.selectedRow = row;
+    this.store.setSelectedData(row);
     this.popupVisible = true;
 
     const target = event.target as HTMLElement;
@@ -94,5 +108,12 @@ export class TableUsersComponent {
     // Position popup just below and to the right of the icon
     this.popupTop = rect.bottom + window.scrollY + 5; // Add scrollY in case the page is scrolled
     this.popupRight = window.innerWidth - rect.right;
+  }
+
+  handleAction(action: string, row?: T) {
+    if (row) {
+      this.store.setSelectedData(row);
+    }
+    this.actionEvent.emit(action);
   }
 }

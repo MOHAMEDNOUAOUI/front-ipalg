@@ -1,5 +1,5 @@
-import { effect, inject, Injectable } from '@angular/core';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { computed, effect, inject, Injectable } from '@angular/core';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { Utilisateur } from '../Models/Utilisateur/Utilisateurs';
 import {
   catchError,
@@ -15,12 +15,9 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { UtilisateursService } from '../services/UtilisateursService';
 import { BackEndResponse, PageableResponse } from '../interfaces/PageableResponse';
 import { Profile } from '../Models/Utilisateur/Profile';
-import { GenericState } from './type.generic';
+import { BaseFilter, BaseStore, GenericState } from './type.generic';
 
-type Filter = {
-  page: number;
-  size: number;
-  search: string;
+type Filter = BaseFilter & {
   profileName: string;
 };
 const initialState: GenericState<Profile, Filter> = {
@@ -42,6 +39,7 @@ const initialState: GenericState<Profile, Filter> = {
     page: 0,
     size: 10,
     search: '',
+    label: '',
     profileName: '',
   },
   numberOfElements: 0,
@@ -56,55 +54,85 @@ const initialState: GenericState<Profile, Filter> = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class ProfileStore extends signalStore(
-  { providedIn: 'root' }, // <-- This was missing
-  withState(initialState),
-  withMethods((store, utilisateirService = inject(UtilisateursService)) => ({
-    setUsers: (response: Utilisateur[]) => {
-      patchState(store, { data: response });
-    },
+export class ProfileStore
+  extends signalStore(
+    withState(initialState),
+    withComputed((store) => ({
+      data: computed(() => store.data().filter((profile) => profile.id == '1')),
+      totalElements: computed(() => store.totalElements()),
+      totalPages: computed(() => store.totalPages()),
+      isLoading: computed(() => store.isLoading()),
+      filter: computed(() => store.filter()),
+      selectedData: computed(() => store.selectedData()),
+      columns: computed(() => store.columns()),
+      message: computed(() => store.message()),
+      numberOfElements: computed(() => store.numberOfElements()),
+    })),
+    withMethods((store, utilisateirService = inject(UtilisateursService)) => ({
+      setUsers: (response: Utilisateur[]) => {
+        patchState(store, { data: response });
+      },
 
-    updateFilter: (filter: Partial<GenericState<Profile, Filter>['filter']>) => {
-      patchState(store, {
-        filter: {
-          ...(store.filter?.() ?? { page: 0, size: 10, search: '', profileName: '' }),
-          ...filter,
-        },
-      });
-    },
+      setSelectedData: (data: Profile | null) => {
+        patchState(store, { selectedData: data });
+      },
 
-    loadUsers: rxMethod<void>(
-      pipe(
-        tap(() => patchState(store, { isLoading: true })),
-        switchMap(() => {
-          const { page, size, search, profileName } = store.filter();
-          return utilisateirService.fetchAllUtilisateurs({ page, size, search, profileName }).pipe(
-            tap((response: BackEndResponse<Profile>) => {
-              patchState(store, {
-                data: [],
-                totalElements: response.data.totalElements,
-                totalPages: response.data.totalPages,
-                message: response.message,
-                numberOfElements: response.data.numberOfElements,
-                isLoading: false,
-              });
-            }),
-            catchError((error) => {
-              console.error('Error loading profils', error);
-              patchState(store, { isLoading: false });
-              return EMPTY;
-            })
-          );
-        })
-      )
-    ),
-  }))
-) {
+      updateFilter: (filter: Partial<GenericState<Profile, Filter>['filter']>) => {
+        patchState(store, {
+          filter: {
+            ...(store.filter?.() ?? { page: 0, size: 10, search: '', label: '', profileName: '' }),
+            ...filter,
+          },
+        });
+      },
+
+      updateSearch: (search: string) => {
+        patchState(store, {
+          filter: {
+            ...(store.filter?.() ?? { page: 0, size: 10, search: '', label: '', profileName: '' }),
+            search: search,
+          },
+        });
+      },
+
+      loadData: rxMethod<void>(
+        pipe(
+          tap(() => patchState(store, { isLoading: true })),
+          switchMap(() => {
+            const filter = store.filter();
+            return utilisateirService.fetchAllUtilisateurs(filter).pipe(
+              tap((response: BackEndResponse<Profile>) => {
+                patchState(store, {
+                  data: [],
+                  totalElements: response.data.totalElements,
+                  totalPages: response.data.totalPages,
+                  message: response.message,
+                  numberOfElements: response.data.numberOfElements,
+                  isLoading: false,
+                });
+              }),
+              catchError((error) => {
+                console.error('Error loading profils', error);
+                patchState(store, { isLoading: false });
+                return EMPTY;
+              })
+            );
+          })
+        )
+      ),
+    }))
+  )
+  implements BaseStore<Profile, Filter>
+{
   constructor() {
     super();
 
-    effect(() => {
-      //   this.loadUsers();
-    });
+    effect(
+      () => {
+        const filter = this.filter();
+        //   this.loadUsers();
+      },
+      { allowSignalWrites: true }
+    );
   }
 }

@@ -1,7 +1,7 @@
 import { UtilisateursService } from './../../services/UtilisateursService';
 import { Component, effect, signal } from '@angular/core';
 import { ReusableTableComponent } from '../../shared/reusable-table/reusable-table.component';
-import { TableUsersComponent } from '../../components/table-users/table-users.component';
+import { GenericTableComponent } from '../../components/generic-table/generic-table.component';
 import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
 import { UtilisateurCreateComponent } from '../../components/utilisateur-create/utilisateur-create.component';
 import { PageableResponse } from '../../interfaces/PageableResponse';
@@ -11,7 +11,7 @@ import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [TableUsersComponent, UtilisateurCreateComponent],
+  imports: [GenericTableComponent, UtilisateurCreateComponent],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.scss',
 })

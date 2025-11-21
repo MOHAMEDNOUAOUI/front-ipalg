@@ -12,21 +12,19 @@
 
 
                 <div class="seperator"></div>
-                @if(exporter){
+                @if(true){
                 <app-p-button title="exporter" [icon]="'pi-file-export'" [severity]="severity.Secondary"
-                    [outline]="true" [rounded]="true" [label]="'Télécharger Excel'"
-                    (click)="ExporterClick()"></app-p-button>
+                    [outline]="true" [rounded]="true" [label]="'Télécharger Excel'"></app-p-button>
                 }
-                @if (importer) {
+                @if (true) {
                 <app-p-button title="importer" [icon]="'pi-upload'" [severity]="severity.Secondary" [outline]="true"
-                    [rounded]="true" [label]="'Importer'" (click)="ImporterClick()"></app-p-button>
+                    [rounded]="true" [label]="'Importer'"></app-p-button>
                 }
                 <app-p-button [title]="'Ajouter ' + page" [icon]="'pi-plus'" [severity]="severity.Dark"
-                    [outline]="false" [rounded]="true" [label]="'Ajouter '+page"
-                    (click)="AjouterClick()"></app-p-button>
+                    [outline]="false" [rounded]="true" [label]="'Ajouter '+ page"></app-p-button>
 
                 <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Primary" [outline]="false"
-                    [rounded]="true" [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
+                    [rounded]="true" [label]="'Filtrer'"></app-p-button>
             </div>
         </div>
     </div>
@@ -38,7 +36,7 @@
                     <!-- <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th> -->
                     <th style="width: 2rem; white-space: nowrap;text-align: center;"></th>
                     <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th>
-                    @for (column of columns; track $index) {
+                    @for (column of this.store.columns(); track $index) {
                     <!-- @if (column.label.includes('Status') || column.label.includes('Created by') ||
                     column.label.includes('Nom d\'utilisateur')) {
                     <th style="padding-left: 0.5rem;width: 1%; white-space: nowrap;text-align: left;" scope="col">
@@ -55,7 +53,7 @@
                     }
                     }
                     }
-                    <th></th>
+                    <th style="width: 2rem; white-space: nowrap;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,7 +72,7 @@
                         #{{$index+1}}
                     </td>
 
-                    @for (column of columns; track $index) {
+                    @for (column of this.store.columns(); track $index) {
                     @if(column.active){
                     <td>
 
@@ -86,7 +84,8 @@
                             class="text-muted" style="font-size: 0.9em;">{{ getValue(values , row) }}</div>
                         }
                         }@else if(column.label==='Status'){
-                        @if (statusUtilisateur.Active == row.status || statusUtilisateur.Inactive==row.status) {
+                        @if (statusUtilisateur.Active == getProperty(row ,'status') ||
+                        statusUtilisateur.Inactive==getProperty(row ,'status')) {
                         <p class="utilisateur-status">
                             <label class="switch"><input [checked]="getValue(column , row) == statusUtilisateur.Active"
                                     type="checkbox" class="switch-input" /><span class="switch-label"></span></label>
@@ -94,7 +93,7 @@
                                     [class.disactive]="getValue(column.value , row)=='Not Active'"></span> -->
                             <!-- <span> {{getValue(column.value , row)}}</span> -->
                         </p>
-                        }@else if(statusUtilisateur.Pending==row.status){
+                        }@else if(statusUtilisateur.Pending==getProperty(row ,'status')){
                         <i title="Pending Account" class="pi pi pi-spin pi-spinner status-icons"
                             style="text-align: center;"></i>
                         }@else {
@@ -118,16 +117,16 @@
 
 
                     <td style="width: 3rem;text-align: center;padding: 0.5rem; white-space: nowrap;">
-                        @if (!ellipsis && delete) {
-                        <i title="Suprimer" (click)="DeleteClick(row)" class="pi pi-trash trash-button"
-                            (click)="openPopUp(row , $index ,$event)"></i>
-                        }
-                        @if (modifier) {
-                        <i class="pi pi-pencil pencil-button" title="Modifier" (click)="ModifierClick(row)"></i>
-                        }
-                        @if (ellipsis && (modifier || delete)) {
-                        <i class="pi pi-ellipsis-v" (click)="openPopUp(row , $index ,$event)"></i>
-                        }
+                        <div style="display: flex;gap: 0.5rem;justify-content: center;">
+                            @if (ellipsis) {
+                            <i class="pi pi-ellipsis-v action-button" (click)="openPopUp(row , $index ,$event)"></i>
+                            }@else {
+                            @for (ellipsisItem of ellipsisItems; track $index) {
+                            <i (click)="handleAction(ellipsisItem.action , row)" [title]="ellipsisItem.label"
+                                [id]="ellipsisItem.class" class="action-button" [ngClass]="ellipsisItem.icon"></i>
+                            }
+                            }
+                        </div>
 
                         <!-- <div style="display: flex; gap: 0.5rem;">
                             <i class="pi pi-key"></i>
@@ -152,33 +151,28 @@
 
                 @if (popupVisible) {
                 <div [style.top.px]="popupTop" [style.right.px]="popupRight" class="menu">
-
-                    <button class="menu-btn" (click)="ModifierClick()">
-                        <i class="pi pi-user"></i>
-                        <span>Voir Profil</span>
-                    </button>
-
-                    @if (delete) {
-                    <button class="menu-btn menu-btn-trash" (click)="DeleteClick()">
-                        <i class="pi pi-trash"></i>
-                        <span>Supprimer</span>
+                    @for (ellipsisItem of ellipsisItems; track $index) {
+                    <button class="menu-btn" (click)="handleAction(ellipsisItem.action)">
+                        <i [ngClass]="ellipsisItem.icon"></i>
+                        <span>{{ellipsisItem.label}}</span>
                     </button>
                     }
+
                 </div>
                 }
             </tbody>
         </table>
     </div>
 
-    <div class="table-footer">
-        <p class="showing"><span>Affichage de {{this.categorieStore.numberOfElements()}}</span> sur
-            {{this.categorieStore.totalElements()}}
+    <!-- <div class="table-footer">
+        <p class="showing"><span>Affichage de {{this.store.numberOfElements()}}</span> sur
+            {{this.store.totalElements()}}
         </p>
-        @if (this.categorieStore.totalPages() > 1) {
-        <app-pagination (pageChange)="changePage($event)" [currentPage]="this.categorieStore.filter().page"
-            [totalPages]="this.categorieStore.totalPages()"></app-pagination>
+        @if (this.store.totalPages() > 1) {
+        <app-pagination (pageChange)="changePage($event)" [currentPage]="this.store.filter().page"
+            [totalPages]="this.store.totalPages()"></app-pagination>
         }
-        @if (activeSize) {
+        @if (this.store.filter().size) {
         <div class="size">
             <label for="">Show per page:</label>
             <select class="size">
@@ -189,5 +183,5 @@
             </select>
         </div>
         }
-    </div>
+    </div> -->
 </div>

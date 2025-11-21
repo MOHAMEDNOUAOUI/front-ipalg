@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
-import { ReusableTableComponent } from "../../../../shared/reusable-table/reusable-table.component";
-import { TableCategories } from "../../../../components/table-categories/table-categories";
-import { CategorieStore } from '../../../../store/categories.store';
+import { ReusableTableComponent } from '../../../../shared/reusable-table/reusable-table.component';
 
 @Component({
   selector: 'app-categories',
-  imports: [ReusableTableComponent, TableCategories],
+  imports: [ReusableTableComponent],
   templateUrl: './categories.html',
-  styleUrl: './categories.scss'
+  styleUrl: './categories.scss',
 })
 export class Categories {
- columns = [
+  columns = [
     {
       label: 'Username',
       value: 'username',
@@ -48,8 +46,5 @@ export class Categories {
     },
   ];
 
-  constructor(public CategorieStore: CategorieStore){
-
-  }
-
+  constructor() {}
 }

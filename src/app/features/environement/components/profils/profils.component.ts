@@ -3,12 +3,10 @@ import { PButtonComponent } from '../../../../shared/p-button/p-button.component
 import { StepsHeaderComponent } from '../../../../shared/steps-header/steps-header.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { step } from '../../../../interfaces/sidepanel-tabs';
-import { TableUsersComponent } from '../../../../components/table-users/table-users.component';
-import { ReusableTableComponent } from '../../../../shared/reusable-table/reusable-table.component';
 import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
 import { ProfileStore } from '../../../../store/profile.store';
 import { EllipsisInterface } from '../../../../interfaces/Table-helper';
+import { GenericTableComponent } from '../../../../components/generic-table/generic-table.component';
 
 @Component({
   selector: 'app-profils',
@@ -18,8 +16,7 @@ import { EllipsisInterface } from '../../../../interfaces/Table-helper';
     StepsHeaderComponent,
     CommonModule,
     RouterModule,
-    TableUsersComponent,
-    ReusableTableComponent,
+    GenericTableComponent,
     PaginationComponent,
   ],
   templateUrl: './profils.component.html',
@@ -65,11 +62,29 @@ export class ProfilsComponent {
 
   modifierProfil() {
     // Logic to modify profile
+    alert(this.profileStore.selectedData()?.id);
   }
   deleteProfil() {
+    alert(this.profileStore.selectedData()?.label);
     // Logic to delete profile
   }
   changePage(page: number) {
     this.profileStore.updateFilter({ page: page });
+  }
+
+  actionsDistributor(action: string) {
+    switch (action) {
+      case 'UPDATE':
+        this.modifierProfil();
+        break;
+      case 'DELETE':
+        this.deleteProfil();
+        break;
+      case 'DETAILS':
+        // this.consulterProfil();
+        break;
+      default:
+        break;
+    }
   }
 }
