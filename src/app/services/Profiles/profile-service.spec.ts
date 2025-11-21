@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Dynamicutils } from './dynamicutils';
+import { ProfileService } from './profile-service';
 
-describe('Dynamicutils', () => {
-  let service: Dynamicutils;
+describe('ProfileService', () => {
+  let service: ProfileService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Dynamicutils);
+    service = TestBed.inject(ProfileService);
   });
 
   it('should be created', () => {

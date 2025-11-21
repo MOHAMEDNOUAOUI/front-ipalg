@@ -11,8 +11,14 @@
             <div class="buttons">
 
 
+
                 <div class="seperator"></div>
-                @if(true){
+                @for (botton of buttons; track $index) {
+                <app-p-button [title]="botton.title" [icon]="botton.icon" [severity]="botton.severity"
+                    [outline]="botton.outline" [rounded]="botton.rounded" [label]="botton.label"
+                    (click)="handleAction(botton.action)"></app-p-button>
+                }
+                <!-- @if(true){
                 <app-p-button title="exporter" [icon]="'pi-file-export'" [severity]="severity.Secondary"
                     [outline]="true" [rounded]="true" [label]="'Télécharger Excel'"></app-p-button>
                 }
@@ -24,7 +30,7 @@
                     [outline]="false" [rounded]="true" [label]="'Ajouter '+ page"></app-p-button>
 
                 <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Primary" [outline]="false"
-                    [rounded]="true" [label]="'Filtrer'"></app-p-button>
+                    [rounded]="true" [label]="'Filtrer'"></app-p-button> -->
             </div>
         </div>
     </div>

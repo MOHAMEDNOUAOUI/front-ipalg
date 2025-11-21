@@ -58,7 +58,7 @@ export class ProfileStore
   extends signalStore(
     withState(initialState),
     withComputed((store) => ({
-      data: computed(() => store.data().filter((profile) => profile.id == '1')),
+      data: computed(() => store.data()),
       totalElements: computed(() => store.totalElements()),
       totalPages: computed(() => store.totalPages()),
       isLoading: computed(() => store.isLoading()),

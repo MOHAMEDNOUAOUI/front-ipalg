@@ -16,7 +16,7 @@ import { environment } from '../../environments/environment';
 import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
 import { UsersStore } from '../../store/users.store';
 import { FormsModule } from '@angular/forms';
-import { EllipsisInterface } from '../../interfaces/Table-helper';
+import { EllipsisInterface, TableButtonsInterface } from '../../interfaces/Table-helper';
 import { BaseFilter, BaseStore } from '../../store/type.generic';
 
 @Component({
@@ -29,6 +29,7 @@ import { BaseFilter, BaseStore } from '../../store/type.generic';
 export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseStore<T, F>> {
   // T equals Data type , F equals Filter type , TStore equals Store type
   @Input() store!: TStore;
+  @Input() buttons: TableButtonsInterface[] = [];
   severity = Severity;
   @Input() columns: any[] = [];
   @Input() page: string = '';
