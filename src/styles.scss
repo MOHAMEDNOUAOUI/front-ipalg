@@ -629,19 +629,6 @@ table {
     display: flex;
   }
 }
-.pi-ellipsis-v,
-.trash-button,
-.pencil-button {
-  color: rgb(82, 82, 82);
-  padding: 0.5rem;
-  border-radius: 10px;
-  // background-color: rgb(241, 241, 241);
-  transition: 300ms ease-in-out;
-
-  &:hover {
-    background-color: rgb(230, 230, 230);
-  }
-}
 
 .button-modals {
   height: fit-content;
@@ -656,11 +643,6 @@ table {
     background-color: rgb(230, 230, 230);
   }
   cursor: pointer;
-}
-
-.trash-button:hover {
-  background-color: red;
-  color: white;
 }
 
 .input-group {

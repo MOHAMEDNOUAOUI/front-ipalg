@@ -8,10 +8,31 @@
 
     <main>
         <!-- <app-steps-header [Steps]="steps"></app-steps-header> -->
-        <app-table-users [store]="profileStore" [exporter]="true" [importer]="true" [modifier]="true" [delete]="true"
-            [ellipsis]="true" [icon]="'pi-spinner'" [page]="'utilisateur'" [columns]="columns"></app-table-users>
+        <app-table-users [ellipsisItems]="items" [store]="profileStore" [icon]="'pi-spinner'"
+            [page]="'Profil'"></app-table-users>
         <!-- <app-reusable-table [delete]="true" [ellipsis]="true" [modifier]="true" [icon]="'pi-spinner'" [page]="'profile'"
             [size]="size" [totalElements]="totalElements" [totalPages]="totalPages" [currentPage]="currentPage"
             [data]="data" [columns]="columns"></app-reusable-table> -->
     </main>
+
+    <div class="table-footer">
+        <p class="showing">
+            <span>Affichage de {{ this.profileStore.filter().size }}</span> sur {{ this.profileStore.totalElements() }}
+        </p>
+        <app-pagination (pageChange)="changePage($event)" [currentPage]="this.profileStore.filter().page"
+            [totalPages]="this.profileStore.totalPages()"></app-pagination>
+
+
+        <!-- @if (true) {
+      <div class="size">
+        <label for="">Show per page:</label>
+        <select class="size">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+      } -->
+    </div>
 </div>

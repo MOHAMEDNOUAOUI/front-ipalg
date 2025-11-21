@@ -14,6 +14,7 @@ import { environment } from '../../environments/environment';
 import { statusUtilisateur, Utilisateur } from '../../Models/Utilisateur/Utilisateurs';
 import { UsersStore } from '../../store/users.store';
 import { FormsModule } from '@angular/forms';
+import { EllipsisInterface } from '../../interfaces/Table-helper';
 
 @Component({
   selector: 'app-table-users',
@@ -22,41 +23,20 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.scss',
 })
-export class TableUsersComponent<T> {
+export class TableUsersComponent {
   @Input() store: any;
   severity = Severity;
   @Input() columns: any[] = [];
   @Input() page: string = '';
-  @Input() activeSize = false;
-  @Input() exporter: boolean = false;
-  @Input() importer: boolean = false;
   @Input() icon: string = '';
+  @Input() ellipsis: boolean = false;
   @Input() maxHeight: string = '';
-  @Input() ellipsis = false;
-  @Input() delete = false;
-  @Input() modifier = false;
+  @Input() ellipsisItems: EllipsisInterface[] = [];
 
-  constructor(public usersStore: UsersStore) {}
-
-  columnWithEmail = {
-    label: 'Email address',
-    value: 'email',
-  };
+  constructor() {}
 
   //Utilisateur
   statusUtilisateur = statusUtilisateur;
-
-  @Output() filter = new EventEmitter<boolean>(false);
-  @Output() exporterEmit = new EventEmitter<boolean>(false);
-  @Output() supprimer = new EventEmitter<{
-    confirmed: boolean;
-    user: Utilisateur;
-  }>();
-  @Output() Modifier = new EventEmitter<{
-    confirmed: boolean;
-    user: Utilisateur;
-  }>();
-  @Output() Ajouter = new EventEmitter<boolean>(false);
 
   popupTop: number = 0;
   popupRight: number = 0;
@@ -72,19 +52,7 @@ export class TableUsersComponent<T> {
     }
   }
 
-  items: any[] = [
-    {
-      label: 'Edit',
-      icon: 'pi pi-pencil',
-      command: () => this.edit(),
-    },
-  ];
-
-  ngOnInit() {
-    console.log(this.store.data());
-  }
-
-  edit() {}
+  ngOnInit() {}
 
   getValue(column: any, row: any) {
     if (column.item) {
@@ -99,12 +67,12 @@ export class TableUsersComponent<T> {
   }
 
   changePage(page: number) {
-    this.usersStore.updateFilter({ page: page });
+    this.store.updateFilter({ page: page });
   }
 
   changeSearch(event: any) {
     let value = event.target.value;
-    this.usersStore.updateFilter({ username: value });
+    this.store.updateFilter({ search: value });
   }
 
   openPopUp(row: any, i: number, event: MouseEvent) {
@@ -127,25 +95,4 @@ export class TableUsersComponent<T> {
     this.popupTop = rect.bottom + window.scrollY + 5; // Add scrollY in case the page is scrolled
     this.popupRight = window.innerWidth - rect.right;
   }
-
-  FilterClick() {
-    this.filter.emit(true);
-  }
-  DeleteClick(User?: Utilisateur) {
-    let user = User ? User : this.selectedRow;
-    this.supprimer.emit({ confirmed: true, user });
-    this.store.Supprimer();
-  }
-  AjouterClick() {
-    this.Ajouter.emit(true);
-  }
-  ModifierClick(User?: Utilisateur) {
-    let user = User ? User : this.selectedRow;
-    this.Modifier.emit({ confirmed: true, user });
-    this.store.selectedUtilisateur = user;
-  }
-  ExporterClick() {
-    this.exporterEmit.emit(true);
-  }
-  ImporterClick() {}
 }

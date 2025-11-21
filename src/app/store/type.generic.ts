@@ -1,4 +1,4 @@
-export type GenericState<T,F> = {
+export type GenericState<T, F> = {
   data: T[];
   totalPages: number;
   totalElements: number;
@@ -6,5 +6,6 @@ export type GenericState<T,F> = {
   isLoading: boolean;
   numberOfElements: number;
   selectedData: T | null;
-  filter: F
+  filter: F;
+  columns?: any[];
 };

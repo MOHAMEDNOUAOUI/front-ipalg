@@ -37,7 +37,7 @@ type Filter = {
   search: string;
   username: string;
 };
-const initialState: GenericState<Utilisateur,Filter> = {
+const initialState: GenericState<Utilisateur, Filter> = {
   data: [],
   totalPages: 0,
   totalElements: 0,
@@ -51,6 +51,93 @@ const initialState: GenericState<Utilisateur,Filter> = {
   },
   numberOfElements: 0,
   selectedData: null,
+  columns: [
+    // {
+    //   label: 'Something Else',
+    //   value: [
+    //     {
+    //       value: 'status',
+    //     },
+    //     {
+    //       value: 'createdBy',
+    //     },
+    //   ],
+    // },
+    {
+      label: 'Utilisateur',
+      active: true,
+      value: [
+        {
+          value: 'username',
+          bold: true,
+        },
+        {
+          value: 'email',
+        },
+      ],
+    },
+    {
+      label: "Nom d'utilisateur",
+      value: [
+        {
+          value: 'userProfile',
+          item: 'name',
+        },
+        {
+          value: 'email',
+        },
+      ],
+      item: 'name',
+      active: true,
+    },
+    {
+      label: 'Prenom',
+      value: 'firstName',
+      active: true,
+      // item: 'label',
+    },
+    {
+      label: 'Nom',
+      value: 'lastName',
+      active: true,
+      // item: 'label',
+    },
+    {
+      label: 'Permissions',
+      value: 'permissionsCount',
+      active: false,
+    },
+    {
+      label: 'Status',
+      value: 'status',
+      active: true,
+    },
+
+    {
+      label: 'Date de Creation',
+      value: 'dateCreation',
+      type: 'DATE',
+      active: true,
+    },
+    {
+      label: 'Dernière modification',
+      value: 'dateUpdate',
+      type: 'DATE',
+      active: true,
+    },
+    {
+      label: 'latest login',
+      value: 'lastLogin',
+      type: 'DATE',
+      active: true,
+    },
+
+    {
+      label: 'Créé par',
+      value: 'createdBy',
+      active: false,
+    },
+  ],
 };
 
 @Injectable({ providedIn: 'root' })
@@ -62,7 +149,7 @@ export class UsersStore extends signalStore(
       patchState(store, { data: response });
     },
 
-    updateFilter: (filter: Partial<GenericState<Utilisateur,Filter>['filter']>) => {
+    updateFilter: (filter: Partial<GenericState<Utilisateur, Filter>['filter']>) => {
       patchState(store, {
         filter: {
           ...(store.filter?.() ?? { page: 0, size: 10, search: '', username: '' }),

@@ -14,39 +14,47 @@ import {
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { UtilisateursService } from '../services/UtilisateursService';
 import { BackEndResponse, PageableResponse } from '../interfaces/PageableResponse';
+import { Profile } from '../Models/Utilisateur/Profile';
+import { GenericState } from './type.generic';
 
-type UserState = {
-  data: Utilisateur[];
-  totalPages: number;
-  totalElements: number;
-  message: string;
-  isLoading: boolean;
-  filter: {
-    page: number;
-    size: number;
-    search: string;
-    username: string;
-  };
-  numberOfElements: number;
+type Filter = {
+  page: number;
+  size: number;
+  search: string;
+  profileName: string;
 };
-const initialState: UserState = {
+const initialState: GenericState<Profile, Filter> = {
   data: [
     {
-      username: 'test',
+      id: '1',
+      label: 'Admnistrateur',
+    },
+    {
+      id: '2',
+      label: 'Moderateur',
     },
   ],
-  totalPages: 0,
-  totalElements: 0,
+  totalPages: 2,
+  totalElements: 2,
   message: '',
   isLoading: false,
   filter: {
     page: 0,
     size: 10,
     search: '',
-    username: '',
+    profileName: '',
   },
   numberOfElements: 0,
+  selectedData: null,
+  columns: [
+    {
+      label: 'Profile',
+      value: 'label',
+      active: true,
+    },
+  ],
 };
+
 @Injectable({ providedIn: 'root' })
 export class ProfileStore extends signalStore(
   { providedIn: 'root' }, // <-- This was missing
@@ -56,10 +64,10 @@ export class ProfileStore extends signalStore(
       patchState(store, { data: response });
     },
 
-    updateFilter: (filter: Partial<UserState['filter']>) => {
+    updateFilter: (filter: Partial<GenericState<Profile, Filter>['filter']>) => {
       patchState(store, {
         filter: {
-          ...(store.filter?.() ?? { page: 0, size: 10, search: '', username: '' }),
+          ...(store.filter?.() ?? { page: 0, size: 10, search: '', profileName: '' }),
           ...filter,
         },
       });
@@ -69,9 +77,9 @@ export class ProfileStore extends signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(() => {
-          const { page, size, search, username } = store.filter();
-          return utilisateirService.fetchAllUtilisateurs({ page, size, search, username }).pipe(
-            tap((response: BackEndResponse<Utilisateur>) => {
+          const { page, size, search, profileName } = store.filter();
+          return utilisateirService.fetchAllUtilisateurs({ page, size, search, profileName }).pipe(
+            tap((response: BackEndResponse<Profile>) => {
               patchState(store, {
                 data: [],
                 totalElements: response.data.totalElements,
@@ -82,14 +90,14 @@ export class ProfileStore extends signalStore(
               });
             }),
             catchError((error) => {
-              console.error('Error loading utilisateurs', error);
+              console.error('Error loading profils', error);
               patchState(store, { isLoading: false });
               return EMPTY;
             })
           );
         })
       )
-    ), 
+    ),
   }))
 ) {
   constructor() {
