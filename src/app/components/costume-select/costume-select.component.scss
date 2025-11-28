@@ -1,7 +1,6 @@
 .dropdown {
   position: relative;
   width: 100%;
-  font-family: sans-serif;
   cursor: pointer;
   outline: none;
 }
@@ -10,10 +9,12 @@
   padding: 0.5rem;
   // border: 2px solid #eeeeeeb0;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   transition: 400ms ease-in-out;
   font-size: 0.9rem;
+  min-width: 10rem;
+  width: 100%;
+  // background-color: red;
 }
 
 .options {

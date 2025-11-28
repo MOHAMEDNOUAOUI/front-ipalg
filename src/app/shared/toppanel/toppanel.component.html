@@ -1,12 +1,7 @@
 <div class="container">
-    <div class="routes">
-        <!-- <i class="pi pi-home" [routerLink]="'dashboard'"></i> -->
-        <p>...</p>
-        <!-- <span [routerLink]="activeRoute.replace(' > ' , '/')">{{activeRoute}}</span> -->
-        <span>{{activeRoute}}</span>
-    </div>
-    <div class="right-side">
-        <i class="pi pi-search"></i>
-        <i class="pi pi-bell"></i>
-    </div>
+    @if (this.AppStore.sidePanelState()) {
+    <i (click)="this.AppStore.setNavigationState()" class="icon-holder pi pi-angle-double-right cursor"></i>
+    }@else {
+    <i (click)="this.AppStore.setNavigationState()" class="icon-holder pi pi-angle-double-left cursor"></i>
+    }
 </div>

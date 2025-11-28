@@ -1,0 +1,24 @@
+<div class="alert-holder">
+    @for (alert of alerts(); track alert.id || $index; let first = $first; let last = $last) {
+    <div class="alert" [class]="alert.type" [class.entering]="alert.state === 'entering'"
+        [class.exiting]="alert.state === 'exiting'" [class.visible]="alert.state === 'visible'"
+        (click)="removeAlert(alert.id!)">
+        <div class="header">
+            <div class="header-row">
+                @if (alert.icon) {
+                <i class="pi" [ngClass]="alert.icon" [class]="alert.type + '-icon'"></i>
+                }
+                <p>{{alert.message}}</p>
+            </div>
+            <i class="pi pi-times close-icon"></i>
+        </div>
+
+        <div class="footer">
+            <p>this message will close in <span>{{alert.secondsRemaining}}</span>s</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress" [style.width.%]="alert.progress"></div>
+        </div>
+    </div>
+    }
+</div>

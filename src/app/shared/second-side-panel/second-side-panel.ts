@@ -1,3 +1,4 @@
+import { AppStore } from './../../store/app.store';
 import { Component } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { sidePanel_Tabs } from '../../interfaces/sidepanel-tabs';
@@ -181,11 +182,11 @@ export class SecondSidePanel {
     },
   ];
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, public AppStore: AppStore) {}
 
   ngOnInit() {
     this.starterPanel();
-
+    console.log(this.AppStore.sidePanelState());
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -225,6 +226,12 @@ export class SecondSidePanel {
       } else {
         t.active = false;
       }
+    });
+  }
+
+  closeTabs() {
+    this.tabs.forEach((t: any) => {
+      t.active = false;
     });
   }
 

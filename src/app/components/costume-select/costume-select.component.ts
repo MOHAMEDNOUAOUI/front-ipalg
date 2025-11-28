@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-costume-select',
@@ -9,14 +9,18 @@ import { Component } from '@angular/core';
   styleUrl: './costume-select.component.scss',
 })
 export class CostumeSelectComponent {
-  options = [
-    { id: '1', label: 'Option One' },
-    { id: '2', label: 'Option Two' },
-    { id: '3', label: 'Option Three' },
-  ];
+  @Input() options: any[] = [];
+  @Input() selectedOptionInput: any;
+  @Output() emitOption = new EventEmitter<any>();
 
-  selectedOption: { id: string; label: string } | null = null;
+  selectedOption: string = '';
   dropdownOpen = false;
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.selectedOption = this.options.find((idk: any) => idk == this.selectedOptionInput);
+  }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
@@ -26,8 +30,8 @@ export class CostumeSelectComponent {
     this.dropdownOpen = false;
   }
 
-  selectOption(option: { id: string; label: string }) {
+  selectOption(option: any) {
     this.selectedOption = option;
-    this;
+    this.emitOption.emit(this.selectedOption);
   }
 }

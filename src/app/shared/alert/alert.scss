@@ -1,0 +1,238 @@
+.alert-holder {
+  position: fixed;
+  right: 1%;
+  bottom: 2%;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column-reverse; // New alerts appear at bottom
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.alert {
+  width: 380px; // Fixed width for consistency
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: white;
+  // box-shadow: rgba(14, 63, 126, 0.06) 0px 0px 0px 1px, rgba(42, 51, 70, 0.03) 0px 1px 1px -0.5px,
+  //   rgba(42, 51, 70, 0.04) 0px 2px 2px -1px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px,
+  //   rgba(42, 51, 70, 0.03) 0px 5px 5px -2.5px, rgba(42, 51, 70, 0.03) 0px 10px 10px -5px,
+  //   rgba(42, 51, 70, 0.03) 0px 24px 24px -8px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  cursor: pointer;
+  transform-origin: center bottom;
+
+  // Initial hidden state
+  opacity: 0;
+  transform: translateY(100%) scale(0.9);
+  max-height: 0;
+  margin-bottom: 0;
+
+  // Entering animation - Slide up from bottom
+  &.entering {
+    animation: slideUpIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  // Visible state
+  &.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 500px;
+    margin-bottom: 0;
+  }
+
+  // Exiting animation - Fade out
+  &.exiting {
+    animation: fadeOutDown 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+    justify-content: space-between;
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+
+      i {
+        font-size: 1rem;
+      }
+
+      p {
+        font-weight: 500;
+        font-size: 1rem;
+        color: #1a1a1a;
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      // Icon colors based on alert type
+      .success-icon {
+        color: #10b981;
+        margin-top: 0.1rem;
+      }
+
+      .danger-icon {
+        color: #ef4444;
+        margin-top: 0.1rem;
+      }
+
+      .warning-icon {
+        color: #f59e0b;
+        margin-top: 0.1rem;
+      }
+
+      .info-icon {
+        color: #3b82f6;
+        margin-top: 0.1rem;
+      }
+    }
+
+    .close-icon {
+      font-size: 1rem;
+      color: #6b7280;
+      transition: all 0.2s ease;
+      padding: 0.25rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+
+      &:hover {
+        color: #374151;
+        background-color: #f3f4f6;
+      }
+    }
+  }
+
+  .progress-container {
+    width: 100%;
+    height: 3px;
+    background-color: #f3f4f6;
+    overflow: hidden;
+
+    .progress {
+      height: 100%;
+      transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
+    }
+  }
+
+  .footer {
+    background-color: #f8fafc;
+    padding: 0.3rem 1rem;
+    width: 100%;
+
+    p {
+      color: #6b7280;
+      font-size: 0.8rem;
+      margin: 0;
+
+      span {
+        font-weight: 600;
+        color: #374151;
+      }
+    }
+  }
+
+  // Alert type styles with colored progress bars
+  &.success {
+    // border-left: 4px solid #10b981;
+
+    .progress {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+  }
+
+  &.danger {
+    // border-left: 4px solid #ef4444;
+
+    .progress {
+      background: linear-gradient(90deg, #ef4444, #f87171);
+    }
+  }
+
+  &.warning {
+    // border-left: 4px solid #f59e0b;
+
+    .progress {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+  }
+
+  &.info {
+    // border-left: 4px solid #3b82f6;
+
+    .progress {
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    }
+  }
+}
+
+// Animations
+@keyframes slideUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0.9);
+    max-height: 0;
+    margin-bottom: 0;
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10%) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 500px;
+    margin-bottom: 0;
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 500px;
+    margin-bottom: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(20%) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50%) scale(0.9);
+    max-height: 0;
+    margin-bottom: -0.5rem; // Compensate for gap
+  }
+}
+
+// Alternative gentle fade out
+@keyframes gentleFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+// For smooth stacking when alerts are removed
+.alert-holder {
+  .alert {
+    transition: margin-bottom 0.3s ease, transform 0.3s ease;
+
+    &.exiting {
+      animation: fadeOutDown 0.3s ease forwards;
+    }
+  }
+}

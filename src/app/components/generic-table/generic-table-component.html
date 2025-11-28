@@ -1,3 +1,9 @@
+@if (deletePopUp) {
+<app-confirmation-pop-up (closed)="onConfirmDialogResult(false)" (canceled)="onConfirmDialogResult(false)"
+    (confirmed)="onConfirmDialogResult(true)" [confirmDialogConfig]="confirmDialogConfig"></app-confirmation-pop-up>
+}
+
+
 <div class="container">
     <div class="table-header">
         <div class="table-header-left">

@@ -1,8 +1,6 @@
 import { ActionsDistributor } from './../../../../utils/ActionsDistrubitorService';
 import { ProfileService } from './../../../../services/Profiles/profile-service';
 import { Component } from '@angular/core';
-import { PButtonComponent } from '../../../../shared/p-button/p-button.component';
-import { StepsHeaderComponent } from '../../../../shared/steps-header/steps-header.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
@@ -12,19 +10,11 @@ import { GenericTableComponent } from '../../../../components/generic-table/gene
 import { AppButtons } from '../../../../interfaces/bottons';
 import { ActionsFunctionsInterface } from '../../../../utils/Actionsinterface';
 import { ActionFunctionType } from '../../../../utils/ActionsDistrubitorService';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'app-profils',
   standalone: true,
-  imports: [
-    PButtonComponent,
-    StepsHeaderComponent,
-    CommonModule,
-    RouterModule,
-    GenericTableComponent,
-    PaginationComponent,
-  ],
+  imports: [CommonModule, RouterModule, GenericTableComponent, PaginationComponent],
   templateUrl: './profils.component.html',
   styleUrl: './profils.component.scss',
 })
@@ -86,7 +76,7 @@ export class ProfilsComponent implements ActionsFunctionsInterface {
   exporterAction(): void {
     throw new Error('Method not implemented.');
   }
-  iporterAction(): void {
+  importerAction(): void {
     throw new Error('Method not implemented.');
   }
   ///////// end functions actions

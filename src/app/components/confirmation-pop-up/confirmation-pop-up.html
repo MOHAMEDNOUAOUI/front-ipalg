@@ -1,0 +1,21 @@
+<div class="custom-confirm-overlay" (click)="close()">
+    <div class="custom-confirm-dialog" (click)="$event.stopPropagation()">
+        <h3 class="dialog-title">{{ confirmDialogConfig.title }}</h3>
+        <p class="dialog-message">{{ confirmDialogConfig.message }}</p>
+        <div class="dialog-buttons">
+            <button class="btn btn-cancel" (click)="cancel()" type="button">
+                {{ confirmDialogConfig.cancelText }}
+            </button>
+            @if (confirmDialogConfig.confirmText == 'Rejeter' || confirmDialogConfig.confirmText == 'Supprimer' ) {
+            <button class="btn btn-reject" (click)="confirm()" type="button">
+                {{ confirmDialogConfig.confirmText }}
+            </button>
+            }@else{
+            <button class="btn btn-confirm" (click)="confirm()" type="button">
+                {{ confirmDialogConfig.confirmText }}
+            </button>
+            }
+
+        </div>
+    </div>
+</div>

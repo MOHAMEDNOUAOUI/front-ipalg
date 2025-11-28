@@ -1,12 +1,4 @@
-// Colors
-:root{
-    --color-primary:#06adb9;
-    --color-secondary:#033d6d;
-    --transparent-primary : #06adb9a1;
-
-    --roboto:'Roboto'
-    --inter:'Inter'
-}
+// Light Theme (Default)
 $color-primary: #06adb9;
 $color-secondary: #033d6d;
 $color-third: #aed8ef;
@@ -25,7 +17,7 @@ $spacing-lg: 24px;
 $spacing-xl: 32px;
 
 // Fonts
-$font-primary: "Roboto", sans-serif;
+$font-primary: 'Roboto', sans-serif;
 
 // Breakpoints
 $breakpoint-sm: 576px;
@@ -33,12 +25,50 @@ $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
-//panel
-$toppanel-height:50px;
+// Panel
+$toppanel-height: 50px;
 $sidepanel-width: 270px;
+$sidepanel-shrink: 80px;
 $sidepanel-height: 100vh;
 $layout-width: calc(100% - #{$sidepanel-width});
+$layout-shrink: calc(100% - #{$sidepanel-shrink});
 $layout-height: 100vh;
+$sidepanel-color: #f5f7f9;
 
-$sidepanel-color:#f5f7f9
-// $layout-height: calc(100vh - #{$toppanel-height});
+// CSS Custom Properties - Light Theme (Default)
+:root {
+  --color-primary: #06adb9;
+  --color-secondary: #033d6d;
+  --color-third: #aed8ef;
+  --color-success: #4caf50;
+  --color-danger: #f44336;
+  --color-text: #212121;
+  --color-paragraph: #747474;
+  --color-bg: #f9f9f9;
+  --color-layout: #f5f7f9;
+  --sidepanel-color: #f5f7f9;
+  --color-sidepanel: rgb(57, 57, 57);
+
+  --transparent-primary: #06adb9a1;
+  --roboto: 'Roboto';
+  --inter: 'Inter';
+  --sidepanel-width: #{$sidepanel-width};
+  --sidepanel-shrink: #{$sidepanel-shrink};
+  --layout-width: #{$layout-width};
+  --layout-shrink: #{$layout-shrink};
+}
+
+// CSS Custom Properties - Dark Theme
+[data-theme='dark'] {
+  --color-primary: #06adb9;
+  --color-secondary: #4a90e2;
+  --color-third: #2a4365;
+  --color-success: #68d391;
+  --color-danger: #fc8181;
+  --color-text: #e2e8f0;
+  --color-paragraph: #a0aec0;
+  --color-bg: #1a202c;
+  --color-layout: #2d3748;
+  --sidepanel-color: #2d3748;
+  --color-sidepanel: rgb(255, 255, 255);
+}

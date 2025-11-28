@@ -1,8 +1,9 @@
+import { AppStore } from './../store/app.store';
 import { Component } from '@angular/core';
 import { SidepanelComponent } from '../shared/sidepanel/sidepanel.component';
 import { RouterOutlet } from '@angular/router';
-import { ToppanelComponent } from "../shared/toppanel/toppanel.component";
-import { SecondSidePanel } from "../shared/second-side-panel/second-side-panel";
+import { ToppanelComponent } from '../shared/toppanel/toppanel.component';
+import { SecondSidePanel } from '../shared/second-side-panel/second-side-panel';
 
 @Component({
   selector: 'app-layout',
@@ -11,4 +12,6 @@ import { SecondSidePanel } from "../shared/second-side-panel/second-side-panel";
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
-export class LayoutComponent {}
+export class LayoutComponent {
+  constructor(public AppStore: AppStore) {}
+}

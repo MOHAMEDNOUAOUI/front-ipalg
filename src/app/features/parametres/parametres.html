@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="container-header-small">
+        <div class="container-header-text">
+            <h1>Paramètres Système</h1>
+            <p>Administration et configuration de l’application</p>
+        </div>
+        <div class="container-header-filter-container">
+
+        </div>
+    </div>
+    <div class="underneath-container">
+        <app-steps-header [Steps]="Steps"></app-steps-header>
+        <div class="free-plan">
+            <h2>Paramètres du Système</h2>
+            <p>
+                Cette section vous permet de consulter et modifier les paramètres essentiels.
+                Pour le moment, seules les options principales peuvent être ajustées ici.
+                De nouvelles fonctionnalités seront ajoutées progressivement.
+            </p>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

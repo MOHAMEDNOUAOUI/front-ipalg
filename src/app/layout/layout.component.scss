@@ -4,13 +4,14 @@
 .layout {
   .layout-holder {
     position: absolute;
-    width: $layout-width;
+    // width: $layout-width;
     height: $layout-height;
     max-height: $layout-height;
-    left: $sidepanel-width;
+    // left: $sidepanel-width;
     // padding: 1rem;
     background-color: white;
     overflow: auto;
+    transition: 400ms ease-in-out;
   }
 
   // .full-router {

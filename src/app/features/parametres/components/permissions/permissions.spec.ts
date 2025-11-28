@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubProfilsComponent } from './sub-profils.component';
+import { Permissions } from './permissions';
 
-describe('SubProfilsComponent', () => {
-  let component: SubProfilsComponent;
-  let fixture: ComponentFixture<SubProfilsComponent>;
+describe('Permissions', () => {
+  let component: Permissions;
+  let fixture: ComponentFixture<Permissions>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SubProfilsComponent]
+      imports: [Permissions]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(SubProfilsComponent);
+
+    fixture = TestBed.createComponent(Permissions);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

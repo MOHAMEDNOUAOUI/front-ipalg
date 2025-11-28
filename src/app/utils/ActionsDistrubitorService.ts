@@ -13,7 +13,7 @@ export class ActionsDistributor {
       VIEW: () => handler.consulterAction(),
       ADD: () => handler.ajouterAction(),
       EXPORT: () => handler.exporterAction(),
-      IMPORT: () => handler.iporterAction(),
+      IMPORT: () => handler.importerAction(),
     };
 
     const actionFunction = actionMap[action];

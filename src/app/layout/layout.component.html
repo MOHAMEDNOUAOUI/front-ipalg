@@ -1,7 +1,11 @@
 <div class="layout">
+
     <!-- <app-sidepanel></app-sidepanel> -->
     <app-second-side-panel></app-second-side-panel>
-    <div class="layout-holder">
+    <div class="layout-holder" [class.bg]="this.AppStore.sidePanelState()"
+        [style.width]="!this.AppStore.sidePanelState() ? 'var(--layout-width)' : 'var(--layout-shrink)'"
+        [style.left]="!this.AppStore.sidePanelState() ? 'var(--sidepanel-width)' : 'var(--sidepanel-shrink)'">
+        <!-- <app-toppanel></app-toppanel> -->
         <router-outlet></router-outlet>
     </div>
 </div>

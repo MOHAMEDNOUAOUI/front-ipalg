@@ -106,7 +106,7 @@ p {
 // Base HTML setup
 html {
   scroll-behavior: smooth;
-  background-color: $color-layout;
+  background-color: var(--color-layout);
 }
 
 body {
@@ -118,7 +118,7 @@ body {
 .layout {
   min-width: 100vw;
   min-height: 100vh;
-  background-color: $color-bg;
+  background-color: var(--color-bg);
   display: flex;
 }
 
@@ -168,6 +168,7 @@ $breakpoints: '', 's', 'sm', 'md', 'lg', 'xl';
   justify-content: space-between;
   align-items: center;
   z-index: 10;
+  padding-left: 1rem;
 
   .container-header-text {
     h1 {
@@ -192,7 +193,7 @@ $breakpoints: '', 's', 'sm', 'md', 'lg', 'xl';
   justify-content: space-between;
   align-items: center;
   z-index: 10;
-
+  padding-left: 1rem;
   .container-header-text {
     h1 {
       font-size: 1.2rem;
@@ -241,7 +242,7 @@ table {
     left: 0;
     z-index: 1;
     tr {
-      background-color: $color-layout;
+      background-color: var(--color-layout);
       th {
         font-weight: 500;
         font-size: 0.9rem;
@@ -606,7 +607,7 @@ table {
     }
     &:hover {
       background-color: rgb(245, 245, 245);
-      color: $color-primary;
+      color: var(--color-primary);
     }
   }
   // .menu-btn-trash {
@@ -681,4 +682,40 @@ table {
 
 .cursor {
   cursor: pointer;
+}
+
+.input {
+  // Base input styling
+  font-size: 14px;
+  color: #333;
+  border-radius: 10px;
+  // Sizing and spacing
+  padding: calc(var(--spacing-unit, 8px)) calc(var(--spacing-unit, 8px) * 2);
+
+  // Border and background
+  border: 1px solid var(--border-color, #d1d5db);
+  background-color: white;
+
+  // Transitions
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  // Placeholder styling
+  &::placeholder {
+    color: var(--text-color-secondary, #6b7280);
+    opacity: 0.7;
+  }
+
+  // Focus state
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(6, 173, 185, 0.2);
+  }
+
+  // Disabled state
+  &:disabled {
+    background-color: var(--surface-section, #f3f4f6);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }

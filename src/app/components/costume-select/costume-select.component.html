@@ -1,17 +1,19 @@
 <div class="dropdown" (click)="toggleDropdown()" tabindex="0" (blur)="closeDropdown()">
     <div class="selectedContainer" [ngStyle]="{ 'borderColor': dropdownOpen ? 'var(--color-primary)' : '' }">
-        {{ selectedOption?.label || 'Selectionnez une option' }}
+        {{ selectedOption }}
     </div>
 
     @if (dropdownOpen) {
     <ul class="options">
-        <li *ngFor="let option of options" [ngClass]="{ 'selected': option.id === selectedOption?.id }"
-            (click)="selectOption(option)">
-            {{ option.label }}
-            @if(option.id === selectedOption?.id){
+        @for (option of options; track $index) {
+        <li [ngClass]="{ 'selected': option === selectedOption }" (click)="selectOption(option)">
+            {{ option! }}
+            @if(option === selectedOption){
             <i class="pi pi-check"></i>
             }
         </li>
+        }
+
     </ul>
     }
 

@@ -29,13 +29,14 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideIcons } from '@ng-icons/core';
 import { matNotificationsActive, matNotifications } from '@ng-icons/material-icons/baseline';
+import { Iplaginterceptor } from './config/ipalg.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([Iplaginterceptor])),
     provideIcons({
       tablerSettingsCode,
       tablerProgressHelp,

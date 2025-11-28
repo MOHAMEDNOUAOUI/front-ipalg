@@ -18,11 +18,13 @@ import { UsersStore } from '../../store/users.store';
 import { FormsModule } from '@angular/forms';
 import { EllipsisInterface, TableButtonsInterface } from '../../interfaces/Table-helper';
 import { BaseFilter, BaseStore } from '../../store/type.generic';
+import { ConfirmationPopUp } from '../confirmation-pop-up/confirmation-pop-up';
+import { ActionFunctionType } from '../../utils/ActionsDistrubitorService';
 
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule],
+  imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule, ConfirmationPopUp],
   templateUrl: './generic-table-component.html',
   styleUrl: './generic-table-component.scss',
 })
@@ -47,6 +49,24 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
   popupTop: number = 0;
   popupRight: number = 0;
   popupVisible = false;
+  deletePopUp = false;
+
+  confirmDialogConfig = {
+    title: '',
+    message: '',
+    confirmText: '',
+    cancelText: '',
+  };
+
+  resetConfirmDialog() {
+    this.deletePopUp = false;
+    this.confirmDialogConfig = {
+      title: '',
+      message: '',
+      confirmText: '',
+      cancelText: '',
+    };
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -115,6 +135,25 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
     if (row) {
       this.store.setSelectedData(row);
     }
-    this.actionEvent.emit(action);
+
+    if (action == ActionFunctionType.DELETE) {
+      this.deletePopUp = true;
+      this.confirmDialogConfig = {
+        title: 'Confirmation de suppression',
+        message:
+          'Voulez-vous vraiment supprimer cet élément ? Cette action ne peut pas être annulée.',
+        confirmText: 'Supprimer',
+        cancelText: 'Annuler',
+      };
+    } else {
+      this.actionEvent.emit(action);
+    }
+  }
+
+  onConfirmDialogResult(confirmation: boolean) {
+    if (confirmation) {
+      this.actionEvent.emit(ActionFunctionType.DELETE);
+    }
+    this.resetConfirmDialog();
   }
 }

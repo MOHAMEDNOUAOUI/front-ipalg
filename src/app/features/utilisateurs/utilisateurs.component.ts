@@ -1,3 +1,4 @@
+import { AlertFrontStore } from './../../store/front-alerts.store';
 import { UtilisateursService } from './../../services/UtilisateursService';
 import { Component, effect, signal } from '@angular/core';
 import { ReusableTableComponent } from '../../shared/reusable-table/reusable-table.component';
@@ -7,15 +8,41 @@ import { UtilisateurCreateComponent } from '../../components/utilisateur-create/
 import { PageableResponse } from '../../interfaces/PageableResponse';
 import { UsersStore } from '../../store/users.store';
 import { saveAs } from 'file-saver';
+import { AppButtons } from '../../interfaces/bottons';
+import { ActionFunctionType, ActionsDistributor } from '../../utils/ActionsDistrubitorService';
+import { EllipsisInterface } from '../../interfaces/Table-helper';
+import { ActionsFunctionsInterface } from '../../utils/Actionsinterface';
+import { ConfirmationPopUp } from '../../components/confirmation-pop-up/confirmation-pop-up';
 
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [GenericTableComponent, UtilisateurCreateComponent],
+  imports: [GenericTableComponent, UtilisateurCreateComponent, ConfirmationPopUp],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.scss',
 })
-export class UtilisateursComponent {
+export class UtilisateursComponent implements ActionsFunctionsInterface {
+  buttons = AppButtons['UTILISATEURS'];
+  items: EllipsisInterface[] = [
+    {
+      label: 'Modifier',
+      icon: 'pi pi-pencil',
+      action: ActionFunctionType.MODIFY,
+      class: 'button-modifier',
+    },
+    {
+      label: 'Supprimer',
+      icon: 'pi pi-trash',
+      action: ActionFunctionType.DELETE,
+      class: 'button-supprimer',
+    },
+    {
+      label: 'Consulter',
+      icon: 'pi pi-eye',
+      action: ActionFunctionType.VIEW,
+      class: 'button-consulter',
+    },
+  ];
   //signals
 
   utilisateursResponse$ = signal<Utilisateur[]>([]);
@@ -25,151 +52,37 @@ export class UtilisateursComponent {
 
   userCreatePopUp = false;
 
-  // data: Utilisateur[] = [
-  //   {
-  //     id: '1',
-  //     username: 'Khalid Tissmi',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Active,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '2',
-  //     username: 'Mohamed Do',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Active,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '3',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Active,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '4',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Pending,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '5',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Active,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '6',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Inactive,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '7',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Inactive,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '8',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Locked,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '9',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Pending,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  //   {
-  //     id: '10',
-  //     username: 'Jhon from there',
-  //     email: 'email@gmail.com',
-  //     status: statusUtilisateur.Locked,
-  //     profile: {
-  //       id: '1',
-  //       label: 'Administrateur',
-  //     },
-  //     createdBy: 'Administrateur',
-  //     dateDeModification: new Date(),
-  //   },
-  // ];
-
-  //
-
-  data = [];
-  constructor(public userStore: UsersStore, private service: UtilisateursService) {}
+  constructor(
+    public userStore: UsersStore,
+    private service: UtilisateursService,
+    private ActionsDistributor: ActionsDistributor,
+    private AlertFrontStore: AlertFrontStore
+  ) {}
 
   ngOnInit() {}
 
-  // outputs emits
-  takeFilterResponse($event: boolean) {
-    if ($event) {
-      alert('filtering');
-    }
+  actionsDistributor(event: ActionFunctionType | string) {
+    console.log(event);
+
+    this.ActionsDistributor.distributeAction(event, this);
   }
 
-  takeAjouterResponse($event: boolean) {
-    if ($event) {
-      this.userCreatePopUp = true;
-    }
+  modifierAction(): void {
+    throw new Error('Method not implemented.');
   }
-  takeModifierResponse($event: { confirmed: boolean; user: Utilisateur }) {
-    if ($event.confirmed) {
-      console.log($event.user);
-    }
+  supprimerAction(): void {
+    this.AlertFrontStore.success('Utilisateur supprimer aves succes', 1500);
+  }
+  consulterAction(): void {
+    throw new Error('Method not implemented.');
+  }
+  ajouterAction(): void {
+    this.userCreatePopUp = true;
+  }
+  exporterAction(): void {
+    this.AlertFrontStore.success('Fichier exporter aves succes', 1500);
+  }
+  importerAction(): void {
+    throw new Error('Method not implemented.');
   }
 }

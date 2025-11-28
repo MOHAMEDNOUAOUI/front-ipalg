@@ -1,3 +1,4 @@
+import { AppStore } from './../../store/app.store';
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
@@ -11,7 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 export class ToppanelComponent {
   activeRoute: string = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public AppStore: AppStore) {
     router.events.subscribe(() => {
       this.activeRoute = this.router.url
         .split('/')

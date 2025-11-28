@@ -4,5 +4,5 @@ export interface ActionsFunctionsInterface {
   consulterAction(): void;
   ajouterAction(): void;
   exporterAction(): void;
-  iporterAction(): void;
+  importerAction(): void;
 }

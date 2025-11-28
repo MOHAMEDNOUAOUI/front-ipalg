@@ -17,7 +17,7 @@ export const routes: Routes = [
           import('./features/dashboard/dashboard.component').then(
             (dashboard) => dashboard.DashboardComponent
           ),
-        data:['DASHBOARD']
+        data: ['DASHBOARD'],
       },
       {
         path: 'inventaire',
@@ -37,27 +37,34 @@ export const routes: Routes = [
             path: '',
             redirectTo: 'profils',
             pathMatch: 'full',
-          },{
+          },
+          {
             path: 'categories',
-            loadComponent: () => import('./features/environement/components/categories/categories').then(
-              (Categories) => Categories.Categories
-            )
-
-          },{
+            loadComponent: () =>
+              import('./features/environement/components/categories/categories').then(
+                (Categories) => Categories.Categories
+              ),
+          },
+          {
             path: 'documents',
-            loadComponent: () => import('./features/environement/components/documents/documents').then(
-              (Documents) => Documents.Documents
-            )
-          },{
+            loadComponent: () =>
+              import('./features/environement/components/documents/documents').then(
+                (Documents) => Documents.Documents
+              ),
+          },
+          {
             path: 'champs-personalises',
-            loadComponent: () => import('./features/environement/components/champs-personalises/champs-personalises').then(
-              (champspersonalises) => champspersonalises.ChampsPersonalises
-            )
-          },{
+            loadComponent: () =>
+              import(
+                './features/environement/components/champs-personalises/champs-personalises'
+              ).then((champspersonalises) => champspersonalises.ChampsPersonalises),
+          },
+          {
             path: 'variables-globales',
-            loadComponent: () => import('./features/environement/components/variables-globales/variables-globales').then(
-              (variablesGlobales) => variablesGlobales.VariablesGlobales
-            )
+            loadComponent: () =>
+              import(
+                './features/environement/components/variables-globales/variables-globales'
+              ).then((variablesGlobales) => variablesGlobales.VariablesGlobales),
           },
           {
             path: 'profils',
@@ -82,6 +89,35 @@ export const routes: Routes = [
           import('./features/utilisateurs/utilisateurs.component').then(
             (u) => u.UtilisateursComponent
           ),
+      },
+      // Settings page layout
+      {
+        path: 'parametres',
+        loadComponent: () => import('./features/parametres/parametres').then((p) => p.Parametres),
+        children: [
+          {
+            path: '',
+            redirectTo: 'parametre-general',
+            pathMatch: 'full',
+          },
+          {
+            path: 'parametre-modules',
+            loadComponent: () =>
+              import('./features/parametres/components/modules/modules').then((m) => m.Modules),
+          },
+          {
+            path: 'parametre-permissions',
+            loadComponent: () =>
+              import('./features/parametres/components/permissions/permissions').then(
+                (p) => p.Permissions
+              ),
+          },
+          {
+            path: 'parametre-general',
+            loadComponent: () =>
+              import('./features/parametres/components/general/general').then((g) => g.General),
+          },
+        ],
       },
     ],
   },
