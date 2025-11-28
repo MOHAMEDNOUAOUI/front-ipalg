@@ -14,6 +14,7 @@ import { filter } from 'rxjs';
   viewProviders: [],
 })
 export class SecondSidePanel {
+  currentYear = new Date().getFullYear();
   tabs: any[] = [
     {
       header: 'Menu',

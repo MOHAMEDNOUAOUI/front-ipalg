@@ -80,6 +80,15 @@ export class AppStore extends signalStore(
         });
       }
     },
+
+    applyAppearances() {
+      if (!localStorage.getItem('appearance')) {
+        localStorage.setItem('appearance', JSON.stringify(Appearance.Light));
+      }
+      if (!localStorage.getItem('langue')) {
+        localStorage.setItem('langue', JSON.stringify(Languages.Francais));
+      }
+    },
   }))
 ) {
   constructor() {
@@ -88,7 +97,7 @@ export class AppStore extends signalStore(
     effect(() => {
       this.applyTheme(this.appearance());
     });
-
+    this.applyAppearances();
     this.initializeTheme();
   }
 }
