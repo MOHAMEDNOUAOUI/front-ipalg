@@ -9,41 +9,17 @@
     <div class="table-header-right">
       <!-- <div class="seperator"></div> -->
       <div class="buttons">
-        <app-p-button
-          [icon]="'pi-filter'"
-          [severity]="severity.Secondary"
-          [outline]="true"
-          [rounded]="true"
-          [label]="'Filtrer'"
-          (click)="FilterClick()"
-        ></app-p-button>
-        <app-p-button
-          [icon]="'pi-plus'"
-          [severity]="severity.Dark"
-          [outline]="false"
-          [rounded]="true"
-          [label]="'Ajouter ' + page"
-          (click)="AjouterClick()"
-        ></app-p-button>
+        <app-p-button [icon]="'pi-filter'" [severity]="severity.Secondary" [outline]="true" [rounded]="true"
+          [label]="'Filtrer'" (click)="FilterClick()"></app-p-button>
+        <app-p-button [icon]="'pi-plus'" [severity]="severity.Dark" [outline]="false" [rounded]="true"
+          [label]="'Ajouter ' + page" (click)="AjouterClick()"></app-p-button>
 
         @if(exporter){
-        <app-p-button
-          [icon]="'pi-download'"
-          [severity]="severity.Success"
-          [outline]="false"
-          [rounded]="true"
-          [label]="'Exporter'"
-          (click)="ExporterClick()"
-        ></app-p-button>
+        <app-p-button [icon]="'pi-download'" [severity]="severity.Success" [outline]="false" [rounded]="true"
+          [label]="'Exporter'" (click)="ExporterClick()"></app-p-button>
         } @if (importer) {
-        <app-p-button
-          [icon]="'pi-upload'"
-          [severity]="severity.Success"
-          [outline]="true"
-          [rounded]="true"
-          [label]="'Importer'"
-          (click)="ImporterClick()"
-        ></app-p-button>
+        <app-p-button [icon]="'pi-upload'" [severity]="severity.Success" [outline]="true" [rounded]="true"
+          [label]="'Importer'" (click)="ImporterClick()"></app-p-button>
         }
       </div>
     </div>
@@ -79,31 +55,23 @@
           </td>
           @for (column of columns; track $index) { @if ([
           'date','status','createdBy'].includes(column.value)) {
-          <td
-            [style.text-align]="column.value.includes('status') ? 'center' : ''"
-            [style.font-weight]="
+          <td [style.text-align]="column.value.includes('status') ? 'center' : ''" [style.font-weight]="
               column.bold
                 ? '500'
                 : '
                     '
-            "
-            style="
+            " style="
               padding-left: 0.5rem;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
               width: 1%;
-            "
-          >
+            ">
             @if (page.includes('utilisateur') && column.value.includes('status')) { @if
             (statusUtilisateur.Active == row.status || statusUtilisateur.Inactive==row.status) {
             <p class="utilisateur-status">
-              <label class="switch"
-                ><input
-                  [checked]="getValue(column, row) == statusUtilisateur.Active"
-                  type="checkbox"
-                  class="switch-input" /><span class="switch-label"></span
-              ></label>
+              <label class="switch"><input [checked]="getValue(column, row) == statusUtilisateur.Active" type="checkbox"
+                  class="switch-input" /><span class="switch-label"></span></label>
               <!-- <span class="dot" [class.active]="getValue(column.value , row)=='Active'"
                                     [class.disactive]="getValue(column.value , row)=='Not Active'"></span> -->
               <!-- <span> {{getValue(column.value , row)}}</span> -->
@@ -119,15 +87,12 @@
             }
           </td>
           } @else {
-          <td
-            [style.font-weight]="
+          <td [style.font-weight]="
               column.bold
                 ? '500'
                 : '
                     '
-            "
-            style="padding-left: 0.5rem"
-          >
+            " style="padding-left: 0.5rem">
             @if(column.value.toLowerCase().includes('date')){
             {{ getValue(column, row) | date : 'MMMM dd, yyyy' }}
             } @else {
@@ -144,12 +109,8 @@
           } }
           <td style="width: 3rem; text-align: center; padding: 0.5rem; white-space: nowrap">
             @if (!ellipsis && delete) {
-            <i
-              title="Suprimer"
-              (click)="DeleteClick(row)"
-              class="pi pi-trash trash-button"
-              (click)="openPopUp(row, $index, $event)"
-            ></i>
+            <i title="Suprimer" (click)="DeleteClick(row)" class="pi pi-trash trash-button"
+              (click)="openPopUp(row, $index, $event)"></i>
             } @if (!ellipsis && modifier) {
             <i class="pi pi-pencil pencil-button" title="Modifier" (click)="ModifierClick(row)"></i>
             } @if (ellipsis && (modifier || delete)) {
@@ -194,8 +155,8 @@
         }
       </tbody>
     </table>
-    
+
   </div>
 
-  
+
 </div>

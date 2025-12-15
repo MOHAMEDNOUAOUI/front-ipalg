@@ -258,6 +258,12 @@
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
+  ng-icon {
+    font-size: 1.3rem;
+    color: var(--color-primary);
+    cursor: pointer;
+  }
+
   .leftside {
     display: flex;
     gap: 0.5rem;
@@ -349,6 +355,7 @@
 .sub-sub-link {
   padding-left: 2rem;
   color: rgb(105, 105, 105);
+  transition: 5s ease-in-out;
 }
 
 .subactive {
@@ -359,16 +366,16 @@
   }
 }
 
+.logout {
+  p,
+  ng-icon {
+    color: red !important;
+  }
+}
 /* Detect 125% scaling by viewport shrink (preferred) */
 @media (max-width: 1700px) {
   .logo h2 {
     font-size: 1.2rem;
-  }
-
-  .link i,
-  .link p,
-  .link ng-icon {
-    font-size: 0.9rem;
   }
 
   .userprofile .informations p {
@@ -379,12 +386,62 @@
     font-size: 0.65rem;
   }
 
-  .sub-link {
-    i,
-    p,
+  .routing-container {
+    .links {
+      .sub-sub-link {
+        i,
+        p,
+        ng-icon {
+          font-size: 0.85rem;
+          color: rgb(57, 57, 57);
+        }
+      }
+    }
+  }
+}
+
+.routing-container-shrinked {
+  .link {
+    font-size: 1.4rem;
+  }
+
+  .linkstab {
+    .sub-link {
+      padding: 0.5rem !important;
+      align-items: center;
+      justify-content: center;
+      &.active {
+        transition: 500ms ease-in-out;
+      }
+    }
+  }
+}
+
+.links-shrinked {
+  .link {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+  }
+
+  .headerActive {
+    border-radius: 10px;
+    background-color: var(--color-secondary);
     ng-icon {
-      font-size: 0.85rem;
-      color: rgb(57, 57, 57);
+      color: white !important;
+    }
+  }
+}
+
+.panel-footer-shrinked {
+  .link {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    transition: 400ms ease-in-out;
+    ng-icon {
+      color: var(--color-secondary) !important;
+    }
+    &:hover {
+      transform: translateX(0.5rem);
     }
   }
 }

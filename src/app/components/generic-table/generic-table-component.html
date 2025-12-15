@@ -95,7 +95,8 @@
                         <div [id]="values.value" id="email" [style.font-weight]="values.bold ? '500' : ''"
                             class="text-muted" style="font-size: 0.9em;">{{ getValue(values , row) }}</div>
                         }
-                        }@else if(column.label==='Status'){
+                        }@else if(column.type == 'status'){
+                        @if (page == 'utilisateur') {
                         @if (statusUtilisateur.Active == getProperty(row ,'status') ||
                         statusUtilisateur.Inactive==getProperty(row ,'status')) {
                         <p class="utilisateur-status">
@@ -111,11 +112,16 @@
                         }@else {
                         <i title="Locked Account" class="pi pi-lock status-icons" style="text-align: center;"></i>
                         }
+                        }@else {
+                        <div>{{ getValue(column, row)}}</div>
+                        }
+
                         }@else if(column.type && column.type=="DATE"){
                         {{ getValue(column, row) | date:'dd MMMM, hh:mm'}}
                         }@else {
                         {{ getValue(column, row)}}
                         }
+
 
                     </td>
                     }

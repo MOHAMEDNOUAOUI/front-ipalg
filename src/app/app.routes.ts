@@ -119,6 +119,15 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./features/notifications/notifications').then((n) => n.Notifications),
+      },
+      {
+        path: 'centre-aide',
+        loadComponent: () => import('./features/centre-aide/centre-aide').then((n) => n.CentreAide),
+      },
     ],
   },
 ];

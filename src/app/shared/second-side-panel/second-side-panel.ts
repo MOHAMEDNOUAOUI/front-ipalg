@@ -95,7 +95,7 @@ export class SecondSidePanel {
         },
         {
           label: 'Entities',
-          icon: 'pi-case',
+          icon: 'tablerTruckDelivery',
           route: 'test',
         },
       ],

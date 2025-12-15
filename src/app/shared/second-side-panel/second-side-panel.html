@@ -114,14 +114,14 @@
             <ng-icon name="tablerSettingsCode" />
             <p>Paramètres</p>
         </div>
-        <div class="link">
+        <div class="link" [routerLink]="'notifications'" [routerLinkActive]="'headerActive'">
             <ng-icon name="tablerBellRingingFill" />
             <p>Notifications</p>
             <div class="circle">
                 <span>15</span>
             </div>
         </div>
-        <div class="link">
+        <div class="link" [routerLink]="'centre-aide'" [routerLinkActive]="'headerActive'">
             <ng-icon name="tablerProgressHelp" />
             <p>Centre d’aide</p>
         </div>
@@ -144,11 +144,88 @@
                 </div>
             </div>
 
-            <ng-icon name="iconoirArrowSeparateVertical"></ng-icon>
+            <!-- <ng-icon name="iconoirArrowSeparateVertical"></ng-icon> -->
+            <ng-icon name="ionLogOutOutline" />
         </div>
+
         <p id="">@ {{currentYear}} Sequence Inc.</p>
     </div>
+    <!-- 
+    <div class="links">
+        <div class="link logout">
+            <ng-icon name="ionLogOutOutline" />
+            <p>Log out</p>
+        </div>
+    </div> -->
+
     }@else {
+    <div class="seperator"></div>
+
+    <div class="routing-container routing-container-shrinked">
+        @for (item of tabs; track $index) {
+        <div class="link" style="justify-content: center;" [class.headerActive]="item.active"
+            [routerLinkActive]="'active'" (click)="openTab(item)">
+            <ng-icon [name]="item.icon" />
+        </div>
+
+        <div class="linkstab">
+            @if (item.active) {
+            @for (link of item.links; track $index) {
+            <div class="sub-link" [routerLink]="link.route" [routerLinkActive]="'active'"
+                [routerLinkActiveOptions]="{ exact : false }" (click)="openSubTab(item , link)">
+                <ng-icon [name]="link.icon"></ng-icon>
+            </div>
+
+            }
+            }
+        </div>
+        }
+
+    </div>
+
+    <div class="links links-shrinked">
+
+        <div class="link" style="justify-content: center;" [routerLink]="'parametres'"
+            [routerLinkActive]="'headerActive'">
+            <ng-icon name="tablerSettingsCode" />
+        </div>
+
+        <div class="link" style="justify-content: center;" [routerLink]="'notifications'"
+            [routerLinkActive]="'headerActive'">
+            <ng-icon name="tablerBellRingingFill" />
+            <div class="circle">
+                <span>15</span>
+            </div>
+        </div>
+        <div class="link" style="justify-content: center;" [routerLink]="'centre-aide'"
+            [routerLinkActive]="'headerActive'">
+            <ng-icon name="tablerProgressHelp" />
+
+        </div>
+        <!-- <div class="link">
+            <ng-icon name="ionLogOutOutline" />
+            <p>Log out</p>
+        </div> -->
+    </div>
+
+    <div class="seperator"></div>
+
+    <div class="panel-footer panel-footer-shrinked">
+        <div class="userprofile">
+            <div class="leftside">
+                <div class="cirlce"></div>
+
+            </div>
+
+            <!-- <ng-icon name="iconoirArrowSeparateVertical"></ng-icon> -->
+
+        </div>
+
+        <div class="link headerActive" style="justify-content: center">
+            <ng-icon name=" ionLogOutOutline" />
+
+        </div>
+    </div>
 
     }
 </div>

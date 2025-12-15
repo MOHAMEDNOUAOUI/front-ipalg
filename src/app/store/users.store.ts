@@ -68,9 +68,11 @@ const initialState: GenericState<Utilisateur, Filter> = {
         {
           value: 'username',
           bold: true,
+          type: 'string',
         },
         {
           value: 'email',
+          type: 'string',
         },
       ],
     },
@@ -80,9 +82,11 @@ const initialState: GenericState<Utilisateur, Filter> = {
         {
           value: 'userProfile',
           item: 'name',
+          type: 'string',
         },
         {
           value: 'email',
+          type: 'string',
         },
       ],
       item: 'name',
@@ -91,23 +95,27 @@ const initialState: GenericState<Utilisateur, Filter> = {
     {
       label: 'Prenom',
       value: 'firstName',
+      type: 'string',
       active: true,
       // item: 'label',
     },
     {
       label: 'Nom',
       value: 'lastName',
+      type: 'string',
       active: true,
       // item: 'label',
     },
     {
       label: 'Permissions',
       value: 'permissionsCount',
+      type: 'string',
       active: false,
     },
     {
       label: 'Status',
       value: 'status',
+      type: 'status',
       active: true,
     },
 
@@ -133,6 +141,7 @@ const initialState: GenericState<Utilisateur, Filter> = {
     {
       label: 'Créé par',
       value: 'createdBy',
+      type: 'string',
       active: false,
     },
   ],
