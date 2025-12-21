@@ -10,7 +10,7 @@ import { PolarChartComponent } from '../../components/dashboard/polar-chart/pola
 import { RadarChartComponent } from '../../components/dashboard/radar-chart/radar-chart.component';
 import { TotalCardWithChartComponent } from '../../components/dashboard/total-card-with-chart/total-card-with-chart.component';
 import { PButtonComponent } from '../../shared/p-button/p-button.component';
-import { CommonModule } from '@angular/common';
+
 import { SummaryChartComponent } from '../../components/summary-chart/summary-chart..component';
 import { BarsChartComponent } from '../../components/dashboard/bars-chart/bars-chart.component';
 import { PileCharts } from "../../components/dashboard/pile-charts/pile-charts";
@@ -18,7 +18,6 @@ import { PileCharts } from "../../components/dashboard/pile-charts/pile-charts";
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    CommonModule,
     SmallCardComponent,
     CardHolderComponent,
     ChartModule,

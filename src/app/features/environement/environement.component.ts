@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router';
 import { LeftSideNavigationPanelComponent } from '../../shared/left-side-navigation-panel/left-side-navigation-panel.component';
 import { navigation } from '../../interfaces/sidepanel-tabs';
@@ -11,11 +11,10 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
   standalone: true,
   imports: [
     PButtonComponent,
-    CommonModule,
     RouterModule,
     LeftSideNavigationPanelComponent,
-    PaginationComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './environement.component.html',
   styleUrl: './environement.component.scss',
 })

@@ -1,7 +1,7 @@
 import { ActionsDistributor } from './../../../../utils/ActionsDistrubitorService';
 import { ProfileService } from './../../../../services/Profiles/profile-service';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
 import { ProfileStore } from '../../../../store/profile.store';
@@ -15,7 +15,7 @@ import { GenericTableFooter } from "../../../../components/generic-table-footer/
 @Component({
   selector: 'app-profils',
   standalone: true,
-  imports: [CommonModule, RouterModule, GenericTableComponent, PaginationComponent, GenericTableFooter],
+  imports: [RouterModule, GenericTableComponent, PaginationComponent, GenericTableFooter],
   templateUrl: './profils.component.html',
   styleUrl: './profils.component.scss',
 })
