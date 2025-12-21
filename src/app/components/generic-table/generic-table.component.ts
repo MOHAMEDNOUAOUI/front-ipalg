@@ -2,6 +2,7 @@ import { filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  effect,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -20,11 +21,12 @@ import { EllipsisInterface, TableButtonsInterface } from '../../interfaces/Table
 import { BaseFilter, BaseStore } from '../../store/type.generic';
 import { ConfirmationPopUp } from '../confirmation-pop-up/confirmation-pop-up';
 import { ActionFunctionType } from '../../utils/ActionsDistrubitorService';
+import { GenericTableRowsExecution } from "../generic-table-rows-execution/generic-table-rows-execution";
 
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule, ConfirmationPopUp],
+  imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule, ConfirmationPopUp, GenericTableRowsExecution],
   templateUrl: './generic-table-component.html',
   styleUrl: './generic-table-component.scss',
 })
@@ -41,7 +43,14 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
   @Input() ellipsisItems: EllipsisInterface[] = [];
   @Output() actionEvent = new EventEmitter<string>();
 
-  constructor() {}
+  showUpdateAll$ = signal<boolean>(false);
+
+  constructor() {
+    effect(() => {
+      const rows = this.store.selectedRowsData();
+      rows.length > 0 ? this.showUpdateAll$.set(true) : this.showUpdateAll$.set(false);
+    });
+  }
 
   //Utilisateur
   statusUtilisateur = statusUtilisateur;
@@ -155,5 +164,9 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
       this.actionEvent.emit(ActionFunctionType.DELETE);
     }
     this.resetConfirmDialog();
+  }
+
+  selectItem(item: T) {
+    this.store.updateSelectedRow(item);
   }
 }

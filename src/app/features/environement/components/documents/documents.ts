@@ -1,11 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-documents',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './documents.html',
-  styleUrl: './documents.scss'
+  styleUrl: './documents.scss',
 })
-export class Documents {
-
-}
+export class Documents {}

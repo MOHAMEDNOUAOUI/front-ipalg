@@ -6,6 +6,17 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+    border: 1px solid #eee;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: 300ms ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 0.8;
   }
   .page {
     padding: 0.5rem 0.9rem;

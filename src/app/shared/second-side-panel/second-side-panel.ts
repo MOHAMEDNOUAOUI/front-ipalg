@@ -69,7 +69,7 @@ export class SecondSidePanel {
             {
               label: 'Documents Management',
               icon: 'tablerCloverFill',
-              route: 'test',
+              route: 'environement/documents',
             },
             {
               label: 'Champs Personalisés',

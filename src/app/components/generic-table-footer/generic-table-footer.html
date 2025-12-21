@@ -1,0 +1,20 @@
+<div class="table-footer">
+    <p class="showing">
+        <span>Affichage de 1-{{ this.store.filter().size - 1 }}</span> sur {{ this.store.totalElements() }}
+    </p>
+    <app-pagination (pageChange)="changePage($event)" [currentPage]="this.store.filter().page"
+        [totalPages]="this.store.totalPages()"></app-pagination>
+
+
+    <!-- @if (true) {
+      <div class="size">
+        <label for="">Show per page:</label>
+        <select class="size">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+      } -->
+</div>

@@ -3,6 +3,7 @@
 
     <button class="arrow" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">
         <i class="pi pi-angle-left"></i>
+        <span>Precendent</span>
     </button>
 
     <!-- Page buttons -->
@@ -14,6 +15,7 @@
 
     <!-- RIGHT button: send currentPage + 2 (1-based) -->
     <button class="arrow" (click)="changePage(currentPage + 1)" [disabled]="currentPage + 1 === totalPages">
+        <span>Suivant</span>
         <i class="pi pi-angle-right"></i>
     </button>
 

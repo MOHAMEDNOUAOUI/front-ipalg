@@ -44,6 +44,7 @@ const initialState: GenericState<Profile, Filter> = {
   },
   numberOfElements: 0,
   selectedData: null,
+  selectedRows: [],
   columns: [
     {
       label: 'Profile',
@@ -59,6 +60,7 @@ export class ProfileStore
     withState(initialState),
     withComputed((store) => ({
       data: computed(() => store.data()),
+      selectedRowsData: computed(() => store.selectedRows()),
       totalElements: computed(() => store.totalElements()),
       totalPages: computed(() => store.totalPages()),
       isLoading: computed(() => store.isLoading()),
@@ -93,6 +95,15 @@ export class ProfileStore
             search: search,
           },
         });
+      },
+      updateSelectedRow: (data: Profile) => {
+        let selectedRows = store.selectedRows();
+        const exists = selectedRows.some((row: Profile) => row.id === data.id);
+
+        const updatedRows = exists
+          ? selectedRows.filter((row) => row.id !== data.id)
+          : [...selectedRows, data];
+        patchState(store, { selectedRows: updatedRows });
       },
 
       loadData: rxMethod<void>(

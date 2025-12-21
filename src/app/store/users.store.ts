@@ -49,6 +49,7 @@ const initialState: GenericState<Utilisateur, Filter> = {
   },
   numberOfElements: 0,
   selectedData: null,
+  selectedRows: [],
   columns: [
     // {
     //   label: 'Something Else',
@@ -153,6 +154,7 @@ export class UsersStore
     withState(initialState),
     withComputed((store) => ({
       data: computed(() => store.data()),
+      selectedRowsData: computed(() => store.selectedRows()),
       totalElements: computed(() => store.totalElements()),
       totalPages: computed(() => store.totalPages()),
       isLoading: computed(() => store.isLoading()),
@@ -186,6 +188,15 @@ export class UsersStore
             search: search,
           },
         });
+      },
+      updateSelectedRow: (data: Utilisateur) => {
+        let selectedRows = store.selectedRows();
+        const exists = selectedRows.some((row: Utilisateur) => row.id === data.id);
+
+        const updatedRows = exists
+          ? selectedRows.filter((row) => row.id !== data.id)
+          : [...selectedRows, data];
+        patchState(store, { selectedRows: updatedRows });
       },
 
       loadData: rxMethod<void>(

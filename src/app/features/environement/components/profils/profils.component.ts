@@ -10,11 +10,12 @@ import { GenericTableComponent } from '../../../../components/generic-table/gene
 import { AppButtons } from '../../../../interfaces/bottons';
 import { ActionsFunctionsInterface } from '../../../../utils/Actionsinterface';
 import { ActionFunctionType } from '../../../../utils/ActionsDistrubitorService';
+import { GenericTableFooter } from "../../../../components/generic-table-footer/generic-table-footer";
 
 @Component({
   selector: 'app-profils',
   standalone: true,
-  imports: [CommonModule, RouterModule, GenericTableComponent, PaginationComponent],
+  imports: [CommonModule, RouterModule, GenericTableComponent, PaginationComponent, GenericTableFooter],
   templateUrl: './profils.component.html',
   styleUrl: './profils.component.scss',
 })
@@ -50,10 +51,6 @@ export class ProfilsComponent implements ActionsFunctionsInterface {
 
   ngOnInit() {
     console.log('data', this.profileStore.selectedData());
-  }
-
-  changePage(page: number) {
-    this.profileStore.updateFilter({ page: page });
   }
 
   actionsDistributor(event: ActionFunctionType | string) {

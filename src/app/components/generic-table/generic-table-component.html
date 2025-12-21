@@ -75,7 +75,7 @@
                     <td style="white-space: nowrap;text-align: center;">
                         <!-- <label class="checkbox"><input type="checkbox" class="checkbox-input" /><span
                                 class="checkbox-label"></span></label> -->
-                        <input class="checkbox" type="checkbox">
+                        <input class="checkbox" type="checkbox" (change)="selectItem(row)">
                     </td>
 
 
@@ -203,3 +203,7 @@
         }
     </div> -->
 </div>
+
+@if (showUpdateAll$()) {
+<app-generic-table-rows-execution [store]="this.store"></app-generic-table-rows-execution>
+}

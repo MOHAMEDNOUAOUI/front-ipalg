@@ -6,6 +6,7 @@ export type GenericState<T, F> = {
   isLoading: boolean;
   numberOfElements: number;
   selectedData: T | null;
+  selectedRows: T[] | [];
   filter: F;
   columns: any[];
 };
@@ -19,6 +20,7 @@ export interface BaseFilter {
 export interface BaseStore<T, F extends BaseFilter> {
   // These should be computed signals, not methods
   data: () => T[];
+  selectedRowsData: () => T[];
   totalPages: () => number;
   totalElements: () => number;
   message: () => string;
@@ -32,5 +34,6 @@ export interface BaseStore<T, F extends BaseFilter> {
   updateFilter: (filter: Partial<F>) => void;
   setSelectedData: (data: T | null) => void;
   updateSearch: (search: string) => void;
+  updateSelectedRow: (data: T) => void;
   loadData: () => void;
 }
