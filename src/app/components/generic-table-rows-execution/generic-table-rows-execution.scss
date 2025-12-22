@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .checked-row {
@@ -44,5 +45,22 @@
   100% {
     bottom: 0;
     opacity: 1;
+  }
+}
+
+.xmark {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms ease-in-out;
+  i {
+    font-size: 0.8rem;
+  }
+  &:hover {
+    transform: translateY(-0.1rem);
+    background-color: rgba(234, 234, 234, 0.489);
   }
 }

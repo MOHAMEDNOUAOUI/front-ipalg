@@ -16,7 +16,9 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
-  box-shadow: rgba(9, 30, 66, 0.1) 0px 1px 1px, rgba(9, 30, 66, 0.1) 0px 0px 1px 1px;
+  box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px,
+    rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
+    rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
 
   p {
     --text-color: black;
@@ -38,26 +40,51 @@
 .p-button-secondary {
   --button-color: #505050 !important;
   --border-color: #e2e8f0 !important;
+
+  p,
+  i {
+    --text-color: rgb(255, 255, 255) !important;
+  }
 }
 
 .p-button-success {
   --button-color: #28a745 !important;
   --border-color: #28a745 !important;
+
+  p,
+  i {
+    --text-color: rgb(255, 255, 255) !important;
+  }
 }
 
 .p-button-warn {
   --button-color: #ffc107 !important;
   --border-color: #ffc107 !important;
+
+  p,
+  i {
+    --text-color: rgb(255, 255, 255) !important;
+  }
 }
 
 .p-button-help {
   --button-color: #17a2b8 !important;
   --border-color: #17a2b8 !important;
+
+  p,
+  i {
+    --text-color: rgb(255, 255, 255) !important;
+  }
 }
 
 .p-button-danger {
   --button-color: #dc3545 !important;
   --border-color: #dc3545 !important;
+
+  p,
+  i {
+    --text-color: rgb(255, 255, 255) !important;
+  }
 }
 .p-button-dark {
   --button-color: var(--color-secondary) !important;
