@@ -14,7 +14,7 @@ import { AppButtons } from '../../../../interfaces/bottons';
 
 @Component({
   selector: 'app-documents',
-  imports: [CommonModule],
+  imports: [CommonModule, StatistiquesHolder, GenericTableComponent],
   templateUrl: './documents.html',
   styleUrl: './documents.scss',
 })

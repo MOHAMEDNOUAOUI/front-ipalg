@@ -11,6 +11,7 @@ import { AppButtons } from '../../../../interfaces/bottons';
 import { ActionsFunctionsInterface } from '../../../../utils/Actionsinterface';
 import { ActionFunctionType } from '../../../../utils/ActionsDistrubitorService';
 import { GenericTableFooter } from '../../../../components/generic-table-footer/generic-table-footer';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profils',
