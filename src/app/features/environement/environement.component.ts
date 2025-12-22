@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router';
 import { LeftSideNavigationPanelComponent } from '../../shared/left-side-navigation-panel/left-side-navigation-panel.component';
 import { navigation } from '../../interfaces/sidepanel-tabs';
@@ -13,7 +13,6 @@ import { RouteAfterCollapse } from '../../components/route-after-collapse/route-
   standalone: true,
   imports: [
     PButtonComponent,
-    CommonModule,
     RouterModule,
     LeftSideNavigationPanelComponent,
     PaginationComponent,

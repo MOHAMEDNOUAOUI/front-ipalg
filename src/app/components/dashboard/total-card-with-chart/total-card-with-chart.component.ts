@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, signal } from '@angular/core';
 
 export type Bar = {
@@ -27,7 +27,7 @@ function shadeColor(color: string, percent: number): string {
 @Component({
   selector: 'app-total-card-with-chart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './total-card-with-chart.component.html',
   styleUrl: './total-card-with-chart.component.scss',
 })

@@ -2,13 +2,13 @@ import { AppStore } from './../../store/app.store';
 import { Component } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { sidePanel_Tabs } from '../../interfaces/sidepanel-tabs';
-import { CommonModule } from '@angular/common';
+
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-second-side-panel',
-  imports: [NgIcon, CommonModule, RouterModule],
+  imports: [NgIcon, RouterModule],
   templateUrl: './second-side-panel.html',
   styleUrl: './second-side-panel.scss',
   viewProviders: [],

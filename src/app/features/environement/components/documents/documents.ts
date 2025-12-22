@@ -1,5 +1,6 @@
 import { ProfileStore } from './../../../../store/profile.store';
 import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { StatistiquesHolder } from '../../../../components/environement-documents/statistiques-holder/statistiques-holder';
 import { GenericTableComponent } from '../../../../components/generic-table/generic-table.component';
@@ -13,7 +14,7 @@ import { AppButtons } from '../../../../interfaces/bottons';
 
 @Component({
   selector: 'app-documents',
-  imports: [CommonModule, StatistiquesHolder, GenericTableComponent],
+  imports: [CommonModule],
   templateUrl: './documents.html',
   styleUrl: './documents.scss',
 })

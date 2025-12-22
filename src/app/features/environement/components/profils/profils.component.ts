@@ -1,7 +1,7 @@
 import { ActionsDistributor } from './../../../../utils/ActionsDistrubitorService';
 import { ProfileService } from './../../../../services/Profiles/profile-service';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
 import { ProfileStore } from '../../../../store/profile.store';

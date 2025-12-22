@@ -2,13 +2,13 @@ import { tab } from './../../interfaces/sidepanel-tabs';
 import { Component } from '@angular/core';
 import { sidePanel_Tabs } from '../../interfaces/sidepanel-tabs';
 import { Router, NavigationEnd, RouterLinkActive, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { cssArrowsExchangeAltV } from '@ng-icons/css.gg';
 @Component({
   selector: 'app-sidepanel',
   standalone: true,
-  imports: [RouterLinkActive, RouterModule, CommonModule, NgIcon],
+  imports: [RouterLinkActive, RouterModule, NgIcon],
   templateUrl: './sidepanel.component.html',
   styleUrl: './sidepanel.component.scss',
   viewProviders: [provideIcons({ cssArrowsExchangeAltV })],
