@@ -6,7 +6,7 @@ main {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   background-color: white;
   padding: 1rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -24,7 +24,7 @@ main {
   width: 100%;
   height: fit-content;
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   align-items: center;
   justify-content: space-between;
   margin-top: auto;

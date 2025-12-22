@@ -237,18 +237,17 @@ table {
 
   thead {
     position: sticky;
-    background-color: rgb(222, 222, 222);
     top: 0;
     left: 0;
     z-index: 1;
     tr {
-      background-color: var(--color-layout);
+      background-color: rgba(236, 236, 236, 0.495);
       th {
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         padding: 1rem;
         padding-left: 0.6rem;
-        color: rgb(0, 0, 0);
+        color: rgb(61, 61, 61);
         // text-transform: lowercase;
         // text-transform: capitalize;
       }
@@ -290,10 +289,10 @@ table {
   i {
     color: rgb(207, 207, 207);
     position: absolute;
-    left: 0.3rem;
+    left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 0.8rem;
+    font-size: 1rem;
     transition: 400ms ease-in-out;
   }
 
@@ -307,7 +306,7 @@ table {
   input {
     width: 100%;
     border: none;
-    padding-left: 1.5rem;
+    padding-left: 2.5rem;
     border-radius: 10px;
     background-color: transparent;
 

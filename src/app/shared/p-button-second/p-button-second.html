@@ -1,0 +1,19 @@
+<div [ngClass]="{
+    'p-button': true,
+    'p-button-text': variant === Variant.text,
+    'p-button-outlined': outline,
+    'p-button-rounded': rounded,
+    'p-button-secondary': severity === Severity.Secondary,
+    'p-button-success': severity === Severity.Success,
+    'p-button-warn': severity === Severity.Warn,
+    'p-button-help': severity === Severity.Help,
+    'p-button-danger': severity === Severity.Danger,
+    'p-button-dark': severity === Severity.Dark
+  }">
+    @if (icon) {
+    <i [classList]="'pi '+ icon"></i>
+    }
+    @if(label){
+    <p>{{ label }}</p>
+    }
+</div>

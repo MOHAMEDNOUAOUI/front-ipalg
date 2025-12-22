@@ -1,0 +1,5 @@
+<div class="container">
+    @for (link of links; track $index) {
+    <div class="link" [routerLinkActive]="'active'" [routerLink]="'/'+link.route" []>{{link.label}}</div>
+    }
+</div>

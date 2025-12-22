@@ -21,12 +21,21 @@ import { EllipsisInterface, TableButtonsInterface } from '../../interfaces/Table
 import { BaseFilter, BaseStore } from '../../store/type.generic';
 import { ConfirmationPopUp } from '../confirmation-pop-up/confirmation-pop-up';
 import { ActionFunctionType } from '../../utils/ActionsDistrubitorService';
-import { GenericTableRowsExecution } from "../generic-table-rows-execution/generic-table-rows-execution";
+import { GenericTableRowsExecution } from '../generic-table-rows-execution/generic-table-rows-execution';
+import { PButtonSecond } from '../../shared/p-button-second/p-button-second';
 
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [PButtonComponent, CommonModule, PaginationComponent, FormsModule, ConfirmationPopUp, GenericTableRowsExecution],
+  imports: [
+    PButtonComponent,
+    CommonModule,
+    PaginationComponent,
+    FormsModule,
+    ConfirmationPopUp,
+    GenericTableRowsExecution,
+    PButtonSecond,
+  ],
   templateUrl: './generic-table-component.html',
   styleUrl: './generic-table-component.scss',
 })
@@ -40,6 +49,7 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
   @Input() icon: string = '';
   @Input() ellipsis: boolean = false;
   @Input() maxHeight: string = '';
+  @Input() header: boolean = false;
   @Input() ellipsisItems: EllipsisInterface[] = [];
   @Output() actionEvent = new EventEmitter<string>();
 
@@ -95,8 +105,9 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
     return (item as any).id || index;
   }
 
-  ngOnInit() {}
-
+  getCheckedValue(row: any): boolean {
+    return row.checked;
+  }
   getValue(column: any, row: any) {
     if (column.item) {
       return row[column.value][column.item];
@@ -139,6 +150,20 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
     this.popupTop = rect.bottom + window.scrollY + 5; // Add scrollY in case the page is scrolled
     this.popupRight = window.innerWidth - rect.right;
   }
+  ellipsisPopUp = false;
+  openEllipsis(event: MouseEvent) {
+    if (this.ellipsisPopUp) {
+      this.ellipsisPopUp = false;
+      return;
+    }
+    this.ellipsisPopUp = true;
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+
+    // Position popup just below and to the right of the icon
+    this.popupTop = rect.bottom + window.scrollY + 5; // Add scrollY in case the page is scrolled
+    this.popupRight = window.innerWidth - rect.right;
+  }
 
   handleAction(action: string, row?: T) {
     if (row) {
@@ -168,5 +193,20 @@ export class GenericTableComponent<T, F extends BaseFilter, TStore extends BaseS
 
   selectItem(item: T) {
     this.store.updateSelectedRow(item);
+    if (this.store.selectedRowsData().length === 0) {
+      this.isChecked = false;
+    } else if (this.store.selectedRowsData().length === this.store.data().length) {
+      this.isChecked = true;
+    }
+  }
+
+  isChecked = false;
+  checkAll(event: any) {
+    console.log(event.target.checked);
+
+    this.isChecked = event.target.checked;
+    this.store.setAllRowsSelected(this.isChecked);
+
+    console.log(this.store.data());
   }
 }

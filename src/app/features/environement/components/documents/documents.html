@@ -1,3 +1,13 @@
 <div class="container">
-
+    <main>
+        <app-statistiques-holder></app-statistiques-holder>
+        <div class="container-main-stream">
+            <div class="container-main-stream-left">
+                <app-generic-table (actionEvent)="actionsDistributor($event)" [header]="false" [buttons]="bottons"
+                    [ellipsis]="false" [ellipsisItems]="items" [store]="ProfileStore" [icon]="'pi-spinner'"
+                    [page]="'Profil'"></app-generic-table>
+            </div>
+            <div class="container-main-stream-right"></div>
+        </div>
+    </main>
 </div>

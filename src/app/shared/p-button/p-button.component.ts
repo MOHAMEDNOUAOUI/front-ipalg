@@ -12,6 +12,7 @@ export enum Severity {
   Help = 'Help',
   Danger = 'Danger',
   Dark = 'Dark',
+  default = 'default',
 }
 @Component({
   selector: 'app-p-button',

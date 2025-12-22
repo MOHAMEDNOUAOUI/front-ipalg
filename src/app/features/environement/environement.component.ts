@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LeftSideNavigationPanelComponent } from '../../shared/left-side-navigation-panel/left-side-navigation-panel.component';
 import { navigation } from '../../interfaces/sidepanel-tabs';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { AppStore } from '../../store/app.store';
+import { RouteAfterCollapse } from '../../components/route-after-collapse/route-after-collapse';
 
 @Component({
   selector: 'app-environement',
@@ -15,13 +17,14 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
     RouterModule,
     LeftSideNavigationPanelComponent,
     PaginationComponent,
+    RouteAfterCollapse,
   ],
   templateUrl: './environement.component.html',
   styleUrl: './environement.component.scss',
 })
 export class EnvironementComponent {
   Severity = Severity;
-
+  isCollapsed: boolean = false;
   navigationList: navigation[] = [
     {
       label: 'Accès Management',
@@ -75,5 +78,14 @@ export class EnvironementComponent {
     },
   ];
 
-  constructor(public router: Router) {}
+  links: any[] = [];
+  constructor(public router: Router, public appStore: AppStore) {
+    effect(() => {
+      this.isCollapsed = this.appStore.sidePanelState();
+    });
+  }
+
+  ngOnInit() {
+    this.links = this.appStore.getRouteTabs('environement').links;
+  }
 }

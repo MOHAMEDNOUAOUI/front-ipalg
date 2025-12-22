@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  display: flex;
+
+  .link {
+    font-size: 0.8rem;
+    color: gray;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: 300ms ease-in-out;
+
+    &.active {
+      font-weight: 600;
+      color: var(--color-secondary);
+      border-color: var(--color-secondary);
+    }
+  }
+}

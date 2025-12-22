@@ -25,10 +25,12 @@ const initialState: GenericState<Profile, Filter> = {
     {
       id: '1',
       label: 'Admnistrateur',
+      checked: false,
     },
     {
       id: '2',
       label: 'Moderateur',
+      checked: false,
     },
   ],
   totalPages: 2,
@@ -99,11 +101,26 @@ export class ProfileStore
       updateSelectedRow: (data: Profile) => {
         let selectedRows = store.selectedRows();
         const exists = selectedRows.some((row: Profile) => row.id === data.id);
-
+        if (exists) {
+          data.checked = false;
+        } else {
+          data.checked = true;
+        }
         const updatedRows = exists
           ? selectedRows.filter((row) => row.id !== data.id)
           : [...selectedRows, data];
         patchState(store, { selectedRows: updatedRows });
+      },
+
+      setAllRowsSelected: (selected: boolean) => {
+        if (selected) {
+          let data = store.data().map((item) => ({ ...item, checked: true }));
+
+          patchState(store, { selectedRows: [...data], data: [...data] });
+        } else {
+          let data = store.data().map((item) => ({ ...item, checked: false }));
+          patchState(store, { selectedRows: [], data: [...data] });
+        }
       },
 
       loadData: rxMethod<void>(

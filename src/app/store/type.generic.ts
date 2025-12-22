@@ -35,5 +35,6 @@ export interface BaseStore<T, F extends BaseFilter> {
   setSelectedData: (data: T | null) => void;
   updateSearch: (search: string) => void;
   updateSelectedRow: (data: T) => void;
+  setAllRowsSelected: (selected: boolean) => void;
   loadData: () => void;
 }

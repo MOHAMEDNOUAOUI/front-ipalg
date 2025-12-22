@@ -198,6 +198,13 @@ export class UsersStore
           : [...selectedRows, data];
         patchState(store, { selectedRows: updatedRows });
       },
+      setAllRowsSelected: (selected: boolean) => {
+        if (selected) {
+          patchState(store, { selectedRows: [...store.data()] });
+        } else {
+          patchState(store, { selectedRows: [] });
+        }
+      },
 
       loadData: rxMethod<void>(
         pipe(

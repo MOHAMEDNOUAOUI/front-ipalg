@@ -1,3 +1,10 @@
-<div>
-    {{this.store.selectedRowsData()}}
+<div class="container">
+    <div class="checked-row">
+        <input class="checkbox" type="checkbox" checked readonly name="" id="">
+        <p>{{this.store.selectedRowsData().length}} items</p>
+    </div>
+    <div class="seperator"></div>
+    <app-p-button-second title="Supprimer" [label]="'Supprimer'" [icon]="'pi-trash'"></app-p-button-second>
+    <div class="seperator"></div>
+    <i class="pi pi-times"></i>
 </div>

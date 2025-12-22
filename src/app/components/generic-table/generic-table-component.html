@@ -5,6 +5,8 @@
 
 
 <div class="container">
+
+    @if (header) {
     <div class="table-header">
         <div class="table-header-left">
             <div class="search-container">
@@ -17,13 +19,31 @@
             <div class="buttons">
 
 
-
+                <!-- <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Primary" [outline]="false"
+                    [rounded]="true" [label]="'Filtrer'"></app-p-button> -->
+                <app-p-button-second title="Filter" [label]="'Filter'" [icon]="'pi-filter'"></app-p-button-second>
                 <div class="seperator"></div>
                 @for (botton of buttons; track $index) {
-                <app-p-button [title]="botton.title" [icon]="botton.icon" [severity]="botton.severity"
+                <!-- <app-p-button-second [title]="botton.title" [severity]="botton.severity" [label]="botton.label"
+                    [icon]="botton.icon"></app-p-button-second> -->
+                <app-p-button-second [title]="botton.title" [icon]="botton.icon" [severity]="botton.severity"
                     [outline]="botton.outline" [rounded]="botton.rounded" [label]="botton.label"
-                    (click)="handleAction(botton.action)"></app-p-button>
+                    (click)="handleAction(botton.action)"></app-p-button-second>
                 }
+                <!-- <i class="pi pi-ellipsis-v action-button" (click)="openEllipsis($event)"></i>
+
+                @if (ellipsisPopUp) {
+                <div [style.top.px]="popupTop" [style.right.px]="popupRight" class="menu">
+                    @for (botton of buttons; track $index) {
+                    <button class="menu-btn" (click)="handleAction(botton.action)">
+                        <i [ngClass]="botton.icon"></i>
+                        <span>{{botton.label}}</span>
+                    </button>
+                    }
+
+                </div>
+                } -->
+
                 <!-- @if(true){
                 <app-p-button title="exporter" [icon]="'pi-file-export'" [severity]="severity.Secondary"
                     [outline]="true" [rounded]="true" [label]="'Télécharger Excel'"></app-p-button>
@@ -33,20 +53,22 @@
                     [rounded]="true" [label]="'Importer'"></app-p-button>
                 }
                 <app-p-button [title]="'Ajouter ' + page" [icon]="'pi-plus'" [severity]="severity.Dark"
-                    [outline]="false" [rounded]="true" [label]="'Ajouter '+ page"></app-p-button>
+                    [outline]="false" [rounded]="true" [label]="'Ajouter '+ page"></app-p-button> -->
 
-                <app-p-button title="Filter" [icon]="'pi-filter'" [severity]="severity.Primary" [outline]="false"
-                    [rounded]="true" [label]="'Filtrer'"></app-p-button> -->
+
             </div>
         </div>
     </div>
+    }
 
     <div class="table-body" [style.max-height]="maxHeight">
         <table>
             <thead>
                 <tr>
                     <!-- <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th> -->
-                    <th style="width: 2rem; white-space: nowrap;text-align: center;"></th>
+                    <th style="width: 2rem;padding: 1rem; white-space: nowrap;text-align: center;">
+                        <input class="checkbox" type="checkbox" [checked]="isChecked" (change)="checkAll($event)">
+                    </th>
                     <th style="width: 2rem; white-space: nowrap;text-align: center;">#</th>
                     @for (column of this.store.columns(); track $index) {
                     <!-- @if (column.label.includes('Status') || column.label.includes('Created by') ||
@@ -65,17 +87,19 @@
                     }
                     }
                     }
-                    <th style="width: 2rem; white-space: nowrap;">Actions</th>
+                    <th style="width: 2rem; white-space: nowrap;"></th>
                 </tr>
             </thead>
             <tbody>
                 @for (row of this.store.data(); track $index) {
                 <tr [class.active]="true">
                     <!-- <td style="width: 2rem; white-space: nowrap;text-align: center;">{{$index+1}}</td> -->
+                    {{getValue('checked' , row)}}
                     <td style="white-space: nowrap;text-align: center;">
                         <!-- <label class="checkbox"><input type="checkbox" class="checkbox-input" /><span
                                 class="checkbox-label"></span></label> -->
-                        <input class="checkbox" type="checkbox" (change)="selectItem(row)">
+                        <input class="checkbox" type="checkbox" [checked]="getCheckedValue(row)"
+                            (change)="selectItem(row)">
                     </td>
 
 
@@ -202,8 +226,7 @@
         </div>
         }
     </div> -->
+    @if (showUpdateAll$() && this.store.selectedRowsData().length > 1) {
+    <app-generic-table-rows-execution [store]="this.store"></app-generic-table-rows-execution>
+    }
 </div>
-
-@if (showUpdateAll$()) {
-<app-generic-table-rows-execution [store]="this.store"></app-generic-table-rows-execution>
-}

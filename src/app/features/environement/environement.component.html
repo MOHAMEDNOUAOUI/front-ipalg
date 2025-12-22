@@ -10,6 +10,11 @@
     }
   </div>
 
+
+  @if (isCollapsed) {
+  <app-route-after-collapse [links]="links"></app-route-after-collapse>
+  }
+
   <main>
     <!-- <app-left-side-navigation-panel
       [navigationList]="navigationList"

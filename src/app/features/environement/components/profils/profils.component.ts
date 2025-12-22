@@ -10,12 +10,18 @@ import { GenericTableComponent } from '../../../../components/generic-table/gene
 import { AppButtons } from '../../../../interfaces/bottons';
 import { ActionsFunctionsInterface } from '../../../../utils/Actionsinterface';
 import { ActionFunctionType } from '../../../../utils/ActionsDistrubitorService';
-import { GenericTableFooter } from "../../../../components/generic-table-footer/generic-table-footer";
+import { GenericTableFooter } from '../../../../components/generic-table-footer/generic-table-footer';
 
 @Component({
   selector: 'app-profils',
   standalone: true,
-  imports: [CommonModule, RouterModule, GenericTableComponent, PaginationComponent, GenericTableFooter],
+  imports: [
+    CommonModule,
+    RouterModule,
+    GenericTableComponent,
+    PaginationComponent,
+    GenericTableFooter,
+  ],
   templateUrl: './profils.component.html',
   styleUrl: './profils.component.scss',
 })
