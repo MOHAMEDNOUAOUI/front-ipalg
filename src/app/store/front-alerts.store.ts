@@ -37,7 +37,7 @@ export class AlertFrontStore extends signalStore(
       setTimeout(() => {
         patchState(store, (state) => ({
           alerts: state.alerts.map((a) =>
-            a.id === alertWithId.id ? { ...a, state: 'visible' as const } : a
+            a.id === alertWithId.id ? { ...a, state: 'visible' as const } : a,
           ),
         }));
       }, 100);
@@ -54,7 +54,7 @@ export class AlertFrontStore extends signalStore(
         // Set first alert to exiting state
         patchState(store, (state) => ({
           alerts: state.alerts.map((alert, index) =>
-            index === 0 ? { ...alert, state: 'exiting' as const } : alert
+            index === 0 ? { ...alert, state: 'exiting' as const } : alert,
           ),
         }));
 
@@ -97,7 +97,7 @@ export class AlertFrontStore extends signalStore(
         // Set to exiting state
         patchState(store, (state) => ({
           alerts: state.alerts.map((a, i) =>
-            i === index ? { ...a, state: 'exiting' as const } : a
+            i === index ? { ...a, state: 'exiting' as const } : a,
           ),
         }));
 
@@ -162,7 +162,7 @@ export class AlertFrontStore extends signalStore(
         }));
       }, updateInterval);
     },
-  }))
+  })),
 ) {
   readonly hasAlerts = computed(() => this.alerts().length > 0);
   readonly alertCount = computed(() => this.alerts().length);
