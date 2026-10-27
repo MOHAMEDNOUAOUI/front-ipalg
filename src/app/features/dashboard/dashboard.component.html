@@ -1,45 +1,153 @@
-<div class="container">
-    <div class="container-header">
-        <div class="container-header-text">
-            <h1>Dashboard</h1>
-            <p>overview over immobilisations</p>
-        </div>
-        <div class="container-header-filter-container">
-            <app-p-button [label]="'Filter'" [severity]="Severity.Primary"></app-p-button>
-        </div>
+<div class="page">
+  <header class="head">
+    <div>
+      <h1>Tableau de bord</h1>
+      <p><strong>{{ alertCount }} alertes à traiter</strong>, dont 2 urgentes. Situation au {{ today }}.</p>
     </div>
-
-    <div class="underneath-container">
-        <app-card-holder></app-card-holder>
-        <div class="thirrow">
-            <!-- <app-total-card-with-chart></app-total-card-with-chart> -->
-            <div class="charts">
-                <app-pie-chart></app-pie-chart>
-            </div>
-            <div class="charts">
-                <app-radar-chart></app-radar-chart>
-            </div>
-            <div class="charts">
-                <app-polar-chart></app-polar-chart>
-            </div>
-
-            <!-- <div class="charts">
-                <app-polar-chart></app-polar-chart>
-            </div> -->
-            <!-- <div class="charts"></div> -->
-        </div>
-        <div class="secondrow">
-            <app-line-chart></app-line-chart>
-            <div class="secondrow-charts">
-                <!-- <app-summary-chart></app-summary-chart> not this one -->
-                 <app-pile-charts/>
-            </div>
-            <!-- <app-repartition-des-biens></app-repartition-des-biens> -->
-            <!-- <div class="forthrow">
-            <div class="charts">
-                <app-radar-chart></app-radar-chart>
-            </div>
-        </div> -->
-
-        </div>
+    <div class="head-actions">
+      <span class="demo" title="Aucune API de tableau de bord n’est branchée pour l’instant">
+        Données de démonstration
+      </span>
+      <a class="cta" routerLink="/notifications">Traiter les alertes</a>
     </div>
+  </header>
+
+  <section class="kpis" aria-label="Chiffres clés">
+    @for (k of kpis; track k.label) {
+    <div class="kpi">
+      <div class="kpi-text">
+        <span class="kpi-label">{{ k.label }}</span>
+        <span class="kpi-value num">{{ k.value }}@if (k.unit) {<small>{{ k.unit }}</small>}</span>
+        <span class="kpi-foot">
+          <span class="delta" [attr.data-good]="k.good">
+            <ng-icon [name]="k.up ? 'tablerArrowUpRight' : 'tablerArrowDownRight'" aria-hidden="true" />
+            {{ k.up ? '+' : '' }}{{ k.delta }} %
+          </span>
+          <span class="kpi-detail">{{ k.detail }}</span>
+        </span>
+      </div>
+      <svg class="kpi-line" viewBox="-2 0 86 32" aria-hidden="true" [attr.data-good]="k.good">
+        <polyline [attr.points]="k.line" fill="none" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+    </div>
+    }
+  </section>
+
+  <div class="sheet">
+    <section class="cell c8">
+      <div class="ch">
+        <div>
+          <h2>Loyers encaissés</h2>
+          <p class="sub">Millions de MAD par mois, depuis janvier</p>
+        </div>
+        <div class="big">
+          <span class="num">{{ totalEncaisse }}<small>M MAD</small></span>
+          <span class="delta" [attr.data-good]="ecart >= 0">
+            <ng-icon [name]="ecart >= 0 ? 'tablerArrowUpRight' : 'tablerArrowDownRight'" aria-hidden="true" />
+            {{ ecart >= 0 ? '+' : '' }}{{ ecart }} % vs prévu
+          </span>
+        </div>
+      </div>
+      <app-area-chart [labels]="mois" [series]="loyers" [min]="5.5" [max]="7" [step]="0.5" [height]="300" unit="M MAD"
+        label="Loyers encaissés par mois, comparés aux loyers prévus" />
+      <div class="legend">
+        <span><i class="sw"></i>Encaissés</span>
+        <span><i class="sw dash"></i>Prévus</span>
+      </div>
+    </section>
+
+    <section class="cell c4">
+      <h2>Occupation du parc locatif</h2>
+      <p class="sub">212 biens loués à des tiers</p>
+      <app-gauge [value]="occupation.taux" label="des biens occupés" />
+      <ul class="mini">
+        @for (p of occupation.parts; track p.label) {
+        <li><i [style.background]="p.color"></i><span>{{ p.label }}</span><b class="num">{{ p.value }}</b></li>
+        }
+      </ul>
+    </section>
+
+    <section class="cell c12">
+      <h2>Patrimoine par statut</h2>
+      <p class="sub">1 248 biens recensés</p>
+      <app-ribbon [parts]="statuts" label="Répartition des biens par statut" />
+    </section>
+
+    <section class="cell c5">
+      <h2>Valeur par ville</h2>
+      <p class="sub">Valeur comptable, en millions de MAD</p>
+      <app-treemap [cells]="villes" unit="M" [height]="300" label="Valeur comptable par ville" />
+    </section>
+
+    <section class="cell c7">
+      <div class="ch">
+        <div>
+          <h2>Échéances à venir</h2>
+          <p class="sub">{{ echTotal }} échéances sur les douze prochains mois</p>
+        </div>
+        <div class="legend top">
+          @for (s of echStacks; track s.name) {
+          <span><i class="dot" [style.background]="s.color"></i>{{ s.name }}</span>
+          }
+        </div>
+      </div>
+      <app-column-chart [labels]="echMois" [stacks]="echStacks" [height]="290" label="Échéances par mois et par nature" />
+    </section>
+
+    <section class="cell c12">
+      <h2>Opérations en cours</h2>
+      <p class="sub">Du dossier proposé jusqu’au litige</p>
+      <ol class="flow">
+        @for (o of operations; track o.label) {
+        <li>
+          <a [routerLink]="'/' + o.route">
+            <span class="fl">{{ o.label }}</span>
+            <span class="fn num">{{ o.n }}</span>
+            <span class="fb"><i [style.width.%]="(o.n / opsMax) * 100"></i></span>
+            <span class="fs">{{ o.note }}</span>
+          </a>
+        </li>
+        }
+      </ol>
+    </section>
+
+    <section class="cell c5">
+      <div class="ch">
+        <div>
+          <h2>À traiter</h2>
+          <p class="sub">Les plus urgents d’abord</p>
+        </div>
+        <a class="all" routerLink="/notifications">Voir les {{ alertCount }}</a>
+      </div>
+      <ul class="todos">
+        @for (t of todos; track t.title + t.where) {
+        <li>
+          <a [routerLink]="'/' + t.route" class="todo-row">
+            <span class="todo-icon" [attr.data-u]="t.urgency"><ng-icon [name]="t.icon" aria-hidden="true" /></span>
+            <span class="todo-text">
+              <strong>{{ t.title }}</strong>
+              <span>{{ t.where }}</span>
+            </span>
+            <span class="todo-when" [attr.data-u]="t.urgency">{{ t.when }}</span>
+          </a>
+        </li>
+        }
+      </ul>
+    </section>
+
+    <section class="cell c7">
+      <h2>Activité récente</h2>
+      <p class="sub">Ce que l’équipe a fait cette semaine</p>
+      <ul class="feed">
+        @for (a of activites; track a.when + a.objet) {
+        <li>
+          <span class="av">{{ a.initials }}</span>
+          <span class="txt"><strong>{{ a.who }}</strong> {{ a.action }} <em>{{ a.objet }}</em></span>
+          <span class="pill" [attr.data-tone]="a.tone">{{ a.tag }}</span>
+          <span class="when">{{ a.when }}</span>
+        </li>
+        }
+      </ul>
+    </section>
+  </div>
+</div>

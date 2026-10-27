@@ -1,20 +1,16 @@
-<div class="container">
-    <div class="container-header-small">
-        <div class="container-header-text">
-            <h1>Gestion des utilisateurs</h1>
-            <p>Gérez vos utilisateurs</p>
+<div class="page">
+    <header class="head">
+        <div>
+            <h1>Utilisateurs</h1>
+            <p>Comptes, profils et accès à l’application</p>
         </div>
-        <div class="container-header-filter-container">
+    </header>
 
-        </div>
+    <div class="sheet">
+        <app-generic-table [header]="true" (actionEvent)="actionsDistributor($event)" [ellipsisItems]="items"
+            [buttons]="buttons" [store]="userStore" [icon]="'pi-spinner'" [page]="'utilisateur'"></app-generic-table>
     </div>
-    <!-- <app-table-users [store]="userStore" [ellipsis]="true" [icon]="'pi-spinner'"
-        [page]="'utilisateur'"></app-table-users> -->
-
-    <app-generic-table [header]="true" (actionEvent)="actionsDistributor($event)" [ellipsisItems]="items"
-        [buttons]="buttons" [store]="userStore" [icon]="'pi-spinner'" [page]="'utilisateur'"></app-generic-table>
 </div>
-
 
 @if (userCreatePopUp) {
 <app-utilisateur-create (cancel)="this.userCreatePopUp = false"></app-utilisateur-create>

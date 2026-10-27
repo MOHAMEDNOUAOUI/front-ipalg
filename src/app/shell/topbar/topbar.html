@@ -1,0 +1,25 @@
+<div class="finder">
+  <ng-icon class="finder-icon" name="tablerSearch" aria-hidden="true" />
+  <input #field type="text" role="combobox" autocomplete="off" spellcheck="false"
+    placeholder="Rechercher" aria-label="Aller à un module" aria-autocomplete="list"
+    aria-controls="finder-list" [attr.aria-expanded]="showList()"
+    [attr.aria-activedescendant]="showList() && hits().length ? 'hit-' + cursor() : null"
+    [value]="query()" (input)="onInput($any($event.target).value)" (keydown)="onFieldKey($event)"
+    (focus)="focused.set(true)" (blur)="focused.set(false)" />
+  <kbd aria-hidden="true">/</kbd>
+
+  @if (showList()) {
+  <ul id="finder-list" class="results" role="listbox" aria-label="Modules">
+    @for (h of hits(); track h.route; let i = $index) {
+    <li role="option" [id]="'hit-' + i" [class.on]="i === cursor()" [attr.aria-selected]="i === cursor()"
+      (mousedown)="go(h)" (mousemove)="cursor.set(i)">
+      <ng-icon [name]="h.icon" aria-hidden="true" />
+      <span class="hit-label">{{ h.label }}</span>
+      <span class="hit-where">{{ h.where }}</span>
+    </li>
+    } @empty {
+    <li class="none">Aucun module ne correspond à « {{ query() }} ».</li>
+    }
+  </ul>
+  }
+</div>

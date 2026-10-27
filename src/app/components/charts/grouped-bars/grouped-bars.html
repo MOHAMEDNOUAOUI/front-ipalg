@@ -1,0 +1,66 @@
+<div class="legend">
+  @for (s of totals(); track s.name) {
+  <span class="key">
+    <i class="swatch" [style.background]="s.color"></i>
+    {{ s.name }}
+    <b class="num">{{ s.total }} {{ unit() }}</b>
+  </span>
+  }
+</div>
+
+<div class="plot">
+  <div class="axis" aria-hidden="true">
+    @for (t of axis().ticks; track t) {
+    <span class="tick num" [style.bottom.%]="(t / axis().max) * 100">{{ t }}</span>
+    <span class="grid" [style.bottom.%]="(t / axis().max) * 100"></span>
+    }
+  </div>
+
+  <div class="cols" (mouseleave)="active.set(null)">
+    @for (g of bars(); track g.label; let i = $index) {
+    <div class="group" tabindex="0" [class.on]="active() === i" (mouseenter)="active.set(i)"
+      (focus)="active.set(i)" (blur)="active.set(null)">
+      <div class="pair">
+        @for (c of g.cols; track $index) {
+        <span class="col" [style.height.%]="c.height" [style.background]="c.color"
+          [style.--i]="i"></span>
+        }
+      </div>
+      <span class="label">{{ g.label }}</span>
+    </div>
+    }
+
+    @if (tip(); as t) {
+    <div class="tip" [attr.data-pos]="t.pos" [style.left.%]="t.pos === 'mid' ? t.at : null" aria-hidden="true">
+      <strong>{{ t.label }}</strong>
+      @for (r of t.rows; track r.name) {
+      <span class="row"><i class="swatch" [style.background]="r.color"></i>{{ r.name }}<b class="num">{{ r.value }} {{ unit() }}</b></span>
+      }
+    </div>
+    }
+  </div>
+</div>
+
+<div class="sr-only">
+<table>
+  <caption>{{ unit() }}</caption>
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      @for (s of series(); track s.name) {
+      <th scope="col">{{ s.name }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (g of groups(); track g.label) {
+    <tr>
+      <th scope="row">{{ g.label }}</th>
+      @for (v of g.values; track $index) {
+      <td>{{ fmt(v) }}</td>
+      }
+    </tr>
+    }
+  </tbody>
+</table>
+</div>

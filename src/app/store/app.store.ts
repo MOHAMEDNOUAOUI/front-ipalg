@@ -1,4 +1,4 @@
-import { sidePanel_Tabs } from './../interfaces/sidepanel-tabs';
+import { NAV_GROUPS, NavGroup } from '../config/navigation';
 import { effect, Inject, Injectable } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
@@ -15,7 +15,7 @@ type AppState = {
   navigationPanelState: boolean;
   appearance: Appearance;
   langue: Languages;
-  sidePanel_Tabs: any[];
+  sidePanel_Tabs: NavGroup[];
 };
 
 const initialeState: AppState = {
@@ -28,173 +28,7 @@ const initialeState: AppState = {
   langue: localStorage.getItem('langue')
     ? JSON.parse(localStorage.getItem('langue')!)
     : Languages.Francais,
-  sidePanel_Tabs: [
-    {
-      header: 'Menu',
-      active: true,
-      // icon: 'pi-home',
-      icon: 'tablerHomeFill',
-      links: [
-        {
-          label: 'Dashboard',
-          icon: 'tablerLayoutDashboardFill',
-          route: 'dashboard',
-        },
-        {
-          label: 'Inventaire',
-          icon: 'tablerArchiveFill',
-          route: 'inventaire',
-        },
-
-        // {
-        //   label: 'Utilisateurs',
-        //   icon: 'pi-users',
-        //   route: 'utilisateurs',
-        // },
-        // {
-        //   label: 'documents',
-        //   icon: 'pi-folder-open',
-        //   route: 'test',
-        // },
-      ],
-    },
-    {
-      header: 'Administration',
-      active: true,
-      icon: 'tablerShieldHalfFill',
-      links: [
-        {
-          label: 'Environnement',
-          icon: 'tablerCloverFill',
-          route: 'environement',
-          active: false,
-          links: [
-            {
-              label: 'Accès Management',
-              icon: 'tablerCloverFill',
-              route: 'environement/profils',
-            },
-            {
-              label: 'Categories Management',
-              icon: 'tablerCloverFill',
-              route: 'environement/categories',
-            },
-            {
-              label: 'Documents Management',
-              icon: 'tablerCloverFill',
-              route: 'environement/documents',
-            },
-            {
-              label: 'Champs Personalisés',
-              icon: 'tablerCloverFill',
-              route: 'test',
-            },
-            {
-              label: 'Variables Globales',
-              icon: 'tablerCloverFill',
-              route: 'test',
-            },
-          ],
-        },
-        {
-          label: 'Utilisateurs',
-          icon: 'tablerUsers',
-          route: 'utilisateurs',
-        },
-        {
-          label: 'Fournisseurs',
-          icon: 'tablerTruckDelivery',
-          route: 'test',
-        },
-        {
-          label: 'Entities',
-          icon: 'tablerTruckDelivery',
-          route: 'test',
-        },
-      ],
-    },
-    {
-      header: 'Maintenance & projets',
-      icon: 'ionHome',
-      active: true,
-      links: [
-        {
-          label: 'orders de maintenance',
-          icon: 'pi-cog',
-          route: 'test',
-        },
-        {
-          label: 'projets immobiliers',
-          icon: 'pi-sitemap',
-          route: 'test',
-        },
-        // {
-        //   label: 'inventaire',
-        //   icon: 'pi-warehouse',
-        //   route: 'test',
-        // },
-      ],
-    },
-    {
-      header: 'Patrimoine Management',
-      active: true,
-      icon: 'ionHome',
-      links: [
-        {
-          label: 'immobilisatoins',
-          icon: 'pi-home',
-          route: 'test',
-        },
-        {
-          label: 'propositions',
-          icon: 'pi-flag',
-          route: 'test',
-        },
-        {
-          label: 'récquisitions',
-          icon: 'pi-home',
-          route: 'test',
-        },
-        {
-          label: 'acquisition & cessions',
-          icon: 'pi-undo',
-          route: 'test',
-        },
-        {
-          label: 'litigues',
-          icon: 'pi-exclamation-triangle',
-          route: 'test',
-        },
-      ],
-    },
-    {
-      header: 'Baux Management',
-      icon: 'ionHome',
-      active: true,
-      links: [
-        {
-          label: 'baux données',
-          icon: 'pi-home',
-          route: 'test',
-        },
-        {
-          label: 'baux pris',
-          icon: 'pi-flag',
-          route: 'test',
-        },
-        {
-          label: 'paiement',
-          icon: 'pi-wallet',
-          route: 'test',
-        },
-        {
-          label: 'contrat locative',
-          icon: 'pi-undo',
-          route: 'test',
-        },
-      ],
-    },
-  ],
+  sidePanel_Tabs: NAV_GROUPS,
 };
 
 @Injectable({

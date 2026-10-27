@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
+import { SHELL_MODULE_KEYS } from './modules/registry';
+
+const modulePage = () => import('./modules/module-page').then((m) => m.ModulePage);
 
 export const routes: Routes = [
   {
@@ -18,13 +21,6 @@ export const routes: Routes = [
             (dashboard) => dashboard.DashboardComponent
           ),
         data: ['DASHBOARD'],
-      },
-      {
-        path: 'inventaire',
-        loadComponent: () =>
-          import('./features/inventaire/inventaire.component').then(
-            (inventaire) => inventaire.InventaireComponent
-          ),
       },
       {
         path: 'environement',
@@ -53,31 +49,25 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'listes-valeurs',
+            loadComponent: modulePage,
+            data: { module: 'environement/listes-valeurs', embedded: true },
+          },
+          {
             path: 'champs-personalises',
-            loadComponent: () =>
-              import(
-                './features/environement/components/champs-personalises/champs-personalises'
-              ).then((champspersonalises) => champspersonalises.ChampsPersonalises),
+            loadComponent: modulePage,
+            data: { module: 'environement/champs-personalises', embedded: true },
           },
           {
             path: 'variables-globales',
-            loadComponent: () =>
-              import(
-                './features/environement/components/variables-globales/variables-globales'
-              ).then((variablesGlobales) => variablesGlobales.VariablesGlobales),
+            loadComponent: modulePage,
+            data: { module: 'environement/variables-globales', embedded: true },
           },
           {
             path: 'profils',
             loadComponent: () =>
               import('./features/environement/components/profils/profils.component').then(
                 (profils) => profils.ProfilsComponent
-              ),
-          },
-          {
-            path: 'modules',
-            loadComponent: () =>
-              import('./features/environement/components/modules/modules.component').then(
-                (modules) => modules.ModulesComponent
               ),
           },
         ],
@@ -128,6 +118,12 @@ export const routes: Routes = [
         path: 'centre-aide',
         loadComponent: () => import('./features/centre-aide/centre-aide').then((n) => n.CentreAide),
       },
+      // List modules (links in config/navigation.ts, definitions in modules/data).
+      ...SHELL_MODULE_KEYS.map((key) => ({
+        path: key,
+        loadComponent: modulePage,
+        data: { module: key },
+      })),
     ],
   },
 ];

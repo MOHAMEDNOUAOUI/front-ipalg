@@ -1,0 +1,14 @@
+<ul class="rows">
+  @for (r of view(); track r.label; let i = $index) {
+  <li [style.--i]="i">
+    <div class="line">
+      <span class="name">{{ r.label }}</span>
+      <span class="val num">{{ r.value }} <abbr>{{ unit() }}</abbr></span>
+    </div>
+    <div class="track" role="img" [attr.aria-label]="r.label + ' : ' + r.value + ' ' + unit() + ', ' + r.share">
+      <span class="fill" [style.width.%]="r.width"></span>
+    </div>
+    <span class="share num">{{ r.share }} du total</span>
+  </li>
+  }
+</ul>

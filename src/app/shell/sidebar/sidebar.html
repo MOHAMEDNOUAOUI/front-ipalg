@@ -1,0 +1,89 @@
+<aside class="nav" [class.rail]="collapsed()" aria-label="Navigation principale">
+  <div class="top">
+  <a class="brand" routerLink="/dashboard" [attr.aria-label]="appName">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="9" fill="#043d6d" />
+      <path d="M6.5 17.5 16 9l9.5 8.5" fill="none" stroke="#06adb9" stroke-width="2.8"
+        stroke-linejoin="round" stroke-linecap="round" />
+      <path d="M10 17v7h12v-7" fill="none" stroke="#fff" stroke-width="2.8"
+        stroke-linejoin="round" stroke-linecap="round" />
+    </svg>
+    @if (!collapsed()) {
+    <span class="brand-text">
+      <strong>{{ appName }}</strong>
+      <small>{{ tagline }}</small>
+    </span>
+    }
+  </a>
+  <button type="button" class="fold" (click)="toggleNav.emit()"
+    [attr.aria-label]="collapsed() ? 'Déplier le menu' : 'Replier le menu'">
+    <ng-icon [name]="collapsed() ? 'tablerLayoutSidebarLeftExpand' : 'tablerLayoutSidebarLeftCollapse'" />
+  </button>
+  </div>
+
+  @if (!collapsed()) {
+  <app-topbar class="search" />
+  }
+
+  <nav class="groups">
+    @if (collapsed()) {
+    @for (g of groups; track g.id) {
+    <a class="rail-link" [routerLink]="firstRoute(g)" [class.active]="activeGroupId() === g.id"
+      [attr.title]="g.header" [attr.aria-label]="g.header"
+      [attr.aria-current]="activeGroupId() === g.id ? 'page' : null" (click)="navigated.emit()">
+      <ng-icon [name]="g.icon" />
+    </a>
+    }
+    } @else {
+    @for (g of groups; track g.id) {
+    <section class="group">
+      <button type="button" class="group-head" [attr.aria-expanded]="isOpen(g.id)"
+        [attr.aria-controls]="'nav-' + g.id" (click)="toggle(g.id)">
+        <span>{{ g.header }}</span>
+        <ng-icon class="chev" name="tablerChevronDown" aria-hidden="true" />
+      </button>
+      <div class="group-body" [class.open]="isOpen(g.id)" [id]="'nav-' + g.id"
+        [attr.inert]="isOpen(g.id) ? null : ''">
+        <ul>
+          @for (l of g.links; track l.route) {
+          <li>
+            <a class="link" [routerLink]="'/' + l.route" routerLinkActive="active"
+              ariaCurrentWhenActive="page" (click)="navigated.emit()">
+              <ng-icon [name]="l.icon" aria-hidden="true" />
+              <span>{{ l.label }}</span>
+              @if (badge(l.route); as n) {
+              <span class="badge num" [attr.aria-label]="n + ' à traiter'">{{ n }}</span>
+              }
+            </a>
+          </li>
+          }
+        </ul>
+      </div>
+    </section>
+    }
+    }
+  </nav>
+
+  <div class="foot">
+    @for (l of footer; track l.route) {
+    <a class="link" [class.rail-link]="collapsed()" [routerLink]="'/' + l.route"
+      routerLinkActive="active" ariaCurrentWhenActive="page" [attr.title]="collapsed() ? l.label : null"
+      [attr.aria-label]="l.label" (click)="navigated.emit()">
+      <ng-icon [name]="l.icon" aria-hidden="true" />
+      @if (!collapsed()) {
+      <span>{{ l.label }}</span>
+      }
+    </a>
+    }
+  </div>
+
+  <div class="me">
+    <span class="avatar" aria-hidden="true">MN</span>
+    @if (!collapsed()) {
+    <span class="who">
+      <strong>Mohamed Nouaoui</strong>
+      <small>Administrateur</small>
+    </span>
+    }
+  </div>
+</aside>

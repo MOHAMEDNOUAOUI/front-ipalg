@@ -1,0 +1,280 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--nav-bg);
+  color: var(--nav-ink);
+  border-right: 1px solid var(--nav-line);
+  white-space: nowrap;
+}
+
+.top {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+
+.fold {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 18px;
+  color: var(--nav-ink-muted);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--nav-bg-hover);
+    color: var(--ink);
+  }
+}
+
+.search {
+  display: block;
+  flex: none;
+  padding: 0 12px 6px;
+}
+
+.nav.rail .top {
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 0 8px;
+}
+
+.brand {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 12px 12px 16px;
+  color: var(--ink);
+  text-decoration: none;
+
+  .mark {
+    flex: none;
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  strong {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  small {
+    font-size: 12px;
+    color: var(--nav-ink-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.groups {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 10px 12px;
+  overscroll-behavior: contain;
+}
+
+.group + .group {
+  margin-top: 2px;
+}
+
+// Small caps group label with a chevron, as in the reference list apps.
+.group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--nav-ink-muted);
+  cursor: pointer;
+  transition: color var(--dur-fast) linear;
+
+  &:hover {
+    color: var(--ink);
+  }
+
+  .chev {
+    order: -1;
+    font-size: 12px;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  &[aria-expanded='false'] .chev {
+    transform: rotate(-90deg);
+  }
+}
+
+.group-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur) var(--ease-out);
+
+  &.open {
+    grid-template-rows: 1fr;
+  }
+
+  ul {
+    min-height: 0;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.link,
+.rail-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--nav-ink);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) linear, color var(--dur-fast) linear;
+
+  ng-icon {
+    flex: none;
+    font-size: 17px;
+    color: var(--nav-ink-muted);
+  }
+
+  .badge {
+    margin-left: auto;
+    min-width: 20px;
+    padding: 0 6px;
+    border-radius: 99px;
+    background: var(--line);
+    color: var(--ink-2);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  &:hover {
+    background: var(--nav-bg-hover);
+    color: var(--ink);
+  }
+
+  &.active {
+    background: var(--nav-bg-active);
+    color: var(--nav-active-ink);
+    font-weight: 600;
+    box-shadow: 0 0 0 1px var(--nav-line);
+
+    ng-icon {
+      color: var(--brand);
+    }
+  }
+}
+
+.rail-link {
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 4px;
+  padding: 0;
+
+  ng-icon {
+    font-size: 20px;
+  }
+}
+
+.foot {
+  flex: none;
+  padding: 6px 10px 4px;
+}
+
+.me {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 10px 12px;
+  padding: 8px;
+  border-top: 1px solid var(--nav-line);
+  padding-top: 12px;
+
+  .avatar {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--brand-dark);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+  }
+
+  strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  small {
+    font-size: 12px;
+    color: var(--nav-ink-muted);
+  }
+}
+
+.nav.rail .me {
+  justify-content: center;
+  margin: 4px 0 12px;
+}
+
+@media (max-width: 900px) {
+  :host {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(280px, 85vw);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform var(--dur) var(--ease-out);
+    visibility: hidden;
+  }
+
+  :host(.mobile-open) {
+    transform: none;
+    visibility: visible;
+  }
+}

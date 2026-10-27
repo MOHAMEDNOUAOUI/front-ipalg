@@ -1,0 +1,269 @@
+<div class="page" [class.embedded]="embedded()">
+  @if (!embedded()) {
+  <header class="head">
+    <div class="titles">
+      <h1>{{ def().title }} <span class="total num">{{ rows().length }}</span></h1>
+      <p>{{ def().subtitle }}</p>
+    </div>
+    <div class="head-actions">
+      <span class="demo" title="Aucune API n’est branchée pour ce module pour l’instant">Données de démonstration</span>
+      @if (def().newLabel) {
+      <button type="button" class="btn primary" (click)="startCreate($event)">
+        <ng-icon name="tablerPlus" aria-hidden="true" /> {{ def().newLabel }}
+      </button>
+      }
+    </div>
+  </header>
+  }
+
+  <section class="kpis" aria-label="Chiffres clés">
+    @for (k of kpis(); track k.label) {
+    <div class="kpi">
+      <div class="kpi-text">
+        <span class="kpi-label">{{ k.label }}</span>
+        <span class="kpi-value num">{{ k.value }}</span>
+        <span class="kpi-foot">
+          <span class="delta" [attr.data-good]="k.good">
+            <ng-icon [name]="k.up ? 'tablerArrowUpRight' : 'tablerArrowDownRight'" aria-hidden="true" />
+            {{ k.up ? '+' : '' }}{{ k.delta }} %
+          </span>
+          <span class="kpi-detail">{{ k.detail || 'vs période précédente' }}</span>
+        </span>
+      </div>
+      <svg class="kpi-line" viewBox="-2 0 86 32" aria-hidden="true" [attr.data-good]="k.good">
+        <polyline [attr.points]="k.line" fill="none" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+    </div>
+    }
+  </section>
+
+  <section class="panel">
+    @if (statusChips().length) {
+    <div class="tabs" role="group" aria-label="Filtrer par statut">
+      <button type="button" class="tab" [class.on]="!status()" [attr.aria-pressed]="!status()" (click)="setStatus('')">
+        Tous <sup class="num">{{ rows().length }}</sup>
+      </button>
+      @for (s of statusChips(); track s.value) {
+      <button type="button" class="tab" [class.on]="status() === s.value" [attr.aria-pressed]="status() === s.value"
+        (click)="setStatus(s.value)">
+        {{ s.value }} <sup class="num">{{ s.count }}</sup>
+      </button>
+      }
+    </div>
+    }
+
+    <div class="toolbar">
+      <label class="search">
+        <ng-icon name="tablerSearch" aria-hidden="true" />
+        <span class="sr-only">Rechercher dans {{ def().title }}</span>
+        <input type="search" placeholder="Rechercher…" [value]="query()" (input)="setQuery($any($event.target).value)" />
+      </label>
+      <div class="actions">
+        <button type="button" class="btn" (click)="exportCsv()">
+          <ng-icon name="tablerDownload" aria-hidden="true" /> Exporter
+        </button>
+        @if (embedded() && def().newLabel) {
+        <button type="button" class="btn primary" (click)="startCreate($event)">
+          <ng-icon name="tablerPlus" aria-hidden="true" /> {{ def().newLabel }}
+        </button>
+        }
+      </div>
+    </div>
+
+    @if (notice()) {
+    <p class="notice" role="status">{{ notice() }}</p>
+    }
+
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">{{ def().title }}</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="check">
+              <input type="checkbox" aria-label="Sélectionner la page" [checked]="allVisible()" (change)="toggleAll()" />
+            </th>
+            @for (c of tableCols(); track c.key) {
+            <th scope="col" [attr.aria-sort]="ariaSort(c.key)" [class.right]="isNumeric(c) && c.type !== 'percent'">
+              <button type="button" (click)="toggleSort(c.key)">
+                {{ c.label }}
+                @if (ariaSort(c.key) === 'ascending') {
+                <ng-icon name="tablerChevronUp" aria-hidden="true" />
+                } @else if (ariaSort(c.key) === 'descending') {
+                <ng-icon name="tablerChevronDown" aria-hidden="true" />
+                }
+              </button>
+            </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of visible(); track r.id) {
+          <tr [class.sel]="selected().has(r.id)">
+            <td class="check">
+              <input type="checkbox" [attr.aria-label]="'Sélectionner ' + rowTitle(r)" [checked]="selected().has(r.id)"
+                (change)="toggleRow(r.id)" />
+            </td>
+            @for (c of tableCols(); track c.key; let first = $first) {
+            <td [class.right]="isNumeric(c) && c.type !== 'percent'" [class.num]="isNumeric(c) || c.type === 'date'">
+              @if (first) {
+              <button type="button" class="row-link" (click)="openRow(r, $event)">{{ display(r, c) }}</button>
+              } @else if (c.type === 'status') {
+              <span class="pill" [attr.data-tone]="tone(r[c.key])">{{ r[c.key] }}</span>
+              } @else if (c.type === 'percent') {
+              <span class="meter" role="img" [attr.aria-label]="display(r, c)">
+                <span class="bars">
+                  @for (on of meter(r, c); track $index) {
+                  <i [class.on]="on"></i>
+                  }
+                </span>
+                <span class="meter-n num">{{ display(r, c) }}</span>
+              </span>
+              } @else if (c.type === 'code') {
+              <span class="code">{{ display(r, c) }}</span>
+              } @else {
+              {{ display(r, c) }}
+              }
+            </td>
+            }
+          </tr>
+          } @empty {
+          <tr>
+            <td class="empty" [attr.colspan]="tableCols().length + 1">
+              <ng-icon name="tablerInbox" aria-hidden="true" />
+              <strong>Aucun résultat</strong>
+              <span>Modifiez la recherche ou choisissez un autre onglet.</span>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="foot">
+      <span class="range num" aria-live="polite">{{ range() }}</span>
+      <div class="pager">
+        <button type="button" class="btn icon" aria-label="Page précédente" [disabled]="page() === 0" (click)="page.set(page() - 1)">
+          <ng-icon name="tablerChevronLeft" aria-hidden="true" />
+        </button>
+        <span class="num">Page {{ page() + 1 }} / {{ pageCount() }}</span>
+        <button type="button" class="btn icon" aria-label="Page suivante" [disabled]="page() >= pageCount() - 1" (click)="page.set(page() + 1)">
+          <ng-icon name="tablerChevronRight" aria-hidden="true" />
+        </button>
+      </div>
+    </footer>
+  </section>
+</div>
+
+@if (selected().size) {
+<div class="bulk" role="region" aria-label="Actions sur la sélection">
+  <span class="bulk-n num">{{ selected().size }} sélectionné{{ selected().size > 1 ? 's' : '' }}</span>
+  <button type="button" class="bulk-a" (click)="exportCsv(true)">
+    <ng-icon name="tablerDownload" aria-hidden="true" /> Exporter
+  </button>
+  <button type="button" class="bulk-a danger" (click)="deleteSelected()">
+    <ng-icon name="tablerTrash" aria-hidden="true" /> Supprimer
+  </button>
+  <button type="button" class="bulk-a icon" aria-label="Annuler la sélection" (click)="clearSelection()">
+    <ng-icon name="tablerX" aria-hidden="true" />
+  </button>
+</div>
+}
+
+@if (panel(); as p) {
+<div class="scrim" (click)="closePanel()"></div>
+<aside
+  #panelEl
+  class="drawer"
+  role="dialog"
+  aria-modal="true"
+  tabindex="-1"
+  [attr.aria-label]="p.mode === 'create' ? def().newLabel : rowTitle(p.row!)"
+>
+  <header class="drawer-head">
+    <div>
+      <span class="drawer-kicker">{{ def().title }}</span>
+      <h2>{{ p.mode === 'create' ? def().newLabel : rowTitle(p.row!) }}</h2>
+    </div>
+    <button type="button" class="btn icon" aria-label="Fermer" (click)="closePanel()">
+      <ng-icon name="tablerX" aria-hidden="true" />
+    </button>
+  </header>
+
+  @if (editing()) {
+  <form class="drawer-body form" (submit)="$event.preventDefault(); save()" novalidate>
+    @for (c of def().cols; track c.key) {
+    <label class="field" [class.invalid]="invalid(c)">
+      <span>{{ c.label }}@if (c.required || c.key === def().titleKey) { <em aria-hidden="true">*</em> }</span>
+      @if (c.type === 'status') {
+      <select (change)="setField(c, $event)">
+        @for (s of statusKeys(); track s) {
+        <option [value]="s" [selected]="draft()[c.key] === s">{{ s }}</option>
+        }
+      </select>
+      } @else if (c.options) {
+      <select (change)="setField(c, $event)">
+        @for (o of c.options; track o) {
+        <option [value]="o" [selected]="draft()[c.key] === o">{{ o }}</option>
+        }
+      </select>
+      } @else if (c.type === 'long') {
+      <textarea rows="3" [value]="draft()[c.key]" (input)="setField(c, $event)"></textarea>
+      } @else {
+      <input
+        [type]="c.type === 'date' ? 'date' : isNumeric(c) ? 'number' : 'text'"
+        [value]="draft()[c.key]"
+        (input)="setField(c, $event)"
+      />
+      }
+      @if (invalid(c)) {
+      <small>Ce champ est obligatoire.</small>
+      }
+    </label>
+    }
+    <div class="drawer-foot">
+      <button type="button" class="btn" (click)="cancelEdit()">Annuler</button>
+      <button type="submit" class="btn primary">Enregistrer</button>
+    </div>
+  </form>
+  } @else {
+  <div class="drawer-body">
+    @if (timeline(); as t) {
+    <ol class="stages" aria-label="Avancement">
+      @for (s of t.steps; track s.label) {
+      <li [attr.data-state]="s.state" [attr.aria-current]="s.state === 'now' ? 'step' : null">
+        <span class="stage-dot"></span>
+        <span class="stage-label">{{ s.label }}</span>
+      </li>
+      }
+    </ol>
+    @if (t.off) {
+    <p class="stage-off">Hors parcours : <strong>{{ t.off }}</strong></p>
+    }
+    }
+    <dl class="facts">
+      @for (c of def().cols; track c.key) {
+      <div [class.wide]="c.type === 'long'">
+        <dt>{{ c.label }}</dt>
+        <dd [class.num]="isNumeric(c) || c.type === 'date'">
+          @if (c.type === 'status') {
+          <span class="pill" [attr.data-tone]="tone(p.row![c.key])">{{ p.row![c.key] }}</span>
+          } @else {
+          {{ display(p.row!, c) }}
+          }
+        </dd>
+      </div>
+      }
+    </dl>
+    @if (def().documents) {
+    <app-documents [row]="p.row!" />
+    }
+    <div class="drawer-foot">
+      <button type="button" class="btn" (click)="closePanel()">Fermer</button>
+      <button type="button" class="btn primary" (click)="startEdit()">
+        <ng-icon name="tablerPencil" aria-hidden="true" /> Modifier
+      </button>
+    </div>
+  </div>
+  }
+</aside>
+}

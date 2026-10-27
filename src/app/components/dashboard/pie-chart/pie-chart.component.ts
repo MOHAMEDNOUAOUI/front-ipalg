@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ApexFill } from 'apexcharts';
 import { ChartComponent } from 'ng-apexcharts';
 
 import {

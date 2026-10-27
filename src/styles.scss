@@ -1,6 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+/* Fonts are loaded from index.html (preconnect + swap), not through blocking @imports. */
 @import 'primeicons/primeicons.css';
 @import './styles/variables';
 @import './styles/typography';
@@ -14,29 +12,51 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--page);
+}
+
+// Browser surfaces that belong to the design system
+::selection {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-mid);
+  outline-offset: 2px;
+}
+
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--line-strong);
   border-radius: 10px;
+  border: 2px solid var(--page);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+  background: var(--ink-3);
 }
 
 /* For Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) #ffffff;
-  font-family: 'Inter', sans-serif;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
 }
 .pi {
   &::before {
@@ -241,33 +261,32 @@ table {
     left: 0;
     z-index: 1;
     tr {
-      background-color: rgba(236, 236, 236, 0.495);
+      background-color: var(--surface);
       th {
-        font-weight: 500;
-        font-size: 0.8rem;
-        padding: 1rem;
-        padding-left: 0.6rem;
-        color: rgb(61, 61, 61);
-        // text-transform: lowercase;
-        // text-transform: capitalize;
+        font-weight: 600;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 9px 12px;
+        color: var(--ink-3);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
       }
     }
   }
 
   tbody {
     tr {
-      transition: 300ms ease-in-out;
-      &:nth-child(odd) {
-        // background-color: #f5f5f542;
-      }
+      transition: background-color 120ms linear;
       &:hover {
-        background-color: #f5f5f57e;
+        background-color: var(--surface-sunken);
       }
       td {
-        padding: 0.6rem;
-        border-bottom: 1px solid #dddddd48;
-        font-size: 0.9rem;
-        font-weight: 300;
+        padding: 11px 12px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13.5px;
+        font-weight: 400;
+        color: var(--ink-2);
         cursor: pointer;
       }
     }
@@ -280,11 +299,11 @@ table {
   display: flex;
   align-items: center;
   position: relative;
-  background-color: transparent;
-  border: 1px solid #cecece;
-  border-radius: 10px;
+  background-color: var(--surface-sunken);
+  border: 1px solid transparent;
+  border-radius: 9px;
   width: 100%;
-  height: 100%;
+  height: 34px;
   transition: 400ms ease-in-out;
   i {
     color: rgb(207, 207, 207);
@@ -393,23 +412,21 @@ table {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: 1.2rem;
-  height: 1.2rem;
-  border: 1px solid #ccc;
-  border-radius: 7px;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 5px;
   position: relative;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--surface);
   vertical-align: middle;
   transition: 400ms ease-in-out;
 }
 
 /* Checked state */
 .checkbox:checked {
-  // background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  border-color: var(--color-primary);
-  animation: animationActive 400ms ease-in-out forwards;
+  background-color: var(--brand-dark);
+  border-color: var(--brand-dark);
 }
 
 /* Create the checkmark using ::after */
@@ -420,8 +437,9 @@ table {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--color-primary);
-  font-size: 0.9rem;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
   pointer-events: none; /* so clicks pass through */
   user-select: none;
 }

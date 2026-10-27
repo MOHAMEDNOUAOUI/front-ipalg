@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 export class Parametres {
   Steps: step[] = [
     {
-      label: 'Generale',
+      label: 'Général',
       route: 'parametre-general',
     },
     {

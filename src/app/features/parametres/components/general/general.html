@@ -1,16 +1,16 @@
 <div class="container">
     <div class="general-row">
         <div class="general-row-text">
-            <h4>Appearance</h4>
-            <p>Customize how your themes loos on your device</p>
+            <h4>Apparence</h4>
+            <p>Choisissez le thème clair ou sombre de l’application</p>
         </div>
         <app-costume-select (emitOption)="catchOption($event)" [selectedOptionInput]="this.AppStore.appearance()"
             [options]="appearances"></app-costume-select>
     </div>
     <div class="general-row">
         <div class="general-row-text">
-            <h4>languague</h4>
-            <p>Customize how your themes look on your device</p>
+            <h4>Langue</h4>
+            <p>Langue d’affichage de l’interface</p>
         </div>
         <app-costume-select (emitOption)="catchOption($event)" [selectedOptionInput]="this.AppStore.langue()"
             [options]="languages"></app-costume-select>

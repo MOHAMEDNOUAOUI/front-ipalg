@@ -1,11 +1,22 @@
-<div class="layout">
+<a class="skip" href="#contenu">Aller au contenu</a>
 
-    <!-- <app-sidepanel></app-sidepanel> -->
-    <app-second-side-panel></app-second-side-panel>
-    <div class="layout-holder" [class.bg]="this.AppStore.sidePanelState()"
-        [style.width]="!this.AppStore.sidePanelState() ? 'var(--layout-width)' : 'var(--layout-shrink)'"
-        [style.left]="!this.AppStore.sidePanelState() ? 'var(--sidepanel-width)' : 'var(--sidepanel-shrink)'">
-        <!-- <app-toppanel></app-toppanel> -->
-        <router-outlet></router-outlet>
-    </div>
+<div class="shell" [class.rail]="rail()">
+  <app-sidebar [collapsed]="rail()" [mobileOpen]="mobileOpen()" (navigated)="mobileOpen.set(false)"
+    (toggleNav)="toggleNav()" />
+
+  @if (mobileOpen()) {
+  <div class="scrim" (click)="mobileOpen.set(false)" aria-hidden="true"></div>
+  }
+
+  <div class="work">
+    <header class="mobilebar">
+      <button type="button" class="menu-btn" (click)="toggleNav()" aria-label="Ouvrir le menu">
+        <ng-icon name="tablerLayoutSidebarLeftExpand" />
+      </button>
+      <strong>BOA Patrimo</strong>
+    </header>
+    <main id="contenu" class="content" tabindex="-1">
+      <router-outlet />
+    </main>
+  </div>
 </div>

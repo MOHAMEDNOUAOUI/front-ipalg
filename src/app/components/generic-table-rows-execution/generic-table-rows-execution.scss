@@ -1,29 +1,32 @@
+// Floating bar shown while two or more rows are ticked.
 .container {
-  background-color: rgb(255, 255, 255);
-  width: fit-content;
-  height: fit-content;
-  border-radius: 10px;
-  padding: 0.5rem;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
   left: 50%;
+  bottom: 24px;
+  z-index: 55;
   transform: translateX(-50%);
-  animation: slide 0.3s ease-in-out;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 1rem;
+  gap: 12px;
+  width: fit-content;
+  height: fit-content;
+  padding: 6px 8px 6px 16px;
+  border-radius: 12px;
+  background: #14202b;
+  color: #fff;
+  box-shadow: var(--shadow-pop);
+  animation: slide 0.18s ease-out;
 }
 
 .checked-row {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 10px;
 
   p {
+    font-size: 13px;
     font-weight: 500;
-    color: black;
+    color: #9db0c2;
   }
 
   .checkbox {
@@ -33,34 +36,38 @@
 
 .seperator {
   width: 1px;
-  height: 1.5rem;
-  background-color: #d3d3d3;
+  height: 1.25rem;
+  background-color: rgba(255, 255, 255, 0.18);
 }
 
 @keyframes slide {
-  0% {
-    bottom: -1rem;
+  from {
     opacity: 0;
-  }
-  100% {
-    bottom: 0;
-    opacity: 1;
+    transform: translate(-50%, 8px);
   }
 }
 
 .xmark {
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 200ms ease-in-out;
+  color: #9db0c2;
+  transition: background-color 120ms linear;
+
   i {
     font-size: 0.8rem;
   }
+
   &:hover {
-    transform: translateY(-0.1rem);
-    background-color: rgba(234, 234, 234, 0.489);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    animation: none;
   }
 }

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ApexDropShadow } from 'apexcharts';
 
 import {
   ApexAxisChartSeries,

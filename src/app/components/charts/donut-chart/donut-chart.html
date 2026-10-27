@@ -1,0 +1,29 @@
+<div class="donut">
+  <div class="ring">
+    <svg viewBox="0 0 42 42" role="img" [attr.aria-label]="summary()">
+      <circle class="track" cx="21" cy="21" r="15.9155" />
+      @for (a of arcs(); track a.label; let i = $index) {
+      <circle class="arc" cx="21" cy="21" r="15.9155" [style.--i]="i" [style.stroke]="a.color"
+        [attr.stroke-dasharray]="a.dash + ' ' + (100 - a.dash)" [attr.stroke-dashoffset]="-a.start"
+        [class.dim]="active() !== null && active() !== i" (mouseenter)="active.set(i)"
+        (mouseleave)="active.set(null)" />
+      }
+    </svg>
+    <div class="center" aria-hidden="true">
+      <strong class="num">{{ shown().value }}</strong>
+      <span>{{ shown().caption }}</span>
+    </div>
+  </div>
+
+  <ul class="legend">
+    @for (s of slices(); track s.label; let i = $index) {
+    <li tabindex="0" [class.on]="active() === i" (mouseenter)="active.set(i)" (mouseleave)="active.set(null)"
+      (focus)="active.set(i)" (blur)="active.set(null)">
+      <span class="swatch" [style.background]="s.color"></span>
+      <span class="name">{{ s.label }}</span>
+      <span class="val num">{{ num(s.value) }}</span>
+      <span class="share num">{{ pct(s.value) }}</span>
+    </li>
+    }
+  </ul>
+</div>

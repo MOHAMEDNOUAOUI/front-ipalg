@@ -1,0 +1,150 @@
+<section class="docs" [class.over]="over()" aria-label="Documents et plans" (dragover)="dragging($event, true)"
+  (dragleave)="dragging($event, false)" (drop)="drop($event)">
+  <h3>
+    Documents et plans <span class="n num">{{ docs().length }}</span>
+    <label class="add">
+      <ng-icon name="tablerPlus" aria-hidden="true" /> Ajouter
+      <input type="file" multiple [accept]="accept" (change)="pick($event)" />
+    </label>
+    <label class="add">
+      <ng-icon name="tablerFolder" aria-hidden="true" /> Dossier
+      <input type="file" webkitdirectory (change)="pick($event)" />
+    </label>
+  </h3>
+  @if (notice()) {
+  <p class="notice" role="status">{{ notice() }}</p>
+  }
+  @if (!uploaded().length) {
+  <p class="drop">Glissez un fichier ici ou cliquez sur Ajouter : PDF, image, ou modèle 3D (GLB, GLTF, OBJ, STL, PLY, FBX). Un dossier complet (modèle + textures) fonctionne aussi.</p>
+  }
+  <ul class="grid">
+    @for (d of docs(); track d.id; let i = $index) {
+    <li>
+      <button type="button" class="card" (click)="open(i, $event)" [attr.aria-label]="'Ouvrir ' + d.name">
+        <span class="thumb" [attr.data-plan]="d.plan ? 'y' : 'n'">
+          @if (d.mime?.startsWith('image/') && d.url) {
+          <img class="pic" [src]="d.url" alt="" />
+          } @else if (is3d(d)) {
+          <svg class="iso" viewBox="0 0 120 84" aria-hidden="true"><polygon points="60,10 100,32 60,54 20,32" class="t"/><polygon points="20,32 60,54 60,76 20,54" class="l"/><polygon points="100,32 60,54 60,76 100,54" class="r"/></svg>
+          } @else if (d.plan) {
+          <app-plan-drawing [kind]="d.plan" [row]="subject()" />
+          } @else {
+          <span class="page" aria-hidden="true">
+            <i class="l t"></i><i class="l"></i><i class="l"></i><i class="l s"></i><i class="l"></i><i class="l s"></i>
+            <i class="stamp"></i>
+          </span>
+          }
+        </span>
+        <span class="meta">
+          <strong>{{ d.name }}</strong>
+          <span>{{ d.type }} · {{ d.size }} · {{ d.date }}</span>
+        </span>
+      </button>
+      @if (d.own) {
+      <button type="button" class="del" (click)="remove(d.id, $event)" [attr.aria-label]="'Supprimer ' + d.name">
+        <ng-icon name="tablerTrash" aria-hidden="true" />
+      </button>
+      }
+    </li>
+    }
+  </ul>
+</section>
+
+@if (active(); as d) {
+<div class="scrim" (click)="close()">
+  <div class="dialog" #dialog tabindex="-1" role="dialog" aria-modal="true" [attr.aria-label]="d.name"
+    (click)="$event.stopPropagation()" (keydown)="key($event)">
+    <header class="bar">
+      <div class="title">
+        <strong>{{ d.name }}</strong>
+        <span>{{ subject()['designation'] }} · {{ d.type }} · {{ d.size }}</span>
+      </div>
+      <div class="acts">
+        @if ((d.plan && !is3d(d)) || d.own) {
+        <button type="button" class="btn" (click)="download()">
+          <ng-icon name="tablerDownload" aria-hidden="true" /> Télécharger
+        </button>
+        }
+        <button type="button" class="btn icon" (click)="close()" aria-label="Fermer">
+          <ng-icon name="tablerX" aria-hidden="true" />
+        </button>
+      </div>
+    </header>
+
+    <div class="body">
+      <nav class="rail" aria-label="Documents du bien">
+        @for (x of docs(); track x.id; let i = $index) {
+        <button type="button" class="mini" [class.on]="i === current()" (click)="current.set(i); fit()"
+          [attr.aria-current]="i === current()">
+          <span class="mt">
+            @if (x.mime?.startsWith('image/') && x.url) {
+            <img class="pic" [src]="x.url" alt="" />
+            } @else if (is3d(x)) {
+            <svg class="iso" viewBox="0 0 120 84" aria-hidden="true"><polygon points="60,10 100,32 60,54 20,32" class="t"/><polygon points="20,32 60,54 60,76 20,54" class="l"/><polygon points="100,32 60,54 60,76 100,54" class="r"/></svg>
+            } @else if (x.plan) {
+            <app-plan-drawing [kind]="x.plan" [row]="subject()" />
+            } @else {
+            <span class="page" aria-hidden="true"><i class="l t"></i><i class="l"></i><i class="l s"></i><i class="l"></i></span>
+            }
+          </span>
+          <span class="ml">{{ x.name }}</span>
+        </button>
+        }
+      </nav>
+
+      <div class="stage" #stage (wheel)="onWheel($event)" (pointerdown)="down($event)" (pointermove)="move($event)"
+        (pointerup)="up()" (pointercancel)="up()">
+        @if (d.model) {
+        @for (m of [d]; track m.id) {
+        <app-model-viewer [url]="m.url!" [name]="m.name" [ext]="m.ext!" [resources]="m.resources ?? {}" />
+        }
+        } @else if (d.plan === '3d') {
+        @for (m of [d]; track m.id) {
+        <app-house-3d [row]="subject()" />
+        }
+        } @else if (d.url) {
+          @if (d.ext === 'pdf' || d.mime === 'application/pdf') {
+          <iframe class="paper file" [src]="frameUrl(d)" [title]="d.name"></iframe>
+          } @else if (d.mime?.startsWith('image/')) {
+          <img class="paper" [src]="d.url" [alt]="d.name"
+            [style.transform]="'translate(' + pan().x + 'px,' + pan().y + 'px) scale(' + zoom() + ')'" />
+          } @else {
+          <div class="paper sheet"><p class="kick">Fichier PDF</p><h4>{{ d.name }}</h4><a class="btn" [href]="d.url" target="_blank" rel="noopener">Ouvrir dans un nouvel onglet</a></div>
+          }
+        } @else {
+        <div class="paper" [style.transform]="'translate(' + pan().x + 'px,' + pan().y + 'px) scale(' + zoom() + ')'">
+          @if (d.plan) {
+          <app-plan-drawing [kind]="d.plan" [row]="subject()" />
+          } @else {
+          <article class="sheet">
+            <p class="kick">Royaume du Maroc · Conservation foncière de {{ subject()['ville'] }}</p>
+            <h4>{{ d.type === 'Titre' ? 'Titre foncier' : d.name }}</h4>
+            <p class="ref num">{{ subject()['titre'] }}</p>
+            <dl>
+              <dt>Propriétaire</dt><dd>Bank of Africa, société anonyme</dd>
+              <dt>Désignation</dt><dd>{{ subject()['designation'] }}</dd>
+              <dt>Nature</dt><dd>{{ subject()['nature'] }}</dd>
+              <dt>Situation</dt><dd>{{ subject()['ville'] }}</dd>
+              <dt>Superficie</dt><dd class="num">{{ subject()['surface'] }} m²</dd>
+              <dt>Date</dt><dd>{{ d.date }}</dd>
+            </dl>
+            <i class="l"></i><i class="l"></i><i class="l s"></i><i class="l"></i><i class="l s"></i>
+            <p class="demo">Document de démonstration</p>
+            <span class="seal" aria-hidden="true"></span>
+          </article>
+          }
+        </div>
+        }
+        @if (!is3d(d) && d.ext !== 'pdf') {
+        <div class="zoom" role="group" aria-label="Zoom">
+          <button type="button" (click)="zoomBy(1 / 1.2)" aria-label="Zoom arrière">−</button>
+          <button type="button" class="pc num" (click)="fit()" aria-label="Ajuster">{{ (zoom() * 100).toFixed(0) }} %</button>
+          <button type="button" (click)="zoomBy(1.2)" aria-label="Zoom avant">+</button>
+        </div>
+        <span class="hint">Molette pour zoomer, glisser pour déplacer</span>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+}

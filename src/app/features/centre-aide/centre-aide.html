@@ -1,1 +1,50 @@
-<p>centre-aide works!</p>
+<div class="page">
+  <header class="head">
+    <h1>Centre d’aide</h1>
+    <p>Guides rapides et réponses aux questions fréquentes</p>
+  </header>
+
+  <section aria-labelledby="guides-title">
+    <h2 id="guides-title" class="section">Guides rapides</h2>
+    <ul class="guides">
+      @for (g of guides; track g.title) {
+      <li>
+        <a [routerLink]="g.route" class="guide">
+          <span class="icon"><ng-icon [name]="g.icon" aria-hidden="true" /></span>
+          <strong>{{ g.title }}</strong>
+          <span>{{ g.text }}</span>
+        </a>
+      </li>
+      }
+    </ul>
+  </section>
+
+  <section class="panel" aria-labelledby="faq-title">
+    <div class="panel-head">
+      <h2 id="faq-title" class="section">Questions fréquentes</h2>
+      <label class="search">
+        <ng-icon name="tablerSearch" aria-hidden="true" />
+        <span class="sr-only">Rechercher dans l’aide</span>
+        <input type="search" placeholder="Rechercher…" [value]="query()" (input)="query.set($any($event.target).value)" />
+      </label>
+    </div>
+
+    @for (f of results(); track f.q) {
+    <details>
+      <summary>{{ f.q }}</summary>
+      <p>{{ f.a }}</p>
+    </details>
+    } @empty {
+    <p class="none">Aucune réponse pour « {{ query() }} ».</p>
+    }
+  </section>
+
+  <section class="contact">
+    <h2 class="section">Besoin d’un coup de main ?</h2>
+    <p>
+      Contactez la Direction des Systèmes d’Information en précisant le module concerné et, si possible,
+      une capture d’écran.
+    </p>
+    <p class="mail"><ng-icon name="tablerMail" aria-hidden="true" /> support.patrimo&#64;bankofafrica.ma</p>
+  </section>
+</div>

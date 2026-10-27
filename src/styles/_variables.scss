@@ -1,13 +1,16 @@
-// Light Theme (Default)
+// BOA Patrimo design tokens.
+// Brand palette from the BMCE Bank of Africa charter; the legacy names
+// ($color-primary, --color-secondary...) are kept so older pages keep working.
+
 $color-primary: #06adb9;
-$color-secondary: #033d6d;
-$color-third: #aed8ef;
-$color-success: #4caf50;
-$color-danger: #f44336;
-$color-text: #212121;
-$color-paragraph: #747474;
-$color-bg: #f9f9f9;
-$color-layout: #f5f7f9;
+$color-secondary: #043d6d;
+$color-third: #b2d9fe;
+$color-success: #2e9e5b;
+$color-danger: #d64545;
+$color-text: #0f2a43;
+$color-paragraph: #4a5f75;
+$color-bg: #f8fbff;
+$color-layout: #f8fbff;
 
 // Spacing
 $spacing-xs: 4px;
@@ -17,7 +20,7 @@ $spacing-lg: 24px;
 $spacing-xl: 32px;
 
 // Fonts
-$font-primary: 'Roboto', sans-serif;
+$font-primary: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
 // Breakpoints
 $breakpoint-sm: 576px;
@@ -26,49 +29,130 @@ $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
 // Panel
-$toppanel-height: 50px;
-$sidepanel-width: 270px;
-$sidepanel-shrink: 80px;
+$sidepanel-width: 244px;
+$sidepanel-shrink: 72px;
 $sidepanel-height: 100vh;
-$layout-width: calc(100% - #{$sidepanel-width});
-$layout-shrink: calc(100% - #{$sidepanel-shrink});
 $layout-height: 100vh;
-$sidepanel-color: #f5f7f9;
+$sidepanel-color: #043d6d;
 
-// CSS Custom Properties - Light Theme (Default)
 :root {
+  // Legacy names
   --color-primary: #06adb9;
-  --color-secondary: #033d6d;
-  --color-third: #aed8ef;
-  --color-success: #4caf50;
-  --color-danger: #f44336;
-  --color-text: #212121;
-  --color-paragraph: #747474;
-  --color-bg: #f9f9f9;
-  --color-layout: #f5f7f9;
-  --sidepanel-color: #f5f7f9;
-  --color-sidepanel: rgb(57, 57, 57);
-
+  --color-secondary: #043d6d;
+  --color-third: #b2d9fe;
+  --color-success: #2e9e5b;
+  --color-danger: #d64545;
+  --color-text: #0f2a43;
+  --color-paragraph: #4a5f75;
+  --color-bg: #f8fbff;
+  --color-layout: #f8fbff;
+  --sidepanel-color: #043d6d;
+  --color-sidepanel: #ffffff;
   --transparent-primary: #06adb9a1;
-  --roboto: 'Roboto';
-  --inter: 'Inter';
+  --inter: 'DM Sans';
+
+  // Brand
+  --brand-dark: #043d6d;
+  --brand: #06adb9;
+  --brand-mid: #185fa5;
+  --brand-light: #b2d9fe;
+  --brand-tint: #e6f3fc;
+
+  // Surfaces and ink (ink-3 is the lightest text that still clears 4.5:1 on white)
+  --page: #f8fbff;
+  --surface: #ffffff;
+  --surface-sunken: #f1f6fb;
+  --line: #e1e9f1;
+  --line-strong: #c9d6e3;
+  --ink: #0f2a43;
+  --ink-2: #3d5269;
+  --ink-3: #5a6e84;
+
+  // Status text/fill pairs
+  --success: #2e9e5b;
+  --success-ink: #1c6f3e;
+  --success-bg: #e5f5ec;
+  --warning: #f5a623;
+  --warning-ink: #8a5300;
+  --warning-bg: #fff3dc;
+  --danger: #d64545;
+  --danger-ink: #a82a2a;
+  --danger-bg: #fdeaea;
+
+  // Chart palette (brand order) plus the neutral for "Autres"
+  --chart-1: #043d6d;
+  --chart-2: #06adb9;
+  --chart-3: #185fa5;
+  --chart-4: #b2d9fe;
+  --chart-5: #8a9bb0;
+
+  // Sidebar: a cool light grey one step off the page, active item lifted to white
+  --nav-bg: #f3f5f8;
+  --nav-bg-hover: #e9edf2;
+  --nav-bg-active: #ffffff;
+  --nav-ink: #33414e;
+  --nav-ink-muted: #7c8996;
+  --nav-line: #e3e8ee;
+  --nav-active-ink: #043d6d;
+
+  // Layout
   --sidepanel-width: #{$sidepanel-width};
   --sidepanel-shrink: #{$sidepanel-shrink};
-  --layout-width: #{$layout-width};
-  --layout-shrink: #{$layout-shrink};
+  --topbar-height: 56px;
+
+  // Shape and depth
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-1: none;
+  --shadow-2: 0 4px 12px rgba(15, 42, 67, 0.08), 0 1px 3px rgba(15, 42, 67, 0.06);
+  --shadow-pop: 0 12px 28px rgba(15, 42, 67, 0.16), 0 2px 6px rgba(15, 42, 67, 0.08);
+
+  // Motion
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur: 180ms;
+  --dur-slow: 480ms;
+
+  --font: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
-// CSS Custom Properties - Dark Theme
 [data-theme='dark'] {
-  --color-primary: #06adb9;
-  --color-secondary: #4a90e2;
-  --color-third: #2a4365;
-  --color-success: #68d391;
-  --color-danger: #fc8181;
-  --color-text: #e2e8f0;
-  --color-paragraph: #a0aec0;
-  --color-bg: #1a202c;
-  --color-layout: #2d3748;
-  --sidepanel-color: #2d3748;
-  --color-sidepanel: rgb(255, 255, 255);
+  --color-secondary: #7db4ee;
+  --color-third: #1d3f63;
+  --color-success: #5fd08e;
+  --color-danger: #f08080;
+  --color-text: #e6eef7;
+  --color-paragraph: #a9bbcf;
+  --color-bg: #08141f;
+  --color-layout: #0c1b2a;
+  --sidepanel-color: #062a4a;
+
+  --brand-tint: #123452;
+  --page: #08141f;
+  --surface: #0f2133;
+  --surface-sunken: #0b1a29;
+  --line: #1c3248;
+  --line-strong: #2b4660;
+  --ink: #e6eef7;
+  --ink-2: #b4c4d6;
+  --ink-3: #8fa3b8;
+
+  --success-ink: #7fdba5;
+  --success-bg: #12301f;
+  --warning-ink: #f5c26b;
+  --warning-bg: #3a2a0c;
+  --danger-ink: #f5a0a0;
+  --danger-bg: #3a1717;
+
+  --chart-1: #4e9bdc;
+  --chart-3: #2f7fc9;
+  --chart-4: #7fb6ec;
+  --nav-bg: #0b1a29;
+  --nav-bg-hover: #13263a;
+  --nav-bg-active: #16293c;
+  --nav-ink: #cfdbe8;
+  --nav-ink-muted: #8fa3b8;
+  --nav-line: #1c3248;
+  --nav-active-ink: #ffffff;
 }

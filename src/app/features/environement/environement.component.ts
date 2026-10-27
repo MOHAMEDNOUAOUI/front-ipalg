@@ -1,90 +1,79 @@
-import { Component, effect } from '@angular/core';
-import { PButtonComponent, Severity } from '../../shared/p-button/p-button.component';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 
-import { Router, RouterModule } from '@angular/router';
-import { LeftSideNavigationPanelComponent } from '../../shared/left-side-navigation-panel/left-side-navigation-panel.component';
-import { navigation } from '../../interfaces/sidepanel-tabs';
-import { PaginationComponent } from '../../shared/pagination/pagination.component';
-import { AppStore } from '../../store/app.store';
-import { RouteAfterCollapse } from '../../components/route-after-collapse/route-after-collapse';
+interface Section {
+  label: string;
+  route: string;
+  icon: string;
+  description: string;
+}
 
+interface SectionGroup {
+  title: string;
+  sections: Section[];
+}
+
+/** Setup area: the reference data other modules draw their choices, rules and fields from. */
 @Component({
   selector: 'app-environement',
-  standalone: true,
-  imports: [
-    PButtonComponent,
-    RouterModule,
-    LeftSideNavigationPanelComponent,
-    PaginationComponent,
-    RouteAfterCollapse,
-  ],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, NgIcon],
   templateUrl: './environement.component.html',
   styleUrl: './environement.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EnvironementComponent {
-  Severity = Severity;
-  isCollapsed: boolean = false;
-  navigationList: navigation[] = [
+  protected readonly groups: SectionGroup[] = [
     {
-      label: 'Accès Management',
-      route: 'profils',
-      active: true,
-      text: {
-        h2: 'Accés Management Settings',
-        p: 'Manager profils, permissions',
-      },
+      title: 'Accès',
+      sections: [
+        {
+          label: 'Profils et permissions',
+          route: 'profils',
+          icon: 'tablerShieldLock',
+          description: 'Qui peut voir et faire quoi dans chaque module',
+        },
+      ],
     },
     {
-      label: 'Modules',
-      route: 'modules',
-      active: false,
+      title: 'Référentiels',
+      sections: [
+        {
+          label: 'Catégories',
+          route: 'categories',
+          icon: 'tablerListDetails',
+          description: 'Catégories de biens et de documents',
+        },
+        {
+          label: 'Types de documents',
+          route: 'documents',
+          icon: 'tablerFileStack',
+          description: 'Actes, plans, contrats et leurs règles de validité',
+        },
+        {
+          label: 'Listes de valeurs',
+          route: 'listes-valeurs',
+          icon: 'tablerListDetails',
+          description: 'Les choix proposés dans les formulaires',
+        },
+      ],
     },
     {
-      label: 'Categories',
-      route: 'categories',
-      active: true,
-      text: {
-        h2: 'Categories Management',
-        p: 'Manager Categories',
-      },
-    },
-    {
-      label: 'Documents',
-      route: 'documents',
-      active: true,
-      text: {
-        h2: 'Documents Management',
-        p: 'Manager Documents',
-      },
-    },
-    {
-      label: 'Champs Personalisés',
-      route: 'champs-personalises',
-      active: true,
-      text: {
-        h2: 'Champs Personalisés Management',
-        p: 'Manager Champs Personalisés',
-      },
-    },
-    {
-      label: 'Variables Globales',
-      route: 'variables-globales',
-      active: true,
-      text: {
-        h2: 'Variables Globales Management',
-        p: 'Manager Variables Globales',
-      },
+      title: 'Personnalisation',
+      sections: [
+        {
+          label: 'Champs personnalisés',
+          route: 'champs-personalises',
+          icon: 'tablerListDetails',
+          description: 'Champs ajoutés aux fiches de chaque module',
+        },
+        {
+          label: 'Variables globales',
+          route: 'variables-globales',
+          icon: 'tablerListDetails',
+          description: 'Taux, seuils et délais utilisés partout',
+        },
+      ],
     },
   ];
-
-  links: any[] = [];
-  constructor(public router: Router, public appStore: AppStore) {
-    effect(() => {
-      this.isCollapsed = this.appStore.sidePanelState();
-    });
-  }
-
-  ngOnInit() {
-    this.links = this.appStore.getRouteTabs('environement').links;
-  }
 }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ChartComponent } from 'ng-apexcharts';
+import { ApexLegend, ChartComponent } from 'ng-apexcharts';
 
 import {
   ApexNonAxisChartSeries,

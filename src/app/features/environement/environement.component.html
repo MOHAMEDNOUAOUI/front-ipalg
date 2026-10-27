@@ -1,29 +1,29 @@
-<div class="container">
-  <div class="container-header-small">
-    @for (item of navigationList; track $index) {
-    @if (router.url.includes(item.route)) {
-    <div class="container-header-text">
-      <h1>{{item.text.h2}}</h1>
-      <p>{{item.text.p}}</p>
-    </div>
-    }
-    }
-  </div>
+<div class="env">
+  <header class="env-head">
+    <h1>Environnement</h1>
+    <p>Les données de référence qui alimentent tous les modules. Ce qui est créé ici apparaît dans les formulaires, les filtres et les règles de l’application.</p>
+  </header>
 
+  <div class="env-body">
+    <nav class="env-nav" aria-label="Sections de l’environnement">
+      @for (g of groups; track g.title) {
+      <div class="env-group">
+        <span class="env-group-title">{{ g.title }}</span>
+        @for (s of g.sections; track s.route) {
+        <a class="env-link" [routerLink]="s.route" routerLinkActive="on" ariaCurrentWhenActive="page">
+          <ng-icon [name]="s.icon" aria-hidden="true" />
+          <span class="env-link-text">
+            <strong>{{ s.label }}</strong>
+            <small>{{ s.description }}</small>
+          </span>
+        </a>
+        }
+      </div>
+      }
+    </nav>
 
-  @if (isCollapsed) {
-  <app-route-after-collapse [links]="links"></app-route-after-collapse>
-  }
-
-  <main>
-    <!-- <app-left-side-navigation-panel
-      [navigationList]="navigationList"
-    ></app-left-side-navigation-panel> -->
-    <section class="mainArea">
-      <router-outlet></router-outlet>
+    <section class="env-main">
+      <router-outlet />
     </section>
-
-
-  </main>
-
+  </div>
 </div>
